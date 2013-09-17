@@ -23,6 +23,11 @@ mycard_client_connect = (wait=5)->
   mycard_client = new WebSocket 'ws://127.0.0.1:9998/'
   mycard_client.onopen = (evt)->
     connected = true
+    $('.col-md-8').append($('<a/>', id: "test", text: "测试"))
+    $('#test').click ->
+      mycard_client.send("mycard://122.0.65.69:7911/test")
+      false
+
   mycard_client.onclose = (evt)->
     console.log '连接关闭'
     if !connected #从没连上去过

@@ -48,7 +48,15 @@
     connected = false;
     mycard_client = new WebSocket('ws://127.0.0.1:9998/');
     mycard_client.onopen = function(evt) {
-      return connected = true;
+      connected = true;
+      $('.col-md-8').append($('<a/>', {
+        id: "test",
+        text: "测试"
+      }));
+      return $('#test').click(function() {
+        mycard_client.send("mycard://122.0.65.69:7911/test");
+        return false;
+      });
     };
     mycard_client.onclose = function(evt) {
       console.log('连接关闭');
