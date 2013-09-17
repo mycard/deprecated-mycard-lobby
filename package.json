@@ -1,0 +1,16 @@
+{
+    "main": "index.html",
+    "name": "mycard",
+    "description": "mycard gui",
+    "version": "2.1.0",
+    "keywords": [ "mycard", "ygopro" ],
+    "window": {
+        "title": "MyCard Loading...",
+        "icon": "logo.png",
+        "toolbar": true,
+        "frame": true,
+        "width": 1024,
+        "height": 640,
+        "position": "center"
+    }
+}
