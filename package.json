@@ -6,9 +6,9 @@
     "keywords": [ "mycard", "ygopro" ],
     "window": {
         "title": "MyCard Loading...",
-        "icon": "logo.png",
-        "toolbar": true,
-        "frame": true,
+        "icon": "img/logo_36.png",
+        "toolbar": false,
+        "frame": false,
         "width": 1024,
         "height": 640,
         "position": "center"

@@ -1,9 +1,11 @@
 #################
-## node-webkit
+## mycard
 #################
-*.exe
-*.dll
-nw.*
+/ygocore/
+config.json
+/node_modules/
+/node-webkit/
+mycard.exe
 
 #################
 ## Jetbrains

@@ -54,6 +54,10 @@ body {
 }
 
 /* Wrapper for page content to push down footer */
+.lobby-page {
+    height: 100%;
+}
+
 #wrap {
     min-height: 100%;
     height: auto !important;
@@ -97,6 +101,7 @@ body {
 .modal {
     overflow-y: auto;
 }
+
 body.modal-open, .modal-open .navbar-fixed-top, .modal-open .navbar-fixed-bottom {
     margin-right: 0;
 }
@@ -120,15 +125,492 @@ body.modal-open, .modal-open .navbar-fixed-top, .modal-open .navbar-fixed-bottom
     padding-right: 30px;
     padding-left: 30px;
 }
+
 #footer hr {
     margin-top: 0;
     margin-bottom: 8px;
 }
-#footer .container {
 
+#footer .container {
     font-size: .85em;
 }
+
 #footer a {
     color: #333;
 }
 
+#new_room_modal .modal-body {
+    padding-bottom: 0;
+}
+
+#new_room_custom hr {
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+/*.jumbotron {}*/
+.modal-footer {
+    margin-top: 0;
+}
+
+.control-label.col-md-2 {
+    padding-right: 0;
+}
+
+#lobby_wrap > .container {
+    max-width: 100%;
+    width: 100%;
+    float: left;
+    box-sizing: border-box;
+    padding-right: 215px; /* 200 + 15 */
+    margin-right: -200px;
+    height: 100%;
+}
+
+#roster_aside {
+    float: right;
+    width: 200px;
+    height: 100%;
+    /*border: 1px solid #dddddd;*/
+    border-right: none;
+    padding-bottom: 34px;
+}
+
+#roster_aside ul {
+    background: #ffffff;
+    overflow-y: hidden;
+    /*height: calc(100% - 34px);*/
+    height: 100%;
+    border: 1px solid #dddddd;
+    border-top: none;
+    margin-bottom: 0;
+}
+
+#roster_aside ul:hover {
+    overflow-y: auto;
+}
+
+#roster_aside ul li {
+    border-bottom: 1px solid #dddddd;
+    padding: 8px 8px;
+    height: 48px;
+    overflow: hidden;
+}
+
+#roster_aside ul li.online_botttom {
+    /*background: url(/assets/images/rooms/gradual_change.png) repeat-x;*/
+    height: 10px;
+    bottom: 0;
+    position: fixed;
+    width: 160px;
+    padding: 0 8px;
+    border: none;
+}
+
+#roster_aside ul li img {
+    height: 32px;
+    width: 32px;
+    float: left;
+}
+
+#roster_aside ul li span {
+    line-height: 32px;
+    font-size: 12px;
+    padding: 0 0 0 10px;
+    float: left;
+}
+
+#roster_aside ul li:hover {
+    background: #eeeeee;
+    color: #3366cc;
+}
+
+#roster_title {
+    /*height: 20px;*/
+    /*background: #f9f9f9;
+    width: 200px;
+    font-size: 14px;
+    line-height: 16px;
+    padding: 10px 10px;
+    color: #147CC3;*/
+}
+
+#roster_title .btn, .form-control {
+    border-radius: 0;
+}
+
+#roster_title .btn {
+    border-right: none;
+}
+
+.lobby-page.web, .forum, .cards {
+    height: 100%;
+}
+
+.lobby-page iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    display: block;
+}
+
+html.blur {
+    border: 1px solid windowframe;
+}
+
+body {
+    -webkit-app-region: drag;
+}
+
+a, button, input, iframe, #roster, img, #rooms_wrapper {
+    -webkit-app-region: no-drag;
+}
+
+#cards_nav .input-group-btn {
+    width: auto;
+}
+
+#cards_search {
+    border: none;
+}
+
+.tt-hint {
+    /* .form-control */
+    display: block;
+    width: 100%;
+    height: 34px;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.428571429;
+    color: #555555;
+    vertical-align: middle;
+    background-color: #ffffff;
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    -webkit-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+    transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+
+    /* .input-group .form-control:first-child */
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.tt-dropdown-menu {
+    width: 264px;
+}
+
+.logged-in {
+    display: none;
+}
+
+.not-logged-in {
+    /*display:none;*/
+}
+
+iframe html {
+    overflow-x: hidden;
+}
+
+#userinfo_name {
+    padding-bottom: 4px;
+    padding-top: 4px;
+}
+
+#userinfo_buttons {
+    padding-left: 10px;
+}
+
+#window_control {
+    display: none;
+}
+
+.gui #window_control {
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 0
+}
+
+.gui #window_control button {
+    border-radius: 0;
+    /*    border: none;
+        color: #fff;
+        background-color: transparent;
+    */
+}
+
+.gui .navbar .container {
+    padding-right: 85px;
+}
+
+#lobby .container .row:first-child {
+    padding-left: 20px;
+    padding-right: 7px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+#contributing .panel-body {
+    overflow-y: hidden;
+}
+
+#contributing .panel-body:hover {
+    overflow-y: auto;
+}
+
+.lobby-page {
+    height: 100%;
+}
+
+#lobby_wrap {
+    min-height: 100%;
+    height: 100%;
+    /* Negative indent footer by its height */
+    margin: 0 auto -207px;
+    /* Pad bottom by footer height */
+    padding: 0 0 207px;
+}
+
+/* Set the fixed height of the footer here */
+#candy {
+    height: 207px;
+    width: 100%;
+    border: none;
+    display: block;
+
+}
+
+#candy hr {
+    margin-top: 0;
+    margin-bottom: 8px;
+}
+
+#candy .container {
+    font-size: .85em;
+}
+
+#candy a {
+    color: #333;
+}
+
+#userinfo img {
+    width: 48px;
+    height: 48px;
+}
+
+.xmpp[data-presence-type='unavailable'] {
+    display: none;
+}
+
+#lobby_wrap .row > a {
+    margin-right: 8px;
+}
+
+/*房间*/
+.room {
+    border: 1px solid #eeeeee;
+    border-radius: 4px;
+    height: 150px;
+    width: 182px;
+    background: #FCFCFC;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    position: relative;
+    border: 1px solid #cccccc;
+    display: block;
+    float: left;
+    margin: 0 15px 15px 0;
+}
+
+.room:hover {
+    cursor: pointer;
+    box-shadow: 0px 5px 5px #efefef;
+}
+
+.room.wait {
+    background: #FFFFFF;
+}
+
+.room.start {
+    background: #F3F3F3;
+}
+
+.room.start .room_body .vs {
+    width: 28px;
+    height: 76px;
+    line-height: 76px;
+    font-weight: bold;
+    font-size: 14px;
+    color: #CCCCCC;
+    text-align: center;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.room .room_top {
+    width: 190px;
+    height: 40px;
+    border-radius: 5px 5px 0 0;
+    font-size: 14px;
+    padding: 0 5px;
+    line-height: 40px;
+    color: #147CC3;
+    text-align: center;
+    font-weight: bold;
+}
+
+.room .room_top img {
+    float: left;
+    margin: 5px 5px 0 5px;
+}
+
+.room .room_top span {
+    float: left;
+    width: 140px;
+    text-align: left;
+    height: 40px;
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.room .room_top p {
+    float: right;
+    color: #dfdfdf;
+    text-shadow: 0px -1px #efefef;
+    margin: 0 5px 0 0;
+    font-weight: normal;
+    font-size: 12px;
+}
+
+.room .room_body {
+    width: 100%;
+    border-top: 1px solid #eeeeee;
+    height: 76px;
+    border-bottom: 1px solid #eeeeee;
+}
+
+.room .room_body div {
+    float: left;
+    height: 76px;
+}
+
+.room .players {
+    font-size: 12px;
+    width: 76px;
+}
+
+.room .room_body.double .players span {
+    vertical-align: middle;
+    display: block;
+    width: 76px;
+    margin: 16px 0 0 0;
+    text-align: center;
+    color: #666;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.room .room_body.single .players span {
+    vertical-align: middle;
+    display: block;
+    width: 76px;
+    margin: 32px 0 0 0;
+    text-align: center;
+    color: #666;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.room .room_body .vs {
+    width: 28px;
+    height: 76px;
+    line-height: 76px;
+    font-weight: bold;
+    font-size: 14px;
+    color: #FFC405;
+    text-align: center;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.room .room_member {
+    color: #666;
+    font-size: 12px;
+    height: 30px;
+}
+
+.room .room_member .mode {
+    margin: 0;
+    padding: 0 0 0 10px;
+    display: block;
+    float: left;
+    height: 30px;
+    line-height: 30px;
+}
+
+.room .room_member .mode span {
+    color: #147CC3;
+}
+
+.room .room_member img {
+    display: block;
+    float: right;
+}
+
+.room .room_member .private {
+    margin: 6px 10px 0 0;
+}
+
+.room .room_member .arena {
+    margin: 6px 10px 0 0;
+}
+
+#rooms_wrapper {
+    padding-bottom: 35px;
+    height: 100%;
+    margin-right: -15px;
+}
+
+
+
+#rooms {
+    height: 100%;
+    overflow-y: scroll;
+    padding-top: 15px;
+}
+
+#lobby_wrap .btn-group {
+    height: 34px;
+    border-bottom: 1px solid #cccccc;
+    margin-left: -15px;
+    width: calc(100% + 30px);
+}
+
+.single .players img {
+    width: 48px;
+    height: 48px;
+    margin: 13px;
+}
+.double .players img {
+    width: 32px;
+    height: 32px;
+    margin-top: 26px;
+}
+.players img {
+    box-shadow: 0 1px 1px 1px rgba(0, 0, 0, 0.3);
+}
+.double .players img:first-child {
+    margin-top: 4px;
+    margin-left: 13px;
+    margin-right: -16px;
+}
+
+#lobby_wrap .btn-group button {
+    border-radius: 0;
+}
+#lobby_wrap .btn-group button:last-child {
+    border-right: none;
+}
