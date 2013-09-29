@@ -575,8 +575,6 @@ iframe html {
     margin-right: -15px;
 }
 
-
-
 #rooms {
     height: 100%;
     overflow-y: hidden;
@@ -587,38 +585,42 @@ iframe html {
     overflow-y: auto;
 }
 
-#lobby_wrap .btn-group {
+/*#lobby_wrap .btn-group {
     height: 34px;
     border-bottom: 1px solid #cccccc;
     margin-left: -15px;
     width: calc(100% + 30px);
-}
+}*/
 
 .single .players img {
     width: 48px;
     height: 48px;
     margin: 13px;
 }
+
 .double .players img {
     width: 32px;
     height: 32px;
     margin-top: 26px;
 }
+
 .players img {
     box-shadow: 0 1px 1px 1px rgba(0, 0, 0, 0.3);
 }
+
 .double .players img:first-child {
     margin-top: 4px;
     margin-left: 13px;
     margin-right: -16px;
 }
 
-#lobby_wrap .btn-group button {
+/*#lobby_wrap .btn-group button {
     border-radius: 0;
 }
+
 #lobby_wrap .btn-group button:last-child {
     border-right: none;
-}
+}*/
 
 #new_room_quick .form-control {
     display: inline;
@@ -627,17 +629,29 @@ iframe html {
     padding: 0;
     font-size: inherit;
 }
+
 #new_room_quick_custom_button {
     margin: 5px;
 }
 
-#back {
+#back img {
     position: absolute;
     top: -6px;
     width: 36px;
     left: 2px;
     opacity: 0.625;
 }
-#back:hover {
+
+#back img:hover {
     opacity: 1;
+}
+
+#userinfo_level {
+    position: absolute;
+    bottom: 1px;
+    right: 5px;
+    background: white;
+    font-size: 12px;
+    line-height: 1;
+    border: 1px solid #999;
 }

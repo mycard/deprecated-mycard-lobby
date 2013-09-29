@@ -381,4 +381,8 @@ default_room_names = [0...1000]
 $.getJSON "http://my-card.in/cards_zh.json?f={'name':1,'_id':0}", (data)->
   default_room_names = data[Math.floor(Math.random() * data.length)].name
 
-$("#lobby_wrap")
+$('#lobby_wrap .tab-pane').on 'shown.bs.tab', (event)->
+  $('#back').show()
+
+$('#back').on 'shown.bs.tab', (event)->
+  $('#back').hide()

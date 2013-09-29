@@ -37,7 +37,7 @@
 </OBJECT>
 <button onclick="clo.Click()"><font face="webdings">r</font></button>-->
 <div class="navbar navbar-inverse navbar-fixed-top">
-    <a href="#home_tab" data-toggle="tab"><img src="img/Metro-Back-256.png" id="back"></a>
+    <a id="back" href="#home_tab" data-toggle="tab" hidden><img src="img/Metro-Back-256.png"></a>
 
     <div class="container">
         <div class="navbar-header">
@@ -92,6 +92,8 @@
                     <a class="dropdown-toggle" data-toggle="dropdown" style="padding: 1px 5px 1px 5px">
                         <img id="userinfo_avatar"
                              src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+
+                        <div id="userinfo_level">12</div>
                     </a>
                     <ul class="dropdown-menu" style="right:auto">
                         <li><a href="#">个人中心</a></li>
@@ -235,7 +237,7 @@
 <section class="room wait" id="new_room_quick">
     <header class="room_top"><span class="room_icon glyphicon glyphicon-plus"></span>
         <span contenteditable class="room_name">房间名...</span></header>
-    <div class="room_body single">
+    <!--<div class="room_body single">
         <span class="glyphicon glyphicon-plus">建立房间</span>
     </div>
     <footer class="room_member">
@@ -244,10 +246,16 @@
             <option selected>比赛</option>
             <option>TAG</option>
         </select></p>
-        <!---->
-        <!--<img _tmplitem="123511"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
         <button id="new_room_quick_custom_button" type="button" class="btn btn-default btn-xs pull-right">自定义</button>
-    </footer>
+    </footer>-->
+    <div class="btn-group btn-group-justified">
+        <a href="#" class="btn btn-default">Left</a>
+        <a href="#" class="btn btn-default">Middle</a>
+    </div>
+    <div class="btn-group btn-group-justified">
+        <a href="#" class="btn btn-default">Left</a>
+        <a href="#" class="btn btn-default">Middle</a>
+    </div>
 </section>
 <section class="room wait">
     <header class="room_top"><span class="room_icon glyphicon glyphicon-home"></span>
@@ -1707,412 +1715,6 @@
     </div>
     <footer class="room_member"><p class="mode">模式: <span>比赛</span></p> <!---->
         <!--<img _tmplitem="123664"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><img class="room_icon" src="http://my-card.in/assets/images/rooms/private.png" alt="room"
-                                  title="">
-        <span class="room_name">6</span></header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>比赛</span></p>
-        <!--<img _tmplitem="123665"  src="/assets/images/lock.png" alt="私密房" class="private">-->
-        <!--<img _tmplitem="123665"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><img class="room_icon" src="http://my-card.in/assets/images/rooms/private.png" alt="room"
-                                  title="">
-        <span class="room_name">321</span></header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>比赛</span></p>
-        <!--<img _tmplitem="123666"  src="/assets/images/lock.png" alt="私密房" class="private">-->
-        <!--<img _tmplitem="123666"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><img class="room_icon" src="http://my-card.in/assets/images/rooms/private.png" alt="room"
-                                  title="">
-        <span class="room_name">123</span></header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"><img src=""></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>比赛</span></p>
-        <!--<img _tmplitem="123667"  src="/assets/images/lock.png" alt="私密房" class="private">-->
-        <!--<img _tmplitem="123667"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><img class="room_icon" src="http://my-card.in/assets/images/rooms/private.png" alt="room"
-                                  title="">
-        <span class="room_name">1kk</span></header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"><img src=""></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>比赛</span></p>
-        <!--<img _tmplitem="123668"  src="/assets/images/lock.png" alt="私密房" class="private">-->
-        <!--<img _tmplitem="123668"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><img class="room_icon" src="http://my-card.in/assets/images/rooms/private.png" alt="room"
-                                  title="">
-        <span class="room_name">tutu</span></header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"><img src=""></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>比赛</span></p>
-        <!--<img _tmplitem="123669"  src="/assets/images/lock.png" alt="私密房" class="private">-->
-        <!--<img _tmplitem="123669"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><img class="room_icon" src="http://my-card.in/assets/images/rooms/private.png" alt="room"
-                                  title="">
-        <span class="room_name">681</span></header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"><img src=""></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>比赛</span></p>
-        <!--<img _tmplitem="123670"  src="/assets/images/lock.png" alt="私密房" class="private">-->
-        <!--<img _tmplitem="123670"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><img class="room_icon" src="http://my-card.in/assets/images/rooms/private.png" alt="room"
-                                  title="">
-        <span class="room_name">384</span></header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>比赛</span></p>
-        <!--<img _tmplitem="123671"  src="/assets/images/lock.png" alt="私密房" class="private">-->
-        <!--<img _tmplitem="123671"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><img class="room_icon" src="http://my-card.in/assets/images/rooms/private.png" alt="room"
-                                  title="">
-        <span class="room_name">977</span></header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>比赛</span></p>
-        <!--<img _tmplitem="123672"  src="/assets/images/lock.png" alt="私密房" class="private">-->
-        <!--<img _tmplitem="123672"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><img class="room_icon" src="http://my-card.in/assets/images/rooms/private.png" alt="room"
-                                  title="">
-        <span class="room_name">MK</span></header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"><img src=""></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>比赛</span></p>
-        <!--<img _tmplitem="123673"  src="/assets/images/lock.png" alt="私密房" class="private">-->
-        <!--<img _tmplitem="123673"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><img class="room_icon" src="http://my-card.in/assets/images/rooms/private.png" alt="room"
-                                  title="">
-        <span class="room_name">455</span></header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"><img src=""></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>比赛</span></p>
-        <!--<img _tmplitem="123674"  src="/assets/images/lock.png" alt="私密房" class="private">-->
-        <!--<img _tmplitem="123674"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><img class="room_icon" src="http://my-card.in/assets/images/rooms/private.png" alt="room"
-                                  title=""> <span>csy123</span>
-    </header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"><img src=""></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>比赛</span></p>
-        <!--<img _tmplitem="123675"  src="/assets/images/lock.png" alt="私密房" class="private">-->
-        <!--<img _tmplitem="123675"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><img class="room_icon" src="http://my-card.in/assets/images/rooms/private.png" alt="room"
-                                  title=""> <span>106106</span>
-    </header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>比赛</span></p>
-        <!--<img _tmplitem="123676"  src="/assets/images/lock.png" alt="私密房" class="private">-->
-        <!--<img _tmplitem="123676"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><img class="room_icon" src="http://my-card.in/assets/images/rooms/private.png" alt="room"
-                                  title="">
-        <span class="room_name">397</span></header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>比赛</span></p>
-        <!--<img _tmplitem="123677"  src="/assets/images/lock.png" alt="私密房" class="private">-->
-        <!--<img _tmplitem="123677"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><img class="room_icon" src="http://my-card.in/assets/images/rooms/private.png" alt="room"
-                                  title="">
-        <span class="room_name">688</span></header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"><img src=""></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>比赛</span></p>
-        <!--<img _tmplitem="123678"  src="/assets/images/lock.png" alt="私密房" class="private">-->
-        <!--<img _tmplitem="123678"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><img class="room_icon" src="http://my-card.in/assets/images/rooms/private.png" alt="room"
-                                  title="">
-        <span class="room_name">阡陌</span></header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"><img src=""></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>比赛</span></p>
-        <!--<img _tmplitem="123679"  src="/assets/images/lock.png" alt="私密房" class="private">-->
-        <!--<img _tmplitem="123679"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><img class="room_icon" src="http://my-card.in/assets/images/rooms/private.png" alt="room"
-                                  title="">
-        <span class="room_name">583</span></header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"><img src=""></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>比赛</span></p>
-        <!--<img _tmplitem="123680"  src="/assets/images/lock.png" alt="私密房" class="private">-->
-        <!--<img _tmplitem="123680"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><img class="room_icon" src="http://my-card.in/assets/images/rooms/private.png" alt="room"
-                                  title="">
-        <span class="room_name">896</span></header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"><img src=""></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>比赛</span></p>
-        <!--<img _tmplitem="123681"  src="/assets/images/lock.png" alt="私密房" class="private">-->
-        <!--<img _tmplitem="123681"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><img class="room_icon" src="http://my-card.in/assets/images/rooms/private.png" alt="room"
-                                  title="">
-        <span class="room_name">386</span></header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"><img src=""></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>比赛</span></p>
-        <!--<img _tmplitem="123682"  src="/assets/images/lock.png" alt="私密房" class="private">-->
-        <!--<img _tmplitem="123682"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><img class="room_icon" src="http://my-card.in/assets/images/rooms/private.png" alt="room"
-                                  title="">
-        <span class="room_name">957</span></header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"><img src=""></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>比赛</span></p>
-        <!--<img _tmplitem="123683"  src="/assets/images/lock.png" alt="私密房" class="private">-->
-        <!--<img _tmplitem="123683"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><img class="room_icon" src="http://my-card.in/assets/images/rooms/private.png" alt="room"
-                                  title="">
-        <span class="room_name">邪龙</span></header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"><img src=""></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>比赛</span></p>
-        <!--<img _tmplitem="123684"  src="/assets/images/lock.png" alt="私密房" class="private">-->
-        <!--<img _tmplitem="123684"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><img class="room_icon" src="http://my-card.in/assets/images/rooms/private.png" alt="room"
-                                  title="">
-        <span class="room_name">706</span></header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"><img src=""></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>比赛</span></p>
-        <!--<img _tmplitem="123685"  src="/assets/images/lock.png" alt="私密房" class="private">-->
-        <!--<img _tmplitem="123685"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><img class="room_icon" src="http://my-card.in/assets/images/rooms/private.png" alt="room"
-                                  title="">
-        <span class="room_name">哈哈哈</span></header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"><img src=""></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>比赛</span></p>
-        <!--<img _tmplitem="123686"  src="/assets/images/lock.png" alt="私密房" class="private">-->
-        <!--<img _tmplitem="123686"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><img class="room_icon" src="http://my-card.in/assets/images/rooms/private.png" alt="room"
-                                  title="">
-        <span class="room_name">614</span></header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"><img src=""></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>比赛</span></p>
-        <!--<img _tmplitem="123687"  src="/assets/images/lock.png" alt="私密房" class="private">-->
-        <!--<img _tmplitem="123687"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><img class="room_icon" src="http://my-card.in/assets/images/rooms/private.png" alt="room"
-                                  title="">
-        <span class="room_name">傻逼幻影</span></header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"><img src=""></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>比赛</span></p>
-        <!--<img _tmplitem="123688"  src="/assets/images/lock.png" alt="私密房" class="private">-->
-        <!--<img _tmplitem="123688"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><img class="room_icon" src="http://my-card.in/assets/images/rooms/private.png" alt="room"
-                                  title="">
-        <span class="room_name">123</span></header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"><img src=""></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>单局</span></p>
-        <!--<img _tmplitem="123689"  src="/assets/images/lock.png" alt="私密房" class="private">-->
-        <!--<img _tmplitem="123689"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><img class="room_icon" src="http://my-card.in/assets/images/rooms/private.png" alt="room"
-                                  title="">
-        <span class="room_name">61</span></header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"><img src=""></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>比赛</span></p>
-        <!--<img _tmplitem="123690"  src="/assets/images/lock.png" alt="私密房" class="private">-->
-        <!--<img _tmplitem="123690"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><img class="room_icon" src="http://my-card.in/assets/images/rooms/private.png" alt="room"
-                                  title="">
-        <span class="room_name">MMM</span></header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"><img src=""></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>比赛</span></p>
-        <!--<img _tmplitem="123691"  src="/assets/images/lock.png" alt="私密房" class="private">-->
-        <!--<img _tmplitem="123691"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><img class="room_icon" src="http://my-card.in/assets/images/rooms/private.png" alt="room"
-                                  title="">
-        <span class="room_name">42</span></header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"><img src=""></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>比赛</span></p>
-        <!--<img _tmplitem="123692"  src="/assets/images/lock.png" alt="私密房" class="private">-->
-        <!--<img _tmplitem="123692"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><img class="room_icon" src="http://my-card.in/assets/images/rooms/private.png" alt="room"
-                                  title="">
-        <span class="room_name">猥琐</span></header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"><img src=""></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>比赛</span></p>
-        <!--<img _tmplitem="123693"  src="/assets/images/lock.png" alt="私密房" class="private">-->
-        <!--<img _tmplitem="123693"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
     </footer>
 </section>
 </section>

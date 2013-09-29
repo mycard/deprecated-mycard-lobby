@@ -567,7 +567,13 @@
     return default_room_names = data[Math.floor(Math.random() * data.length)].name;
   });
 
-  $("#lobby_wrap");
+  $('#lobby_wrap .tab-pane').on('shown.bs.tab', function(event) {
+    return $('#back').show();
+  });
+
+  $('#back').on('shown.bs.tab', function(event) {
+    return $('#back').hide();
+  });
 
 }).call(this);
 
