@@ -376,3 +376,9 @@ $("#roster_search").submit ->
   candy.contentWindow.postMessage type: 'subscribe', jid: jid, candy.src
   false
 
+default_room_names = [0...1000]
+
+$.getJSON "http://my-card.in/cards_zh.json?f={'name':1,'_id':0}", (data)->
+  default_room_names = data[Math.floor(Math.random() * data.length)].name
+
+$("#lobby_wrap")

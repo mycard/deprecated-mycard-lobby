@@ -37,6 +37,8 @@
 </OBJECT>
 <button onclick="clo.Click()"><font face="webdings">r</font></button>-->
 <div class="navbar navbar-inverse navbar-fixed-top">
+    <a href="#home_tab" data-toggle="tab"><img src="img/Metro-Back-256.png" id="back"></a>
+
     <div class="container">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -182,82 +184,74 @@
 </div>
 <div class="lobby-page lobby" id="lobby" hidden>
 <div id="lobby_wrap">
-<div class="container">
-<div class="btn-group">
-    <button type="button" class="btn btn-default">公告</button>
-    <button type="button" class="btn btn-default">房间</button>
-    <button type="button" class="btn btn-default">新手教学</button>
-    <div class="pull-right">
-        <div class="btn-group">
-            <button type="button" class="btn btn-default">建立房间</button>
-            <button type="button" class="btn btn-default">自动匹配</button>
+<div class="tab-content container">
+<div class="tab-pane active" id="home_tab">
+
+    <div class="row">
+        <a id="match" href="#" class="btn btn-primary btn-lg">自动匹配</a>
+        <a href="#rooms_tab" data-toggle="tab" class="btn btn-primary btn-lg">房间列表</a>
+        <a data-toggle="modal" href="#rooms_modal" class="btn btn-default btn-lg">备用模式</a>
+        <a data-toggle="modal" href="#rooms_modal" class="btn btn-default btn-lg">备用模式</a>
+        <a data-toggle="modal" href="#rooms_modal" class="btn btn-primary btn-lg pull-right">新手教学</a>
+    </div>
+
+    <div class="row">
+        <div class="col-md-8">
+            <img class="img-thumbnail"
+                 src="http://1-ps.googleusercontent.com/h/www.hacg.me/sm/scripts/xtimthumb.php,qsrc=.,_img,_s1.jpg,aw=940,ah=470,azc=1.pagespeed.ic.EEkVdVhqdH.jpg">
+        </div>
+        <div class="col-md-1"></div>
+        <div class="col-md-4">
+            <div class="panel panel-default" id="contributing">
+                <div class="panel-heading">帮助 MyCard 做的更好</div>
+                <div class="panel-body" style="height: 80px;">
+                    程序
+                    <ul style="font-size:12px">
+                        <li style="text-overflow: ellipsis;white-space: nowrap">用<a href="#">这套图标</a>替换右上角按钮
+                        </li>
+                        <li style="text-overflow: ellipsis;white-space: nowrap">搭一个 ejabberd 聊天集群</li>
+                        <li>...</li>
+                        <li>...</li>
+                        <li>...</li>
+                        <li>...</li>
+                    </ul>
+                </div>
+                <ul class="list-group">
+                    <li class="list-group-item">
+                        <a href="#">管理员招募中</a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="#">
+                            <img src="http://my-card.in/assets/images/index/support.png">
+                        </a>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
 </div>
-<!--<div class="row">
-    <a id="match" href="#" class="btn btn-primary btn-lg">自动匹配</a>
-    <a data-toggle="modal" href="#new_room_modal" class="btn btn-primary btn-lg">建立房间</a>
-    <a data-toggle="modal" href="#rooms_modal" class="btn btn-primary btn-lg">房间列表</a>
-    <a data-toggle="modal" href="#rooms_modal" class="btn btn-default btn-lg">备用模式</a>
-    <a data-toggle="modal" href="#rooms_modal" class="btn btn-info btn-lg pull-right">新手教学</a>
-
-</div>-->
-
-<!--<div class="row">
-    <div class="col-md-8">
-        <img class="img-thumbnail"
-             src="http://1-ps.googleusercontent.com/h/www.hacg.me/sm/scripts/xtimthumb.php,qsrc=.,_img,_s1.jpg,aw=940,ah=470,azc=1.pagespeed.ic.EEkVdVhqdH.jpg">
-    </div>
-    <div class="col-md-1"></div>
-    <div class="col-md-4">
-        <div class="panel panel-default" id="contributing">
-            <div class="panel-heading">帮助 MyCard 做的更好</div>
-            <div class="panel-body" style="height: 80px;">
-                程序
-                <ul style="font-size:12px">
-                    <li style="text-overflow: ellipsis;white-space: nowrap">用<a href="#">这套图标</a>替换右上角按钮
-                    </li>
-                    <li style="text-overflow: ellipsis;white-space: nowrap">搭一个 ejabberd 聊天集群</li>
-                    <li>...</li>
-                    <li>...</li>
-                    <li>...</li>
-                    <li>...</li>
-                </ul>
-            </div>
-            <ul class="list-group">
-                <li class="list-group-item">
-                    <a href="#">管理员招募中</a>
-                </li>
-                <li class="list-group-item">
-                    <a href="#">
-                        <img src="http://my-card.in/assets/images/index/support.png">
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </div>
-</div>-->
-<div id="rooms_wrapper">
+<div class="tab-pane" id="rooms_tab">
 <section id="rooms">
-<section class="room wait">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/wait.png" alt="room" title="">
-        <span>760</span></header>
+<section class="room wait" id="new_room_quick">
+    <header class="room_top"><span class="room_icon glyphicon glyphicon-plus"></span>
+        <span contenteditable class="room_name">房间名...</span></header>
     <div class="room_body single">
-        <div class="players">
-            <img src="http://www.gravatar.com/avatar/09fb7a14e5b9fbb9cd82ffaa1df37634?size=48">
-        </div>
-        <div class="vs">VS</div>
-        <div class="players">
-            <img src="https://lh5.googleusercontent.com/-0nAg4kc0B0A/AAAAAAAAAAI/AAAAAAAAM5k/dqA3k5ZhMIM/photo.jpg?sz=48">
-        </div>
+        <span class="glyphicon glyphicon-plus">建立房间</span>
     </div>
-    <footer class="room_member"><p class="mode">模式: <span>比赛</span></p> <!---->
+    <footer class="room_member">
+        <p class="mode">模式: <select class="form-control">
+            <option>单局</option>
+            <option selected>比赛</option>
+            <option>TAG</option>
+        </select></p>
+        <!---->
         <!--<img _tmplitem="123511"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
+        <button id="new_room_quick_custom_button" type="button" class="btn btn-default btn-xs pull-right">自定义</button>
     </footer>
 </section>
 <section class="room wait">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/wait.png" alt="room" title="">
-        <span>731</span></header>
+    <header class="room_top"><span class="room_icon glyphicon glyphicon-home"></span>
+        <span class="room_name">731</span></header>
     <div class="room_body single">
         <div class="players"><img src="https://www.gravatar.com/avatar/1e9e348c0b3f0f70fddd127f8de126d6?size=120"></div>
         <div class="vs">VS</div>
@@ -268,8 +262,8 @@
     </footer>
 </section>
 <section class="room wait">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/wait.png" alt="room" title="">
-        <span>20FTF8000,5,1,woain</span>
+    <header class="room_top"><span class="room_icon glyphicon glyphicon-home"></span>
+        <span class="room_name">20FTF8000,5,1,woain</span>
     </header>
     <div class="room_body single">
         <div class="players"><img src="https://www.gravatar.com/avatar/78de8f235fc53f56abbe6870b307f0b4?size=120"></div>
@@ -281,8 +275,8 @@
     </footer>
 </section>
 <section class="room wait">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/wait.png" alt="room" title="">
-        <span>x</span></header>
+    <header class="room_top"><span class="room_icon glyphicon glyphicon-home"></span>
+        <span class="room_name">x</span></header>
     <div class="room_body double">
         <div class="players"><img src="http://www.gravatar.com/avatar/09fb7a14e5b9fbb9cd82ffaa1df37634?size=48"><img
                 src="http://www.gravatar.com/avatar/09fb7a14e5b9fbb9cd82ffaa1df37634?size=48"></div>
@@ -297,8 +291,8 @@
     </footer>
 </section>
 <section class="room wait">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/wait.png" alt="room" title="">
-        <span>79</span></header>
+    <header class="room_top"><span class="room_icon glyphicon glyphicon-home"></span>
+        <span class="room_name">79</span></header>
     <div class="room_body double">
         <div class="players"><img src="https://www.gravatar.com/avatar/873bd008b011ad0ecc5b3b651a069e9e?size=120"><img
                 src="img/room_empty.png"></div>
@@ -310,8 +304,8 @@
     </footer>
 </section>
 <section class="room wait">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/wait.png" alt="room" title="">
-        <span>467</span></header>
+    <header class="room_top"><span class="room_icon glyphicon glyphicon-home"></span>
+        <span class="room_name">467</span></header>
     <div class="room_body single">
         <div class="players"><img src="https://www.gravatar.com/avatar/95a168f9f5cdb29992a7fec881623758?size=120"></div>
         <div class="vs">VS</div>
@@ -321,425 +315,10 @@
         <!--<img _tmplitem="123516"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
     </footer>
 </section>
-<section class="room wait">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/private.png" alt="room" title="">
-        <span>886</span></header>
-    <div class="room_body single">
-        <div class="players"><img
-                src="http://himg.bdimg.com/sys/portrait/item/9abce7a791e5ada6504be4b88ae5b89d1802.jpg"></div>
-        <div class="vs">VS</div>
-        <div class="players"><img src="img/room_empty.png"></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>比赛</span></p>
-        <!--<img _tmplitem="123517"  src="/assets/images/lock.png" alt="私密房" class="private">-->
-        <!--<img _tmplitem="123517"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room wait">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/private.png" alt="room" title="">
-        <span>130</span></header>
-    <div class="room_body single">
-        <div class="players"><img src="https://www.gravatar.com/avatar/a446284efcb1fc33f3c410369873f30b?size=120"></div>
-        <div class="vs">VS</div>
-        <div class="players"><img src="img/room_empty.png"></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>单局</span></p>
-        <!--<img _tmplitem="123518"  src="/assets/images/lock.png" alt="私密房" class="private">-->
-        <!--<img _tmplitem="123518"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room wait">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/private.png" alt="room" title="">
-        <span>769</span></header>
-    <div class="room_body single">
-        <div class="players"><img src="http://www.touhou.cc/ucenter/data/avatar/000/01/55/90_avatar_middle.jpg"></div>
-        <div class="vs">VS</div>
-        <div class="players"><img src="https://www.gravatar.com/avatar/bbd295433394919e8dda89456a6bc983?size=120"></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>单局</span></p>
-        <!--<img _tmplitem="123519"  src="/assets/images/lock.png" alt="私密房" class="private">-->
-        <!--<img _tmplitem="123519"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room wait">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/private.png" alt="room" title="">
-        <span>904</span></header>
-    <div class="room_body single">
-        <div class="players"><img src="http://himg.bdimg.com/sys/portrait/item/c5bba606.jpg"></div>
-        <div class="vs">VS</div>
-        <div class="players"><img src="https://www.gravatar.com/avatar/e75f03466fa559b8b6484444884824cb?size=120"></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>比赛</span></p>
-        <!--<img _tmplitem="123520"  src="/assets/images/lock.png" alt="私密房" class="private">-->
-        <!--<img _tmplitem="123520"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room wait">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/private.png" alt="room" title="">
-        <span>355</span></header>
-    <div class="room_body single">
-        <div class="players"><img src="img/room_empty.png"></div>
-        <div class="vs">VS</div>
-        <div class="players"></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>比赛</span></p>
-        <!--<img _tmplitem="123521"  src="/assets/images/lock.png" alt="私密房" class="private">-->
-        <!--<img _tmplitem="123521"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room wait">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/private.png" alt="room" title="">
-        <span>和人</span></header>
-    <div class="room_body single">
-        <div class="players"><img src="img/room_empty.png"></div>
-        <div class="vs">VS</div>
-        <div class="players"></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>比赛</span></p>
-        <!--<img _tmplitem="123522"  src="/assets/images/lock.png" alt="私密房" class="private">-->
-        <!--<img _tmplitem="123522"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room wait">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/private.png" alt="room" title="">
-        <span>asd</span></header>
-    <div class="room_body single">
-        <div class="players"><img src="img/room_empty.png"></div>
-        <div class="vs">VS</div>
-        <div class="players"><img src="img/room_empty.png"></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>比赛</span></p>
-        <!--<img _tmplitem="123523"  src="/assets/images/lock.png" alt="私密房" class="private">-->
-        <!--<img _tmplitem="123523"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room wait">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/private.png" alt="room" title="">
-        <span>1</span></header>
-    <div class="room_body double">
-        <div class="players"><img src="img/room_empty.png"></div>
-        <div class="vs">VS</div>
-        <div class="players"><img src="img/room_empty.png"></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>TAG</span></p>
-        <!--<img _tmplitem="123524"  src="/assets/images/lock.png" alt="私密房" class="private">-->
-        <!--<img _tmplitem="123524"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room wait">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/private.png" alt="room" title="">
-        <span>CAO</span></header>
-    <div class="room_body single">
-        <div class="players"><img src="img/room_empty.png"></div>
-        <div class="vs">VS</div>
-        <div class="players"><img src="img/room_empty.png"></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>比赛</span></p>
-        <!--<img _tmplitem="123525"  src="/assets/images/lock.png" alt="私密房" class="private">-->
-        <!--<img _tmplitem="123525"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room wait">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/private.png" alt="room" title="">
-        <span>hei</span></header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>比赛</span></p>
-        <!--<img _tmplitem="123526"  src="/assets/images/lock.png" alt="私密房" class="private">-->
-        <!--<img _tmplitem="123526"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room wait">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/private.png" alt="room" title="">
-        <span>84</span></header>
-    <div class="room_body double">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>TAG</span></p>
-        <!--<img _tmplitem="123527"  src="/assets/images/lock.png" alt="私密房" class="private">-->
-        <!--<img _tmplitem="123527"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room wait">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/private.png" alt="room" title="">
-        <span>395</span></header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>比赛</span></p>
-        <!--<img _tmplitem="123528"  src="/assets/images/lock.png" alt="私密房" class="private">-->
-        <!--<img _tmplitem="123528"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room wait">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/private.png" alt="room" title="">
-        <span>962</span></header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>比赛</span></p>
-        <!--<img _tmplitem="123529"  src="/assets/images/lock.png" alt="私密房" class="private">-->
-        <!--<img _tmplitem="123529"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room wait">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/private.png" alt="room" title="">
-        <span>714</span></header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>比赛</span></p>
-        <!--<img _tmplitem="123530"  src="/assets/images/lock.png" alt="私密房" class="private">-->
-        <!--<img _tmplitem="123530"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room wait">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/private.png" alt="room" title="">
-        <span>766</span></header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"><img src=""></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>比赛</span></p>
-        <!--<img _tmplitem="123531"  src="/assets/images/lock.png" alt="私密房" class="private">-->
-        <!--<img _tmplitem="123531"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room wait">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/private.png" alt="room" title="">
-        <span>39</span></header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>比赛</span></p>
-        <!--<img _tmplitem="123532"  src="/assets/images/lock.png" alt="私密房" class="private">-->
-        <!--<img _tmplitem="123532"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room wait">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/private.png" alt="room" title="">
-        <span>164</span></header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>比赛</span></p>
-        <!--<img _tmplitem="123533"  src="/assets/images/lock.png" alt="私密房" class="private">-->
-        <!--<img _tmplitem="123533"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room wait">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/private.png" alt="room" title="">
-        <span>998</span></header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>比赛</span></p>
-        <!--<img _tmplitem="123534"  src="/assets/images/lock.png" alt="私密房" class="private">-->
-        <!--<img _tmplitem="123534"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room wait">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/private.png" alt="room" title="">
-        <span>38</span></header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>比赛</span></p>
-        <!--<img _tmplitem="123535"  src="/assets/images/lock.png" alt="私密房" class="private">-->
-        <!--<img _tmplitem="123535"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room wait">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/private.png" alt="room" title="">
-        <span>12</span></header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>比赛</span></p>
-        <!--<img _tmplitem="123536"  src="/assets/images/lock.png" alt="私密房" class="private">-->
-        <!--<img _tmplitem="123536"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room wait">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/private.png" alt="room" title="">
-        <span>809</span></header>
-    <div class="room_body double">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"><img src=""></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>TAG</span></p>
-        <!--<img _tmplitem="123537"  src="/assets/images/lock.png" alt="私密房" class="private">-->
-        <!--<img _tmplitem="123537"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room wait">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/private.png" alt="room" title="">
-        <span>999</span></header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>比赛</span></p>
-        <!--<img _tmplitem="123538"  src="/assets/images/lock.png" alt="私密房" class="private">-->
-        <!--<img _tmplitem="123538"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room wait">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/private.png" alt="room" title="">
-        <span>916</span></header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>比赛</span></p>
-        <!--<img _tmplitem="123539"  src="/assets/images/lock.png" alt="私密房" class="private">-->
-        <!--<img _tmplitem="123539"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room wait">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/private.png" alt="room" title="">
-        <span>317</span></header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>比赛</span></p>
-        <!--<img _tmplitem="123540"  src="/assets/images/lock.png" alt="私密房" class="private">-->
-        <!--<img _tmplitem="123540"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room wait">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/private.png" alt="room" title="">
-        <span>333</span></header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>比赛</span></p>
-        <!--<img _tmplitem="123541"  src="/assets/images/lock.png" alt="私密房" class="private">-->
-        <!--<img _tmplitem="123541"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room wait">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/private.png" alt="room" title="">
-        <span>A</span></header>
-    <div class="room_body double">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"><img src=""></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>TAG</span></p>
-        <!--<img _tmplitem="123542"  src="/assets/images/lock.png" alt="私密房" class="private">-->
-        <!--<img _tmplitem="123542"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room wait">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/private.png" alt="room" title="">
-        <span>6</span></header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>比赛</span></p>
-        <!--<img _tmplitem="123543"  src="/assets/images/lock.png" alt="私密房" class="private">-->
-        <!--<img _tmplitem="123543"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room wait">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/private.png" alt="room" title="">
-        <span>943</span></header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>比赛</span></p>
-        <!--<img _tmplitem="123544"  src="/assets/images/lock.png" alt="私密房" class="private">-->
-        <!--<img _tmplitem="123544"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room wait">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/private.png" alt="room" title="">
-        <span>8</span></header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>比赛</span></p>
-        <!--<img _tmplitem="123545"  src="/assets/images/lock.png" alt="私密房" class="private">-->
-        <!--<img _tmplitem="123545"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room wait">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/private.png" alt="room" title="">
-        <span>740</span></header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"><img src=""></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>比赛</span></p>
-        <!--<img _tmplitem="123546"  src="/assets/images/lock.png" alt="私密房" class="private">-->
-        <!--<img _tmplitem="123546"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room wait">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/private.png" alt="room" title="">
-        <span>198</span></header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>比赛</span></p>
-        <!--<img _tmplitem="123547"  src="/assets/images/lock.png" alt="私密房" class="private">-->
-        <!--<img _tmplitem="123547"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room wait">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/private.png" alt="room" title="">
-        <span>qqq</span></header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"><img src=""></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>单局</span></p>
-        <!--<img _tmplitem="123548"  src="/assets/images/lock.png" alt="私密房" class="private">-->
-        <!--<img _tmplitem="123548"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
+
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/start.png" alt="room" title=""> <span>41742452</span>
+    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span> <span
+            class="room_name">41742452</span>
     </header>
     <div class="room_body single">
         <div class="players"><img src=""></div>
@@ -751,8 +330,8 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/start.png" alt="room" title="">
-        <span></span></header>
+    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
+        <span class="room_name"></span></header>
     <div class="room_body single">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -763,8 +342,8 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/start.png" alt="room" title="">
-        <span>180</span></header>
+    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
+        <span class="room_name">180</span></header>
     <div class="room_body single">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -775,8 +354,8 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/start.png" alt="room" title="">
-        <span>41</span></header>
+    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
+        <span class="room_name">41</span></header>
     <div class="room_body single">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -787,8 +366,8 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/start.png" alt="room" title="">
-        <span>366</span></header>
+    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
+        <span class="room_name">366</span></header>
     <div class="room_body double">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -799,8 +378,8 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/start.png" alt="room" title="">
-        <span>1212</span></header>
+    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
+        <span class="room_name">1212</span></header>
     <div class="room_body single">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -811,8 +390,8 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/start.png" alt="room" title="">
-        <span>690</span></header>
+    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
+        <span class="room_name">690</span></header>
     <div class="room_body double">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -823,8 +402,8 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/start.png" alt="room" title="">
-        <span>555</span></header>
+    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
+        <span class="room_name">555</span></header>
     <div class="room_body single">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -835,8 +414,8 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/start.png" alt="room" title="">
-        <span>12211</span></header>
+    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
+        <span class="room_name">12211</span></header>
     <div class="room_body single">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -847,8 +426,8 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/start.png" alt="room" title="">
-        <span>231</span></header>
+    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
+        <span class="room_name">231</span></header>
     <div class="room_body single">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -859,8 +438,8 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/start.png" alt="room" title="">
-        <span>880</span></header>
+    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
+        <span class="room_name">880</span></header>
     <div class="room_body single">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -871,8 +450,8 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/start.png" alt="room" title="">
-        <span>344</span></header>
+    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
+        <span class="room_name">344</span></header>
     <div class="room_body single">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -883,8 +462,8 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/start.png" alt="room" title="">
-        <span>744</span></header>
+    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
+        <span class="room_name">744</span></header>
     <div class="room_body single">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -895,8 +474,8 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/start.png" alt="room" title="">
-        <span>278</span></header>
+    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
+        <span class="room_name">278</span></header>
     <div class="room_body single">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -907,8 +486,8 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/start.png" alt="room" title="">
-        <span>12211</span></header>
+    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
+        <span class="room_name">12211</span></header>
     <div class="room_body single">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -919,8 +498,8 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/start.png" alt="room" title="">
-        <span>241</span></header>
+    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
+        <span class="room_name">241</span></header>
     <div class="room_body double">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -931,8 +510,8 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/start.png" alt="room" title="">
-        <span>888</span></header>
+    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
+        <span class="room_name">888</span></header>
     <div class="room_body single">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -943,8 +522,8 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/start.png" alt="room" title="">
-        <span>44</span></header>
+    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
+        <span class="room_name">44</span></header>
     <div class="room_body single">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -955,8 +534,8 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/start.png" alt="room" title="">
-        <span>52</span></header>
+    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
+        <span class="room_name">52</span></header>
     <div class="room_body single">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -967,8 +546,8 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/start.png" alt="room" title="">
-        <span>1525</span></header>
+    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
+        <span class="room_name">1525</span></header>
     <div class="room_body double">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -979,8 +558,8 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/start.png" alt="room" title="">
-        <span>666</span></header>
+    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
+        <span class="room_name">666</span></header>
     <div class="room_body double">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -991,8 +570,8 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/start.png" alt="room" title="">
-        <span>308</span></header>
+    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
+        <span class="room_name">308</span></header>
     <div class="room_body double">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -1003,8 +582,8 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/start.png" alt="room" title="">
-        <span>277</span></header>
+    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
+        <span class="room_name">277</span></header>
     <div class="room_body double">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -1015,7 +594,7 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/start.png" alt="room" title=""> <span>123456789</span>
+    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span> <span>123456789</span>
     </header>
     <div class="room_body single">
         <div class="players"><img src=""></div>
@@ -1027,8 +606,8 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/start.png" alt="room" title="">
-        <span>923</span></header>
+    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
+        <span class="room_name">923</span></header>
     <div class="room_body single">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -1039,8 +618,8 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/start.png" alt="room" title="">
-        <span>652</span></header>
+    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
+        <span class="room_name">652</span></header>
     <div class="room_body single">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -1051,8 +630,8 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/start.png" alt="room" title="">
-        <span>860</span></header>
+    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
+        <span class="room_name">860</span></header>
     <div class="room_body double">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -1063,8 +642,8 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/start.png" alt="room" title="">
-        <span>817</span></header>
+    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
+        <span class="room_name">817</span></header>
     <div class="room_body single">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -1075,8 +654,8 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/start.png" alt="room" title="">
-        <span>992</span></header>
+    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
+        <span class="room_name">992</span></header>
     <div class="room_body single">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -1087,8 +666,8 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/start.png" alt="room" title="">
-        <span>672</span></header>
+    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
+        <span class="room_name">672</span></header>
     <div class="room_body double">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -1099,8 +678,8 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/start.png" alt="room" title="">
-        <span>587</span></header>
+    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
+        <span class="room_name">587</span></header>
     <div class="room_body single">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -1111,8 +690,8 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/start.png" alt="room" title="">
-        <span>10星流</span></header>
+    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
+        <span class="room_name">10星流</span></header>
     <div class="room_body single">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -1123,8 +702,8 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/start.png" alt="room" title="">
-        <span>611</span></header>
+    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
+        <span class="room_name">611</span></header>
     <div class="room_body double">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -1135,8 +714,8 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/start.png" alt="room" title="">
-        <span>514</span></header>
+    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
+        <span class="room_name">514</span></header>
     <div class="room_body single">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -1147,8 +726,8 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/start.png" alt="room" title="">
-        <span>737</span></header>
+    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
+        <span class="room_name">737</span></header>
     <div class="room_body double">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -1159,8 +738,8 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/start.png" alt="room" title="">
-        <span>214</span></header>
+    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
+        <span class="room_name">214</span></header>
     <div class="room_body single">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -1171,8 +750,8 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/start.png" alt="room" title="">
-        <span>526</span></header>
+    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
+        <span class="room_name">526</span></header>
     <div class="room_body double">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -1183,8 +762,8 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/start.png" alt="room" title="">
-        <span>265</span></header>
+    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
+        <span class="room_name">265</span></header>
     <div class="room_body single">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -1195,8 +774,8 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/start.png" alt="room" title="">
-        <span>266</span></header>
+    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
+        <span class="room_name">266</span></header>
     <div class="room_body double">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -1207,8 +786,8 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/start.png" alt="room" title="">
-        <span>237</span></header>
+    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
+        <span class="room_name">237</span></header>
     <div class="room_body single">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -1219,8 +798,8 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/start.png" alt="room" title="">
-        <span>6355</span></header>
+    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
+        <span class="room_name">6355</span></header>
     <div class="room_body single">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -1231,8 +810,8 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/start.png" alt="room" title="">
-        <span>653</span></header>
+    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
+        <span class="room_name">653</span></header>
     <div class="room_body double">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -1243,8 +822,8 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/start.png" alt="room" title="">
-        <span>541</span></header>
+    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
+        <span class="room_name">541</span></header>
     <div class="room_body double">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -1255,8 +834,8 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/start.png" alt="room" title="">
-        <span>62</span></header>
+    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
+        <span class="room_name">62</span></header>
     <div class="room_body single">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -1267,8 +846,8 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/start.png" alt="room" title="">
-        <span>119</span></header>
+    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
+        <span class="room_name">119</span></header>
     <div class="room_body single">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -1279,8 +858,8 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/start.png" alt="room" title="">
-        <span>646</span></header>
+    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
+        <span class="room_name">646</span></header>
     <div class="room_body single">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -1291,8 +870,8 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/start.png" alt="room" title="">
-        <span>981</span></header>
+    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
+        <span class="room_name">981</span></header>
     <div class="room_body double">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -1303,8 +882,8 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/start.png" alt="room" title="">
-        <span>590</span></header>
+    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
+        <span class="room_name">590</span></header>
     <div class="room_body single">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -1315,8 +894,8 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/start.png" alt="room" title="">
-        <span>51</span></header>
+    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
+        <span class="room_name">51</span></header>
     <div class="room_body double">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -1327,8 +906,8 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/start.png" alt="room" title="">
-        <span>211</span></header>
+    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
+        <span class="room_name">211</span></header>
     <div class="room_body single">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -1339,8 +918,8 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/start.png" alt="room" title="">
-        <span>795</span></header>
+    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
+        <span class="room_name">795</span></header>
     <div class="room_body single">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -1351,8 +930,8 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/start.png" alt="room" title="">
-        <span>290</span></header>
+    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
+        <span class="room_name">290</span></header>
     <div class="room_body single">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -1363,8 +942,8 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/start.png" alt="room" title="">
-        <span>房名</span></header>
+    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
+        <span class="room_name">房名</span></header>
     <div class="room_body double">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -1375,8 +954,8 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/start.png" alt="room" title="">
-        <span>1981</span></header>
+    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
+        <span class="room_name">1981</span></header>
     <div class="room_body single">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -1387,8 +966,8 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/start.png" alt="room" title="">
-        <span>823</span></header>
+    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
+        <span class="room_name">823</span></header>
     <div class="room_body single">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -1399,8 +978,8 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/start.png" alt="room" title="">
-        <span>484</span></header>
+    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
+        <span class="room_name">484</span></header>
     <div class="room_body double">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -1411,8 +990,8 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/start.png" alt="room" title="">
-        <span>798</span></header>
+    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
+        <span class="room_name">798</span></header>
     <div class="room_body single">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -1423,8 +1002,8 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/start.png" alt="room" title="">
-        <span>877</span></header>
+    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
+        <span class="room_name">877</span></header>
     <div class="room_body single">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -1435,8 +1014,8 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/start.png" alt="room" title="">
-        <span>924</span></header>
+    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
+        <span class="room_name">924</span></header>
     <div class="room_body double">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -1447,8 +1026,8 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/start.png" alt="room" title="">
-        <span>6549</span></header>
+    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
+        <span class="room_name">6549</span></header>
     <div class="room_body single">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -1459,8 +1038,8 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/start.png" alt="room" title="">
-        <span>367</span></header>
+    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
+        <span class="room_name">367</span></header>
     <div class="room_body single">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -1471,8 +1050,8 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/start.png" alt="room" title="">
-        <span>321</span></header>
+    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
+        <span class="room_name">321</span></header>
     <div class="room_body single">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -1483,8 +1062,8 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/start.png" alt="room" title="">
-        <span>487</span></header>
+    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
+        <span class="room_name">487</span></header>
     <div class="room_body double">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -1495,8 +1074,8 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/start.png" alt="room" title="">
-        <span>294</span></header>
+    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
+        <span class="room_name">294</span></header>
     <div class="room_body double">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -1507,8 +1086,8 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/start.png" alt="room" title="">
-        <span>332</span></header>
+    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
+        <span class="room_name">332</span></header>
     <div class="room_body single">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -1519,8 +1098,8 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/start.png" alt="room" title="">
-        <span>0.0</span></header>
+    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
+        <span class="room_name">0.0</span></header>
     <div class="room_body single">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -1531,8 +1110,8 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/start.png" alt="room" title="">
-        <span>89+</span></header>
+    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
+        <span class="room_name">89+</span></header>
     <div class="room_body single">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -1543,8 +1122,8 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/start.png" alt="room" title="">
-        <span>123</span></header>
+    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
+        <span class="room_name">123</span></header>
     <div class="room_body double">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -1555,8 +1134,8 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/start.png" alt="room" title="">
-        <span>305</span></header>
+    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
+        <span class="room_name">305</span></header>
     <div class="room_body double">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -1567,8 +1146,8 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/start.png" alt="room" title="">
-        <span>151</span></header>
+    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
+        <span class="room_name">151</span></header>
     <div class="room_body double">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -1579,8 +1158,8 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/start.png" alt="room" title="">
-        <span>530</span></header>
+    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
+        <span class="room_name">530</span></header>
     <div class="room_body single">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -1591,8 +1170,8 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/start.png" alt="room" title="">
-        <span>3344</span></header>
+    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
+        <span class="room_name">3344</span></header>
     <div class="room_body single">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -1603,8 +1182,8 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/start.png" alt="room" title="">
-        <span>FUN</span></header>
+    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
+        <span class="room_name">FUN</span></header>
     <div class="room_body double">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -1615,8 +1194,8 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/start.png" alt="room" title="">
-        <span>181</span></header>
+    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
+        <span class="room_name">181</span></header>
     <div class="room_body double">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -1627,8 +1206,8 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/start.png" alt="room" title="">
-        <span>893</span></header>
+    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
+        <span class="room_name">893</span></header>
     <div class="room_body single">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -1639,8 +1218,8 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/start.png" alt="room" title="">
-        <span>试卡组</span></header>
+    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
+        <span class="room_name">试卡组</span></header>
     <div class="room_body single">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -1651,8 +1230,8 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/start.png" alt="room" title="">
-        <span>主流</span></header>
+    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
+        <span class="room_name">主流</span></header>
     <div class="room_body single">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -1663,8 +1242,8 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/start.png" alt="room" title="">
-        <span>170</span></header>
+    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
+        <span class="room_name">170</span></header>
     <div class="room_body single">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -1675,8 +1254,8 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/start.png" alt="room" title="">
-        <span>570</span></header>
+    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
+        <span class="room_name">570</span></header>
     <div class="room_body single">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -1687,8 +1266,8 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/start.png" alt="room" title="">
-        <span>108</span></header>
+    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
+        <span class="room_name">108</span></header>
     <div class="room_body single">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -1699,8 +1278,8 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/start.png" alt="room" title="">
-        <span>601</span></header>
+    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
+        <span class="room_name">601</span></header>
     <div class="room_body single">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -1711,8 +1290,8 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/start.png" alt="room" title="">
-        <span>468</span></header>
+    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
+        <span class="room_name">468</span></header>
     <div class="room_body single">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -1723,8 +1302,8 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/start.png" alt="room" title="">
-        <span>676</span></header>
+    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
+        <span class="room_name">676</span></header>
     <div class="room_body single">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -1735,8 +1314,8 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/start.png" alt="room" title="">
-        <span>542</span></header>
+    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
+        <span class="room_name">542</span></header>
     <div class="room_body single">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -1747,8 +1326,8 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/start.png" alt="room" title="">
-        <span>111111</span></header>
+    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
+        <span class="room_name">111111</span></header>
     <div class="room_body single">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -1759,8 +1338,8 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/start.png" alt="room" title="">
-        <span>1</span></header>
+    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
+        <span class="room_name">1</span></header>
     <div class="room_body single">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -1771,8 +1350,8 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/start.png" alt="room" title="">
-        <span>44221</span></header>
+    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
+        <span class="room_name">44221</span></header>
     <div class="room_body single">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -1783,8 +1362,8 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/start.png" alt="room" title="">
-        <span>276</span></header>
+    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
+        <span class="room_name">276</span></header>
     <div class="room_body single">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -1795,8 +1374,8 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/start.png" alt="room" title="">
-        <span>q</span></header>
+    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
+        <span class="room_name">q</span></header>
     <div class="room_body single">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -1807,8 +1386,8 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/start.png" alt="room" title="">
-        <span>2</span></header>
+    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
+        <span class="room_name">2</span></header>
     <div class="room_body single">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -1819,8 +1398,8 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/start.png" alt="room" title="">
-        <span>123</span></header>
+    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
+        <span class="room_name">123</span></header>
     <div class="room_body single">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -1831,8 +1410,8 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/start.png" alt="room" title="">
-        <span>22</span></header>
+    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
+        <span class="room_name">22</span></header>
     <div class="room_body double">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -1843,8 +1422,8 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/start.png" alt="room" title="">
-        <span>3344</span></header>
+    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
+        <span class="room_name">3344</span></header>
     <div class="room_body single">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -1855,8 +1434,8 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/start.png" alt="room" title="">
-        <span>0926</span></header>
+    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
+        <span class="room_name">0926</span></header>
     <div class="room_body single">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -1867,8 +1446,8 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/start.png" alt="room" title="">
-        <span>111</span></header>
+    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
+        <span class="room_name">111</span></header>
     <div class="room_body single">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -1879,8 +1458,8 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/start.png" alt="room" title="">
-        <span>288</span></header>
+    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
+        <span class="room_name">288</span></header>
     <div class="room_body single">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -1891,8 +1470,8 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/start.png" alt="room" title="">
-        <span>dddsfd</span></header>
+    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
+        <span class="room_name">dddsfd</span></header>
     <div class="room_body single">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -1903,8 +1482,8 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/start.png" alt="room" title="">
-        <span>dddsfd</span></header>
+    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
+        <span class="room_name">dddsfd</span></header>
     <div class="room_body single">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -1915,8 +1494,8 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/start.png" alt="room" title="">
-        <span>zzz</span></header>
+    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
+        <span class="room_name">zzz</span></header>
     <div class="room_body single">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -1927,8 +1506,8 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/start.png" alt="room" title="">
-        <span>369</span></header>
+    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
+        <span class="room_name">369</span></header>
     <div class="room_body single">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -1939,8 +1518,8 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/start.png" alt="room" title="">
-        <span>aw</span></header>
+    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
+        <span class="room_name">aw</span></header>
     <div class="room_body single">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -1951,8 +1530,8 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/start.png" alt="room" title="">
-        <span>45</span></header>
+    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
+        <span class="room_name">45</span></header>
     <div class="room_body single">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -1963,8 +1542,8 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/start.png" alt="room" title="">
-        <span>fun</span></header>
+    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
+        <span class="room_name">fun</span></header>
     <div class="room_body double">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -1975,8 +1554,8 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/start.png" alt="room" title="">
-        <span>630</span></header>
+    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
+        <span class="room_name">630</span></header>
     <div class="room_body single">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -1987,8 +1566,8 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/start.png" alt="room" title="">
-        <span>196</span></header>
+    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
+        <span class="room_name">196</span></header>
     <div class="room_body single">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -1999,8 +1578,8 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/start.png" alt="room" title="">
-        <span>948</span></header>
+    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
+        <span class="room_name">948</span></header>
     <div class="room_body double">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -2011,8 +1590,8 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/start.png" alt="room" title="">
-        <span>791</span></header>
+    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
+        <span class="room_name">791</span></header>
     <div class="room_body single">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -2023,8 +1602,8 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/start.png" alt="room" title="">
-        <span>159</span></header>
+    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
+        <span class="room_name">159</span></header>
     <div class="room_body single">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -2035,8 +1614,8 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/start.png" alt="room" title="">
-        <span>777</span></header>
+    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
+        <span class="room_name">777</span></header>
     <div class="room_body single">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -2047,8 +1626,8 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/start.png" alt="room" title="">
-        <span>df</span></header>
+    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
+        <span class="room_name">df</span></header>
     <div class="room_body single">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -2059,8 +1638,8 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/start.png" alt="room" title="">
-        <span>125</span></header>
+    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
+        <span class="room_name">125</span></header>
     <div class="room_body double">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -2071,8 +1650,8 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/start.png" alt="room" title="">
-        <span>123</span></header>
+    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
+        <span class="room_name">123</span></header>
     <div class="room_body single">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -2083,8 +1662,8 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/start.png" alt="room" title="">
-        <span>410</span></header>
+    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
+        <span class="room_name">410</span></header>
     <div class="room_body single">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -2095,8 +1674,8 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/start.png" alt="room" title="">
-        <span>145</span></header>
+    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
+        <span class="room_name">145</span></header>
     <div class="room_body single">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -2107,8 +1686,8 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/start.png" alt="room" title="">
-        <span>475</span></header>
+    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
+        <span class="room_name">475</span></header>
     <div class="room_body single">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -2119,8 +1698,8 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/start.png" alt="room" title="">
-        <span>速开不</span></header>
+    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
+        <span class="room_name">速开不</span></header>
     <div class="room_body single">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -2131,8 +1710,9 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/private.png" alt="room" title="">
-        <span>6</span></header>
+    <header class="room_top"><img class="room_icon" src="http://my-card.in/assets/images/rooms/private.png" alt="room"
+                                  title="">
+        <span class="room_name">6</span></header>
     <div class="room_body single">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -2144,8 +1724,9 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/private.png" alt="room" title="">
-        <span>321</span></header>
+    <header class="room_top"><img class="room_icon" src="http://my-card.in/assets/images/rooms/private.png" alt="room"
+                                  title="">
+        <span class="room_name">321</span></header>
     <div class="room_body single">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -2157,8 +1738,9 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/private.png" alt="room" title="">
-        <span>123</span></header>
+    <header class="room_top"><img class="room_icon" src="http://my-card.in/assets/images/rooms/private.png" alt="room"
+                                  title="">
+        <span class="room_name">123</span></header>
     <div class="room_body single">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -2170,8 +1752,9 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/private.png" alt="room" title="">
-        <span>1kk</span></header>
+    <header class="room_top"><img class="room_icon" src="http://my-card.in/assets/images/rooms/private.png" alt="room"
+                                  title="">
+        <span class="room_name">1kk</span></header>
     <div class="room_body single">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -2183,8 +1766,9 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/private.png" alt="room" title="">
-        <span>tutu</span></header>
+    <header class="room_top"><img class="room_icon" src="http://my-card.in/assets/images/rooms/private.png" alt="room"
+                                  title="">
+        <span class="room_name">tutu</span></header>
     <div class="room_body single">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -2196,8 +1780,9 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/private.png" alt="room" title="">
-        <span>681</span></header>
+    <header class="room_top"><img class="room_icon" src="http://my-card.in/assets/images/rooms/private.png" alt="room"
+                                  title="">
+        <span class="room_name">681</span></header>
     <div class="room_body single">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -2209,8 +1794,9 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/private.png" alt="room" title="">
-        <span>384</span></header>
+    <header class="room_top"><img class="room_icon" src="http://my-card.in/assets/images/rooms/private.png" alt="room"
+                                  title="">
+        <span class="room_name">384</span></header>
     <div class="room_body single">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -2222,8 +1808,9 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/private.png" alt="room" title="">
-        <span>977</span></header>
+    <header class="room_top"><img class="room_icon" src="http://my-card.in/assets/images/rooms/private.png" alt="room"
+                                  title="">
+        <span class="room_name">977</span></header>
     <div class="room_body single">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -2235,8 +1822,9 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/private.png" alt="room" title="">
-        <span>MK</span></header>
+    <header class="room_top"><img class="room_icon" src="http://my-card.in/assets/images/rooms/private.png" alt="room"
+                                  title="">
+        <span class="room_name">MK</span></header>
     <div class="room_body single">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -2248,8 +1836,9 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/private.png" alt="room" title="">
-        <span>455</span></header>
+    <header class="room_top"><img class="room_icon" src="http://my-card.in/assets/images/rooms/private.png" alt="room"
+                                  title="">
+        <span class="room_name">455</span></header>
     <div class="room_body single">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -2261,7 +1850,8 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/private.png" alt="room" title=""> <span>csy123</span>
+    <header class="room_top"><img class="room_icon" src="http://my-card.in/assets/images/rooms/private.png" alt="room"
+                                  title=""> <span>csy123</span>
     </header>
     <div class="room_body single">
         <div class="players"><img src=""></div>
@@ -2274,7 +1864,8 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/private.png" alt="room" title=""> <span>106106</span>
+    <header class="room_top"><img class="room_icon" src="http://my-card.in/assets/images/rooms/private.png" alt="room"
+                                  title=""> <span>106106</span>
     </header>
     <div class="room_body single">
         <div class="players"><img src=""></div>
@@ -2287,8 +1878,9 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/private.png" alt="room" title="">
-        <span>397</span></header>
+    <header class="room_top"><img class="room_icon" src="http://my-card.in/assets/images/rooms/private.png" alt="room"
+                                  title="">
+        <span class="room_name">397</span></header>
     <div class="room_body single">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -2300,8 +1892,9 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/private.png" alt="room" title="">
-        <span>688</span></header>
+    <header class="room_top"><img class="room_icon" src="http://my-card.in/assets/images/rooms/private.png" alt="room"
+                                  title="">
+        <span class="room_name">688</span></header>
     <div class="room_body single">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -2313,8 +1906,9 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/private.png" alt="room" title="">
-        <span>阡陌</span></header>
+    <header class="room_top"><img class="room_icon" src="http://my-card.in/assets/images/rooms/private.png" alt="room"
+                                  title="">
+        <span class="room_name">阡陌</span></header>
     <div class="room_body single">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -2326,8 +1920,9 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/private.png" alt="room" title="">
-        <span>583</span></header>
+    <header class="room_top"><img class="room_icon" src="http://my-card.in/assets/images/rooms/private.png" alt="room"
+                                  title="">
+        <span class="room_name">583</span></header>
     <div class="room_body single">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -2339,8 +1934,9 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/private.png" alt="room" title="">
-        <span>896</span></header>
+    <header class="room_top"><img class="room_icon" src="http://my-card.in/assets/images/rooms/private.png" alt="room"
+                                  title="">
+        <span class="room_name">896</span></header>
     <div class="room_body single">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -2352,8 +1948,9 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/private.png" alt="room" title="">
-        <span>386</span></header>
+    <header class="room_top"><img class="room_icon" src="http://my-card.in/assets/images/rooms/private.png" alt="room"
+                                  title="">
+        <span class="room_name">386</span></header>
     <div class="room_body single">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -2365,8 +1962,9 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/private.png" alt="room" title="">
-        <span>957</span></header>
+    <header class="room_top"><img class="room_icon" src="http://my-card.in/assets/images/rooms/private.png" alt="room"
+                                  title="">
+        <span class="room_name">957</span></header>
     <div class="room_body single">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -2378,8 +1976,9 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/private.png" alt="room" title="">
-        <span>邪龙</span></header>
+    <header class="room_top"><img class="room_icon" src="http://my-card.in/assets/images/rooms/private.png" alt="room"
+                                  title="">
+        <span class="room_name">邪龙</span></header>
     <div class="room_body single">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -2391,8 +1990,9 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/private.png" alt="room" title="">
-        <span>706</span></header>
+    <header class="room_top"><img class="room_icon" src="http://my-card.in/assets/images/rooms/private.png" alt="room"
+                                  title="">
+        <span class="room_name">706</span></header>
     <div class="room_body single">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -2404,8 +2004,9 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/private.png" alt="room" title="">
-        <span>哈哈哈</span></header>
+    <header class="room_top"><img class="room_icon" src="http://my-card.in/assets/images/rooms/private.png" alt="room"
+                                  title="">
+        <span class="room_name">哈哈哈</span></header>
     <div class="room_body single">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -2417,8 +2018,9 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/private.png" alt="room" title="">
-        <span>614</span></header>
+    <header class="room_top"><img class="room_icon" src="http://my-card.in/assets/images/rooms/private.png" alt="room"
+                                  title="">
+        <span class="room_name">614</span></header>
     <div class="room_body single">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -2430,8 +2032,9 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/private.png" alt="room" title="">
-        <span>傻逼幻影</span></header>
+    <header class="room_top"><img class="room_icon" src="http://my-card.in/assets/images/rooms/private.png" alt="room"
+                                  title="">
+        <span class="room_name">傻逼幻影</span></header>
     <div class="room_body single">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -2443,8 +2046,9 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/private.png" alt="room" title="">
-        <span>123</span></header>
+    <header class="room_top"><img class="room_icon" src="http://my-card.in/assets/images/rooms/private.png" alt="room"
+                                  title="">
+        <span class="room_name">123</span></header>
     <div class="room_body single">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -2456,8 +2060,9 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/private.png" alt="room" title="">
-        <span>61</span></header>
+    <header class="room_top"><img class="room_icon" src="http://my-card.in/assets/images/rooms/private.png" alt="room"
+                                  title="">
+        <span class="room_name">61</span></header>
     <div class="room_body single">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -2469,8 +2074,9 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/private.png" alt="room" title="">
-        <span>MMM</span></header>
+    <header class="room_top"><img class="room_icon" src="http://my-card.in/assets/images/rooms/private.png" alt="room"
+                                  title="">
+        <span class="room_name">MMM</span></header>
     <div class="room_body single">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -2482,8 +2088,9 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/private.png" alt="room" title="">
-        <span>42</span></header>
+    <header class="room_top"><img class="room_icon" src="http://my-card.in/assets/images/rooms/private.png" alt="room"
+                                  title="">
+        <span class="room_name">42</span></header>
     <div class="room_body single">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -2495,8 +2102,9 @@
     </footer>
 </section>
 <section class="room start">
-    <header class="room_top"><img src="http://my-card.in/assets/images/rooms/private.png" alt="room" title="">
-        <span>猥琐</span></header>
+    <header class="room_top"><img class="room_icon" src="http://my-card.in/assets/images/rooms/private.png" alt="room"
+                                  title="">
+        <span class="room_name">猥琐</span></header>
     <div class="room_body single">
         <div class="players"><img src=""></div>
         <div class="vs">VS</div>
@@ -2509,31 +2117,7 @@
 </section>
 </section>
 </div>
-<!--<div class="row">
-    <div class="col-md-3">
-        <div class="panel panel-default">
-            <div class="panel-heading">房间名</div>
-            <div class="panel-body">
-                <div class="row">
-                    <div class="col-md-5">
-                        <img src="http://www.gravatar.com/avatar/09fb7a14e5b9fbb9cd82ffaa1df37634?size=48">
-                    </div>
-                    <div class="col-md-2">
-                        VS
-                    </div>
-                    <div class="col-md-5">
-                        <img src="https://lh5.googleusercontent.com/-0nAg4kc0B0A/AAAAAAAAAAI/AAAAAAAAM5k/dqA3k5ZhMIM/photo.jpg?sz=48">
-                    </div>
-                </div>
-                <div class="row">
-                    LOCK
-                </div>
-            </div>
-        </div>
-    </div>
-</div>-->
 </div>
-
 <aside id="roster_aside">
     <div id="roster_title">
         <form id="roster_search">
@@ -2686,90 +2270,6 @@
                 <button id="new_room_share_button" type="button" class="btn btn-primary" data-dismiss="modal">约战
                 </button>
                 <button id="new_room_button" type="button" class="btn btn-primary" data-dismiss="modal">打野</button>
-            </div>
-        </div>
-        <!-- /.modal-content -->
-    </div>
-    <!-- /.modal-dialog -->
-</div>
-<!-- /.modal -->
-
-<div class="modal fade" id="rooms_modal">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">房间列表</h4>
-            </div>
-            <div class="modal-body">
-
-                <form class="form-inline" role="form">
-                    筛选
-                    <div class="form-group">
-                        <select class="form-control">
-                            <option>服务器</option>
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <select class="form-control">
-                            <option>决斗模式</option>
-                            <option>单局模式</option>
-                            <option>比赛模式</option>
-                            <option>ＴＡＧ</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <select class="form-control">
-                            <option>不限</option>
-                            <option selected>等待中</option>
-                            <option>已开始</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label class="sr-only" for="exampleInputPassword2">Password</label>
-                        <input type="password" class="form-control" id="exampleInputPassword2" placeholder="搜索">
-                    </div>
-                </form>
-
-                <table class="table table-hover table-striped">
-                    <thead>
-                    <tr>
-                        <th>房间名</th>
-                        <th>决斗模式</th>
-                        <th colspan="4">玩家</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td>喵喵喵</td>
-                        <td>单局模式</td>
-                        <td>zh99998</td>
-                        <td colspan="3">zh99998</td>
-                    </tr>
-                    <tr>
-                        <td>喵喵喵</td>
-                        <td>ＴＡＧ</td>
-                        <td>zh99998</td>
-                        <td>zh99998</td>
-                        <td>zh99998</td>
-                        <td>zh99998</td>
-                    </tr>
-                    <tr>
-                        <td>喵喵喵</td>
-                        <td>比賽模式</td>
-                        <td>zh99998</td>
-                        <td colspan="3">zh99998</td>
-                    </tr>
-                    </tbody>
-                </table>
-
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                <button type="button" class="btn btn-primary">建立房间</button>
             </div>
         </div>
         <!-- /.modal-content -->
