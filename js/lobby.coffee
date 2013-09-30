@@ -155,7 +155,7 @@ mycard_client_connect = (wait = 3)->
     connected = true
 
   mycard_client.onclose = (evt)->
-    console.log '连接关闭'
+    console.log 'client disconnected'
     if !connected #从没连上去过
       if wait > 1
         mycard_client_connect(wait - 1)
@@ -270,11 +270,8 @@ $('#roster').on 'click', '.xmpp', ->
   candy = $('#candy')[0]
   candy.contentWindow.postMessage type: 'chat', jid: $(this).data('jid'), candy.src
 
-#login('zh99998', 'zh112998')
-
 window.addEventListener 'message', (event)->
   msg = event.data
-  console.log "received message", msg
   #console.log msg.stanza
   switch msg.type
     when 'vcard'
@@ -295,7 +292,6 @@ window.addEventListener 'message', (event)->
           $('<span/>', text: name)
         ]))
     when 'roster_set'
-      console.log(1, msg.stanza)
       $(msg.stanza).find('query[xmlns="jabber:iq:roster"] > item').each (index, element)->
         jid = element.getAttribute('jid')
         name = element.getAttribute('name') ? jid.split('@',2)[0]
@@ -363,7 +359,6 @@ window.addEventListener 'message', (event)->
           status = stanza.find("status")[0]
           pres += ":" + status.textContent  if status
           #roster.add new Candy.Core.ChatUser(barefrom, pres)
-          console.log type
           $(".xmpp[data-jid=\"#{barefrom}\"]").attr('data-presence-type', type or 'available')
 
 $("#roster_search").submit ->
@@ -386,3 +381,87 @@ $('#lobby_wrap .tab-pane').on 'shown.bs.tab', (event)->
 
 $('#back').on 'shown.bs.tab', (event)->
   $('#back').hide()
+
+$('#new_room_quick_single').click ->
+  room_name = mycard.room_name $('#newroom_quick_name').text()
+  mycard_client.send mycard.room_url_mycard("122.0.65.70", 7911, room_name, "zh99998", "zh112998", false, false)
+$('#new_room_quick_match').click ->
+  room_name = mycard.room_name $('#newroom_quick_name').text(), null, false, 0, 1
+  mycard_client.send mycard.room_url_mycard("122.0.65.70", 7911, room_name, "zh99998", "zh112998", false, false)
+$('#new_room_quick_tag').click ->
+  room_name = mycard.room_name $('#newroom_quick_name').text(), null, false, 0, 2
+  mycard_client.send mycard.room_url_mycard("122.0.65.70", 7911, room_name, "zh99998", "zh112998", false, false)
+
+$.getJSON 'https://api.github.com/repos/mycard/mycard/issues', (data)->
+  for issue in data
+    element = $('<li/>', class: 'list-group-item').append($('<a/>', href:issue.html_url, text: issue.title, target: '_blank'))
+    labels = $('<span/>', class: 'labels pull-right')
+    for label in issue.labels
+      labels.append $('<span/>',class: 'label', text: label.name, style: "background-color: ##{label.color}")
+    element.append labels
+    element.appendTo '#issues'
+
+
+room_template = Hogan.compile $('#room_template').html()
+
+rooms_connect = ->
+  connected = false
+  $('#new_room_quick').nextAll().replaceWith $('<p/>',text: '正在连接...')
+  wsServer = 'ws://mycard-server.my-card.in:9998'
+  websocket = new WebSocket(wsServer);
+  websocket.onopen = ->
+    $('#new_room_quick').nextAll().replaceWith $('<p/>',text: '正在读取房间列表...')
+    console.log("websocket: Connected to WebSocket server.")
+  websocket.onclose = (evt)=>
+    $('#new_room_quick').nextAll().replaceWith $('<p/>',text: '大厅连接中断, ').append($('<a />', id: 'reconnect', text: '重新连接'))
+    $('#reconnect').click rooms_connect
+    console.log("websocket: Disconnected");
+  websocket.onmessage = (evt)->
+    rooms = JSON.parse(evt.data)
+    if connected
+      for room in rooms
+        if room._deleted
+          $("#room_#{room.id}").hide 'slow', ->
+          $("#room_#{room.id}").remove()
+        else
+          room = $.extend({rule: 0, mode: 0, enable_priority: false, no_check_deck: false, no_shuffle_deck: false,start_lp: 8000, start_hand: 5, draw_count: 1}, room)
+          room['match?'] = room.mode == 1
+          room['tag?'] = room.mode == 2
+          room['start?'] = room.status == 'start'
+
+          for player in room.users
+            room["player_#{player.player}"] = player.id
+
+          element = $("#room_#{room.id}")
+          if element.length
+            element.replaceWith room_template.render(room)
+          else
+            $(room_template.render(room)).hide().insertAfter('#new_room_quick').show('slow')
+    else
+      $('#new_room_quick').nextAll().replaceWith (for room in rooms
+        room = $.extend({rule: 0, mode: 0, enable_priority: false, no_check_deck: false, no_shuffle_deck: false,start_lp: 8000, start_hand: 5, draw_count: 1}, room)
+        room['match?'] = room.mode == 1
+        room['tag?'] = room.mode == 2
+        room['start?'] = room.status == 'start'
+        for player in room.users
+          room["player_#{player.player}"] = player.id
+        room_template.render(room)
+      )
+
+    connected = true
+  websocket.onerror = (evt)->
+    console.log('websocket: Error occured: ' + evt.data);
+
+$('#new_room_quick').nextAll().remove()
+$('#new_room_quick').after $('<p/>',text: '正在读取服务器列表...')
+$.getJSON "http://my-card.in/servers.json", (data)->
+  rooms_connect()
+
+###
+does not work
+http://stackoverflow.com/a/11052002
+$('#rooms').on  'error', 'img', (event)->
+  console.log event, this
+  this.src = 'img/avatar_error_small.png'
+
+###

@@ -13,14 +13,47 @@
     <link href="css/bootstrap.css" rel="stylesheet">
     <link href="css/typeahead.js-bootstrap.css" rel="stylesheet">
 
-    <!-- Custom styles for this template -->
     <link href="css/lobby.css" rel="stylesheet">
 
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-    <script src="../../assets/js/html5shiv.js"></script>
-    <script src="../../assets/js/respond.min.js"></script>
-    <![endif]-->
+    <template id="room_template">
+        <section id="room_{{id}}" class="room {{status}}">
+            <!-- WTF的复杂 -->
+            <header class="room_top"><span
+                    class="room_icon glyphicon {{#start?}}glyphicon-tower{{/start?}}{{^start}}glyphicon-home{{/start}}"></span>
+                <span class="room_name">{{name}}</span></header>
+            {{^tag?}}
+            <div class="room_body single">
+                <div class="players">
+                    <img src="{{#player_0}}http://my-card.in/users/{{player_0}}.png{{/player_0}}{{^player_0}}img/room_empty.png{{/player_0}}" onerror="this.src='img/avatar_error_small.png'">
+                </div>
+                <div class="vs">VS</div>
+                <div class="players">
+                    <img src="{{#player_1}}http://my-card.in/users/{{player_1}}.png{{/player_1}}{{^player_1}}img/room_empty.png{{/player_1}}" onerror="this.src='img/avatar_error_small.png'">
+                </div>
+            </div>
+            {{/tag?}}
+            {{#tag?}}
+            <div class="room_body double">
+                <div class="players">
+                    <img src="{{#player_0}}http://my-card.in/users/{{player_0}}.png{{/player_0}}{{^player_0}}img/room_empty.png{{/player_0}}" onerror="this.src='img/avatar_error_small.png'">
+                    <img src="{{#player_1}}http://my-card.in/users/{{player_1}}.png{{/player_1}}{{^player_1}}img/room_empty.png{{/player_1}}" onerror="this.src='img/avatar_error_small.png'">
+                </div>
+                <div class="vs">VS</div>
+                <div class="players">
+                    <img src="{{#player_2}}http://my-card.in/users/{{player_2}}.png{{/player_2}}{{^player_2}}img/room_empty.png{{/player_2}}" onerror="this.src='img/avatar_error_small.png'">
+                    <img src="{{#player_3}}http://my-card.in/users/{{player_3}}.png{{/player_3}}{{^player_3}}img/room_empty.png{{/player_3}}" onerror="this.src='img/avatar_error_small.png'">
+                </div>
+            </div>
+            {{/tag?}}
+            <footer class="room_member">
+                <!-- WTF!! -->
+                <p class="mode">模式: <span>{{^match?}}{{^tag?}}单局{{/tag?}}{{/match?}}{{#match?}}比赛{{/match?}}{{#tag?}}TAG{{/tag?}}</span>
+                </p> <!---->
+                <!--<img _tmplitem="123661"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
+            </footer>
+        </section>
+    </template>
+
 </head>
 
 <body>
@@ -37,7 +70,7 @@
 </OBJECT>
 <button onclick="clo.Click()"><font face="webdings">r</font></button>-->
 <div class="navbar navbar-inverse navbar-fixed-top">
-    <a id="back" href="#home_tab" data-toggle="tab" hidden><img src="img/Metro-Back-256.png"></a>
+    <a id="back" href="#home_tab" data-toggle="tab" hidden><img src="img/back.png"></a>
 
     <div class="container">
         <div class="navbar-header">
@@ -185,1559 +218,136 @@
     </footer>
 </div>
 <div class="lobby-page lobby" id="lobby" hidden>
-<div id="lobby_wrap">
-<div class="tab-content container">
-<div class="tab-pane active" id="home_tab">
+    <div id="lobby_wrap">
+        <div class="tab-content container">
+            <div class="tab-pane active" id="home_tab">
 
-    <div class="row">
-        <a id="match" href="#" class="btn btn-primary btn-lg">自动匹配</a>
-        <a href="#rooms_tab" data-toggle="tab" class="btn btn-primary btn-lg">房间列表</a>
-        <a data-toggle="modal" href="#rooms_modal" class="btn btn-default btn-lg">备用模式</a>
-        <a data-toggle="modal" href="#rooms_modal" class="btn btn-default btn-lg">备用模式</a>
-        <a data-toggle="modal" href="#rooms_modal" class="btn btn-primary btn-lg pull-right">新手教学</a>
-    </div>
-
-    <div class="row">
-        <div class="col-md-8">
-            <img class="img-thumbnail"
-                 src="http://1-ps.googleusercontent.com/h/www.hacg.me/sm/scripts/xtimthumb.php,qsrc=.,_img,_s1.jpg,aw=940,ah=470,azc=1.pagespeed.ic.EEkVdVhqdH.jpg">
-        </div>
-        <div class="col-md-1"></div>
-        <div class="col-md-4">
-            <div class="panel panel-default" id="contributing">
-                <div class="panel-heading">帮助 MyCard 做的更好</div>
-                <div class="panel-body" style="height: 80px;">
-                    程序
-                    <ul style="font-size:12px">
-                        <li style="text-overflow: ellipsis;white-space: nowrap">用<a href="#">这套图标</a>替换右上角按钮
-                        </li>
-                        <li style="text-overflow: ellipsis;white-space: nowrap">搭一个 ejabberd 聊天集群</li>
-                        <li>...</li>
-                        <li>...</li>
-                        <li>...</li>
-                        <li>...</li>
-                    </ul>
+                <div class="row">
+                    <a id="match" href="#" class="btn btn-primary btn-lg">自动匹配</a>
+                    <a href="#rooms_tab" data-toggle="tab" class="btn btn-primary btn-lg">自定义游戏</a>
+                    <a data-toggle="modal" href="#rooms_modal" class="btn btn-default btn-lg">备用模式</a>
+                    <a data-toggle="modal" href="#rooms_modal" class="btn btn-default btn-lg">备用模式</a>
+                    <a data-toggle="modal" href="#rooms_modal" class="btn btn-primary btn-lg pull-right">新手教学</a>
                 </div>
-                <ul class="list-group">
-                    <li class="list-group-item">
-                        <a href="#">管理员招募中</a>
-                    </li>
-                    <li class="list-group-item">
+
+                <div class="row">
+                    <div class="col-md-8">
+                        <div id="carousel-example-generic" class="carousel slide">
+                            <!-- Indicators -->
+                            <ol class="carousel-indicators">
+                                <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+                                <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+                                <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+                            </ol>
+
+                            <!-- Wrapper for slides -->
+                            <div class="carousel-inner">
+                                <div class="item active">
+                                    <a href="http://nwbbs.com/thread-762047-1-1.html" target="_blank"><img
+                                            class="img-thumbnail"
+                                            src="img/Unnamed.png"></a>
+
+                                    <div class="carousel-caption">
+                                        <h3>首届NWBBS@鸷光杯网络赛</h3>
+                                    </div>
+                                </div>
+                                <div class="item">
+                                    <a href="http://nwbbs.com/thread-762047-1-1.html" target="_blank"><img
+                                            class="img-thumbnail"
+                                            src="img/11337592_215642235124_2.jpg"></a>
+
+                                    <div class="carousel-caption">
+                                        <h3>喵喵喵喵喵喵喵</h3>
+                                    </div>
+                                </div>
+                                <div class="item">
+                                    <a href="http://nwbbs.com/thread-762047-1-1.html" target="_blank"><img
+                                            class="img-thumbnail"
+                                            src="img/2010938.jpg"></a>
+
+                                    <div class="carousel-caption">
+                                        <h3>汪汪汪汪汪汪汪</h3>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Controls -->
+                            <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
+                                <span class="icon-prev"></span>
+                            </a>
+                            <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
+                                <span class="icon-next"></span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-md-1"></div>
+                    <div class="col-md-4" style="padding-left: 0">
+                        <div id="contributing">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">帮助 MyCard 做的更好</div>
+                                <ul class="list-group"
+                                    style="font-size:12px;text-overflow: ellipsis;white-space: nowrap"
+                                    id="issues"></ul>
+                            </div>
+                        </div>
                         <a href="#">
                             <img src="http://my-card.in/assets/images/index/support.png">
+                            <img src="https://www.paypalobjects.com/zh_XC/i/btn/btn_donate_LG.gif">
                         </a>
-                    </li>
-                </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane" id="rooms_tab">
+                <section id="rooms">
+                    <section class="room wait" id="new_room_quick">
+                        <header class="room_top"><span class="room_icon glyphicon glyphicon-plus"></span>
+                            <span contenteditable id="newroom_quick_name" class="room_name">房间名...</span></header>
+                        <!--<div class="room_body single">
+                            <span class="glyphicon glyphicon-plus">建立房间</span>
+                        </div>
+                        <footer class="room_member">
+                            <p class="mode">模式: <select class="form-control">
+                                <option>单局</option>
+                                <option selected>比赛</option>
+                                <option>TAG</option>
+                            </select></p>
+                            <button id="new_room_quick_custom_button" type="button" class="btn btn-default btn-xs pull-right">自定义</button>
+                        </footer>-->
+                        <div class="btn-group btn-group-justified">
+                            <div class="tablerow">
+                                <a id="new_room_quick_single" href="#" class="btn btn-default">单局</a>
+                                <a id="new_room_quick_match" href="#" class="btn btn-default">比赛</a>
+                            </div>
+                            <div class="tablerow">
+                                <a id="new_room_quick_tag" href="#" class="btn btn-default">TAG</a>
+                                <a id="new_room_quick_custom" data-toggle="modal" href="#new_room_modal"
+                                   class="btn btn-default">自定义</a>
+                            </div>
+                        </div>
+                    </section>
+
+
+                </section>
             </div>
         </div>
-    </div>
-</div>
-<div class="tab-pane" id="rooms_tab">
-<section id="rooms">
-<section class="room wait" id="new_room_quick">
-    <header class="room_top"><span class="room_icon glyphicon glyphicon-plus"></span>
-        <span contenteditable class="room_name">房间名...</span></header>
-    <!--<div class="room_body single">
-        <span class="glyphicon glyphicon-plus">建立房间</span>
-    </div>
-    <footer class="room_member">
-        <p class="mode">模式: <select class="form-control">
-            <option>单局</option>
-            <option selected>比赛</option>
-            <option>TAG</option>
-        </select></p>
-        <button id="new_room_quick_custom_button" type="button" class="btn btn-default btn-xs pull-right">自定义</button>
-    </footer>-->
-    <div class="btn-group btn-group-justified">
-        <a href="#" class="btn btn-default">Left</a>
-        <a href="#" class="btn btn-default">Middle</a>
-    </div>
-    <div class="btn-group btn-group-justified">
-        <a href="#" class="btn btn-default">Left</a>
-        <a href="#" class="btn btn-default">Middle</a>
-    </div>
-</section>
-<section class="room wait">
-    <header class="room_top"><span class="room_icon glyphicon glyphicon-home"></span>
-        <span class="room_name">731</span></header>
-    <div class="room_body single">
-        <div class="players"><img src="https://www.gravatar.com/avatar/1e9e348c0b3f0f70fddd127f8de126d6?size=120"></div>
-        <div class="vs">VS</div>
-        <div class="players"><img src="https://www.gravatar.com/avatar/5787720ce33face6918fd26dcc1d1d4d?size=120"></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>单局</span></p> <!---->
-        <!--<img _tmplitem="123512"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room wait">
-    <header class="room_top"><span class="room_icon glyphicon glyphicon-home"></span>
-        <span class="room_name">20FTF8000,5,1,woain</span>
-    </header>
-    <div class="room_body single">
-        <div class="players"><img src="https://www.gravatar.com/avatar/78de8f235fc53f56abbe6870b307f0b4?size=120"></div>
-        <div class="vs">VS</div>
-        <div class="players"><img src="https://www.gravatar.com/avatar/7a85e09d5125bb6ad505d0d334570c2b?size=120"></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>单局</span></p> <!---->
-        <!--<img _tmplitem="123513"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room wait">
-    <header class="room_top"><span class="room_icon glyphicon glyphicon-home"></span>
-        <span class="room_name">x</span></header>
-    <div class="room_body double">
-        <div class="players"><img src="http://www.gravatar.com/avatar/09fb7a14e5b9fbb9cd82ffaa1df37634?size=48"><img
-                src="http://www.gravatar.com/avatar/09fb7a14e5b9fbb9cd82ffaa1df37634?size=48"></div>
-        <div class="vs">VS</div>
-        <div class="players"><img
-                src="https://lh5.googleusercontent.com/-0nAg4kc0B0A/AAAAAAAAAAI/AAAAAAAAM5k/dqA3k5ZhMIM/photo.jpg?sz=48"><img
-                src="https://lh5.googleusercontent.com/-0nAg4kc0B0A/AAAAAAAAAAI/AAAAAAAAM5k/dqA3k5ZhMIM/photo.jpg?sz=48">
-        </div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>TAG</span></p> <!---->
-        <!--<img _tmplitem="123514"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room wait">
-    <header class="room_top"><span class="room_icon glyphicon glyphicon-home"></span>
-        <span class="room_name">79</span></header>
-    <div class="room_body double">
-        <div class="players"><img src="https://www.gravatar.com/avatar/873bd008b011ad0ecc5b3b651a069e9e?size=120"><img
-                src="img/room_empty.png"></div>
-        <div class="vs">VS</div>
-        <div class="players"><img src="img/room_empty.png"><img src="img/room_empty.png"></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>TAG</span></p> <!---->
-        <!--<img _tmplitem="123515"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room wait">
-    <header class="room_top"><span class="room_icon glyphicon glyphicon-home"></span>
-        <span class="room_name">467</span></header>
-    <div class="room_body single">
-        <div class="players"><img src="https://www.gravatar.com/avatar/95a168f9f5cdb29992a7fec881623758?size=120"></div>
-        <div class="vs">VS</div>
-        <div class="players"><img src="img/room_empty.png"></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>单局</span></p> <!---->
-        <!--<img _tmplitem="123516"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-
-<section class="room start">
-    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span> <span
-            class="room_name">41742452</span>
-    </header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"><img src=""></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>比赛</span></p> <!---->
-        <!--<img _tmplitem="123549"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
-        <span class="room_name"></span></header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"><img src=""></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>比赛</span></p> <!---->
-        <!--<img _tmplitem="123550"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
-        <span class="room_name">180</span></header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>比赛</span></p> <!---->
-        <!--<img _tmplitem="123551"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
-        <span class="room_name">41</span></header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>单局</span></p> <!---->
-        <!--<img _tmplitem="123552"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
-        <span class="room_name">366</span></header>
-    <div class="room_body double">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>TAG</span></p> <!---->
-        <!--<img _tmplitem="123553"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
-        <span class="room_name">1212</span></header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>单局</span></p> <!---->
-        <!--<img _tmplitem="123554"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
-        <span class="room_name">690</span></header>
-    <div class="room_body double">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>TAG</span></p> <!---->
-        <!--<img _tmplitem="123555"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
-        <span class="room_name">555</span></header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>单局</span></p> <!---->
-        <!--<img _tmplitem="123556"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
-        <span class="room_name">12211</span></header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>单局</span></p> <!---->
-        <!--<img _tmplitem="123557"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
-        <span class="room_name">231</span></header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>单局</span></p> <!---->
-        <!--<img _tmplitem="123558"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
-        <span class="room_name">880</span></header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>单局</span></p> <!---->
-        <!--<img _tmplitem="123559"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
-        <span class="room_name">344</span></header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>比赛</span></p> <!---->
-        <!--<img _tmplitem="123560"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
-        <span class="room_name">744</span></header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"><img src=""></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>比赛</span></p> <!---->
-        <!--<img _tmplitem="123561"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
-        <span class="room_name">278</span></header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"><img src=""></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>比赛</span></p> <!---->
-        <!--<img _tmplitem="123562"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
-        <span class="room_name">12211</span></header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>单局</span></p> <!---->
-        <!--<img _tmplitem="123563"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
-        <span class="room_name">241</span></header>
-    <div class="room_body double">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>TAG</span></p> <!---->
-        <!--<img _tmplitem="123564"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
-        <span class="room_name">888</span></header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>单局</span></p> <!---->
-        <!--<img _tmplitem="123565"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
-        <span class="room_name">44</span></header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>单局</span></p> <!---->
-        <!--<img _tmplitem="123566"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
-        <span class="room_name">52</span></header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>单局</span></p> <!---->
-        <!--<img _tmplitem="123567"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
-        <span class="room_name">1525</span></header>
-    <div class="room_body double">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>TAG</span></p> <!---->
-        <!--<img _tmplitem="123568"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
-        <span class="room_name">666</span></header>
-    <div class="room_body double">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>TAG</span></p> <!---->
-        <!--<img _tmplitem="123569"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
-        <span class="room_name">308</span></header>
-    <div class="room_body double">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>TAG</span></p> <!---->
-        <!--<img _tmplitem="123570"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
-        <span class="room_name">277</span></header>
-    <div class="room_body double">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>TAG</span></p> <!---->
-        <!--<img _tmplitem="123571"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span> <span>123456789</span>
-    </header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"><img src=""></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>单局</span></p> <!---->
-        <!--<img _tmplitem="123572"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
-        <span class="room_name">923</span></header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>比赛</span></p> <!---->
-        <!--<img _tmplitem="123573"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
-        <span class="room_name">652</span></header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>比赛</span></p> <!---->
-        <!--<img _tmplitem="123574"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
-        <span class="room_name">860</span></header>
-    <div class="room_body double">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>TAG</span></p> <!---->
-        <!--<img _tmplitem="123575"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
-        <span class="room_name">817</span></header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>比赛</span></p> <!---->
-        <!--<img _tmplitem="123576"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
-        <span class="room_name">992</span></header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>比赛</span></p> <!---->
-        <!--<img _tmplitem="123577"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
-        <span class="room_name">672</span></header>
-    <div class="room_body double">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>TAG</span></p> <!---->
-        <!--<img _tmplitem="123578"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
-        <span class="room_name">587</span></header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>单局</span></p> <!---->
-        <!--<img _tmplitem="123579"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
-        <span class="room_name">10星流</span></header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>比赛</span></p> <!---->
-        <!--<img _tmplitem="123580"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
-        <span class="room_name">611</span></header>
-    <div class="room_body double">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>TAG</span></p> <!---->
-        <!--<img _tmplitem="123581"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
-        <span class="room_name">514</span></header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"><img src=""></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>比赛</span></p> <!---->
-        <!--<img _tmplitem="123582"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
-        <span class="room_name">737</span></header>
-    <div class="room_body double">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"><img src=""></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>TAG</span></p> <!---->
-        <!--<img _tmplitem="123583"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
-        <span class="room_name">214</span></header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"><img src=""></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>比赛</span></p> <!---->
-        <!--<img _tmplitem="123584"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
-        <span class="room_name">526</span></header>
-    <div class="room_body double">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"><img src=""></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>TAG</span></p> <!---->
-        <!--<img _tmplitem="123585"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
-        <span class="room_name">265</span></header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>单局</span></p> <!---->
-        <!--<img _tmplitem="123586"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
-        <span class="room_name">266</span></header>
-    <div class="room_body double">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"><img src=""></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>TAG</span></p> <!---->
-        <!--<img _tmplitem="123587"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
-        <span class="room_name">237</span></header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"><img src=""></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>比赛</span></p> <!---->
-        <!--<img _tmplitem="123588"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
-        <span class="room_name">6355</span></header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"><img src=""></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>单局</span></p> <!---->
-        <!--<img _tmplitem="123589"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
-        <span class="room_name">653</span></header>
-    <div class="room_body double">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"><img src=""></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>TAG</span></p> <!---->
-        <!--<img _tmplitem="123590"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
-        <span class="room_name">541</span></header>
-    <div class="room_body double">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"><img src=""></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>TAG</span></p> <!---->
-        <!--<img _tmplitem="123591"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
-        <span class="room_name">62</span></header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"><img src=""></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>比赛</span></p> <!---->
-        <!--<img _tmplitem="123592"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
-        <span class="room_name">119</span></header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"><img src=""></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>比赛</span></p> <!---->
-        <!--<img _tmplitem="123593"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
-        <span class="room_name">646</span></header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"><img src=""></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>比赛</span></p> <!---->
-        <!--<img _tmplitem="123594"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
-        <span class="room_name">981</span></header>
-    <div class="room_body double">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"><img src=""></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>TAG</span></p> <!---->
-        <!--<img _tmplitem="123595"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
-        <span class="room_name">590</span></header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"><img src=""></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>单局</span></p> <!---->
-        <!--<img _tmplitem="123596"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
-        <span class="room_name">51</span></header>
-    <div class="room_body double">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"><img src=""></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>TAG</span></p> <!---->
-        <!--<img _tmplitem="123597"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
-        <span class="room_name">211</span></header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"><img src=""></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>比赛</span></p> <!---->
-        <!--<img _tmplitem="123598"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
-        <span class="room_name">795</span></header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"><img src=""></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>单局</span></p> <!---->
-        <!--<img _tmplitem="123599"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
-        <span class="room_name">290</span></header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"><img src=""></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>比赛</span></p> <!---->
-        <!--<img _tmplitem="123600"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
-        <span class="room_name">房名</span></header>
-    <div class="room_body double">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"><img src=""></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>TAG</span></p> <!---->
-        <!--<img _tmplitem="123601"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
-        <span class="room_name">1981</span></header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"><img src=""></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>比赛</span></p> <!---->
-        <!--<img _tmplitem="123602"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
-        <span class="room_name">823</span></header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"><img src=""></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>比赛</span></p> <!---->
-        <!--<img _tmplitem="123603"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
-        <span class="room_name">484</span></header>
-    <div class="room_body double">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"><img src=""></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>TAG</span></p> <!---->
-        <!--<img _tmplitem="123604"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
-        <span class="room_name">798</span></header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"><img src=""></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>比赛</span></p> <!---->
-        <!--<img _tmplitem="123605"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
-        <span class="room_name">877</span></header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"><img src=""></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>单局</span></p> <!---->
-        <!--<img _tmplitem="123606"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
-        <span class="room_name">924</span></header>
-    <div class="room_body double">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"><img src=""></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>TAG</span></p> <!---->
-        <!--<img _tmplitem="123607"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
-        <span class="room_name">6549</span></header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"><img src=""></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>比赛</span></p> <!---->
-        <!--<img _tmplitem="123608"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
-        <span class="room_name">367</span></header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"><img src=""></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>单局</span></p> <!---->
-        <!--<img _tmplitem="123609"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
-        <span class="room_name">321</span></header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"><img src=""></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>单局</span></p> <!---->
-        <!--<img _tmplitem="123610"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
-        <span class="room_name">487</span></header>
-    <div class="room_body double">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"><img src=""></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>TAG</span></p> <!---->
-        <!--<img _tmplitem="123611"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
-        <span class="room_name">294</span></header>
-    <div class="room_body double">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"><img src=""></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>TAG</span></p> <!---->
-        <!--<img _tmplitem="123612"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
-        <span class="room_name">332</span></header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"><img src=""></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>比赛</span></p> <!---->
-        <!--<img _tmplitem="123613"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
-        <span class="room_name">0.0</span></header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"><img src=""></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>单局</span></p> <!---->
-        <!--<img _tmplitem="123614"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
-        <span class="room_name">89+</span></header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"><img src=""></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>单局</span></p> <!---->
-        <!--<img _tmplitem="123615"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
-        <span class="room_name">123</span></header>
-    <div class="room_body double">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"><img src=""></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>TAG</span></p> <!---->
-        <!--<img _tmplitem="123616"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
-        <span class="room_name">305</span></header>
-    <div class="room_body double">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"><img src=""></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>TAG</span></p> <!---->
-        <!--<img _tmplitem="123617"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
-        <span class="room_name">151</span></header>
-    <div class="room_body double">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"><img src=""></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>TAG</span></p> <!---->
-        <!--<img _tmplitem="123618"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
-        <span class="room_name">530</span></header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"><img src=""></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>比赛</span></p> <!---->
-        <!--<img _tmplitem="123619"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
-        <span class="room_name">3344</span></header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"><img src=""></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>单局</span></p> <!---->
-        <!--<img _tmplitem="123620"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
-        <span class="room_name">FUN</span></header>
-    <div class="room_body double">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"><img src=""></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>TAG</span></p> <!---->
-        <!--<img _tmplitem="123621"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
-        <span class="room_name">181</span></header>
-    <div class="room_body double">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"><img src=""></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>TAG</span></p> <!---->
-        <!--<img _tmplitem="123622"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
-        <span class="room_name">893</span></header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"><img src=""></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>比赛</span></p> <!---->
-        <!--<img _tmplitem="123623"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
-        <span class="room_name">试卡组</span></header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"><img src=""></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>单局</span></p> <!---->
-        <!--<img _tmplitem="123624"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
-        <span class="room_name">主流</span></header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"><img src=""></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>比赛</span></p> <!---->
-        <!--<img _tmplitem="123625"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
-        <span class="room_name">170</span></header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"><img src=""></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>比赛</span></p> <!---->
-        <!--<img _tmplitem="123626"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
-        <span class="room_name">570</span></header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"><img src=""></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>单局</span></p> <!---->
-        <!--<img _tmplitem="123627"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
-        <span class="room_name">108</span></header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"><img src=""></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>单局</span></p> <!---->
-        <!--<img _tmplitem="123628"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
-        <span class="room_name">601</span></header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"><img src=""></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>比赛</span></p> <!---->
-        <!--<img _tmplitem="123629"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
-        <span class="room_name">468</span></header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"><img src=""></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>比赛</span></p> <!---->
-        <!--<img _tmplitem="123630"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
-        <span class="room_name">676</span></header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"><img src=""></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>单局</span></p> <!---->
-        <!--<img _tmplitem="123631"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
-        <span class="room_name">542</span></header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"><img src=""></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>比赛</span></p> <!---->
-        <!--<img _tmplitem="123632"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
-        <span class="room_name">111111</span></header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"><img src=""></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>单局</span></p> <!---->
-        <!--<img _tmplitem="123633"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
-        <span class="room_name">1</span></header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"><img src=""></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>单局</span></p> <!---->
-        <!--<img _tmplitem="123634"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
-        <span class="room_name">44221</span></header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"><img src=""></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>单局</span></p> <!---->
-        <!--<img _tmplitem="123635"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
-        <span class="room_name">276</span></header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"><img src=""></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>单局</span></p> <!---->
-        <!--<img _tmplitem="123636"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
-        <span class="room_name">q</span></header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"><img src=""></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>单局</span></p> <!---->
-        <!--<img _tmplitem="123637"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
-        <span class="room_name">2</span></header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"><img src=""></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>单局</span></p> <!---->
-        <!--<img _tmplitem="123638"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
-        <span class="room_name">123</span></header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"><img src=""></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>单局</span></p> <!---->
-        <!--<img _tmplitem="123639"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
-        <span class="room_name">22</span></header>
-    <div class="room_body double">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"><img src=""></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>TAG</span></p> <!---->
-        <!--<img _tmplitem="123640"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
-        <span class="room_name">3344</span></header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"><img src=""></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>单局</span></p> <!---->
-        <!--<img _tmplitem="123641"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
-        <span class="room_name">0926</span></header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"><img src=""></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>单局</span></p> <!---->
-        <!--<img _tmplitem="123642"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
-        <span class="room_name">111</span></header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"><img src=""></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>单局</span></p> <!---->
-        <!--<img _tmplitem="123643"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
-        <span class="room_name">288</span></header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"><img src=""></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>比赛</span></p> <!---->
-        <!--<img _tmplitem="123644"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
-        <span class="room_name">dddsfd</span></header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"><img src=""></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>单局</span></p> <!---->
-        <!--<img _tmplitem="123645"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
-        <span class="room_name">dddsfd</span></header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"><img src=""></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>单局</span></p> <!---->
-        <!--<img _tmplitem="123646"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
-        <span class="room_name">zzz</span></header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"><img src=""></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>单局</span></p> <!---->
-        <!--<img _tmplitem="123647"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
-        <span class="room_name">369</span></header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"><img src=""></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>单局</span></p> <!---->
-        <!--<img _tmplitem="123648"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
-        <span class="room_name">aw</span></header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"><img src=""></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>单局</span></p> <!---->
-        <!--<img _tmplitem="123649"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
-        <span class="room_name">45</span></header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"><img src=""></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>单局</span></p> <!---->
-        <!--<img _tmplitem="123650"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
-        <span class="room_name">fun</span></header>
-    <div class="room_body double">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"><img src=""></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>TAG</span></p> <!---->
-        <!--<img _tmplitem="123651"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
-        <span class="room_name">630</span></header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"><img src=""></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>比赛</span></p> <!---->
-        <!--<img _tmplitem="123652"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
-        <span class="room_name">196</span></header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"><img src=""></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>单局</span></p> <!---->
-        <!--<img _tmplitem="123653"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
-        <span class="room_name">948</span></header>
-    <div class="room_body double">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"><img src=""></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>TAG</span></p> <!---->
-        <!--<img _tmplitem="123654"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
-        <span class="room_name">791</span></header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"><img src=""></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>单局</span></p> <!---->
-        <!--<img _tmplitem="123655"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
-        <span class="room_name">159</span></header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"><img src=""></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>比赛</span></p> <!---->
-        <!--<img _tmplitem="123656"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
-        <span class="room_name">777</span></header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"><img src=""></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>单局</span></p> <!---->
-        <!--<img _tmplitem="123657"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
-        <span class="room_name">df</span></header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"><img src=""></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>单局</span></p> <!---->
-        <!--<img _tmplitem="123658"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
-        <span class="room_name">125</span></header>
-    <div class="room_body double">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"><img src=""></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>TAG</span></p> <!---->
-        <!--<img _tmplitem="123659"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
-        <span class="room_name">123</span></header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"><img src=""></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>单局</span></p> <!---->
-        <!--<img _tmplitem="123660"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
-        <span class="room_name">410</span></header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"><img src=""></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>比赛</span></p> <!---->
-        <!--<img _tmplitem="123661"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
-        <span class="room_name">145</span></header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"><img src=""></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>比赛</span></p> <!---->
-        <!--<img _tmplitem="123662"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
-        <span class="room_name">475</span></header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"><img src=""></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>单局</span></p> <!---->
-        <!--<img _tmplitem="123663"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-<section class="room start">
-    <header class="room_top"><span class="room_icon glyphicon glyphicon-tower"></span>
-        <span class="room_name">速开不</span></header>
-    <div class="room_body single">
-        <div class="players"><img src=""></div>
-        <div class="vs">VS</div>
-        <div class="players"><img src=""></div>
-    </div>
-    <footer class="room_member"><p class="mode">模式: <span>比赛</span></p> <!---->
-        <!--<img _tmplitem="123664"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-    </footer>
-</section>
-</section>
-</div>
-</div>
-<aside id="roster_aside">
-    <div id="roster_title">
-        <form id="roster_search">
-            <div class="input-group">
+        <aside id="roster_aside">
+            <div id="roster_title">
+                <form id="roster_search">
+                    <div class="input-group">
                         <span class="input-group-btn">
                             <button class="btn btn-default" type="button">
                                 <span class="glyphicon glyphicon-search"></span>
                             </button>
                         </span>
-                <input type="text" name="name" class="form-control">
+                        <input type="text" name="name" class="form-control">
+                    </div>
+                </form>
+                <!-- /input-group -->
             </div>
-        </form>
-        <!-- /input-group -->
+            <ul id="roster" class="list-unstyled"></ul>
+        </aside>
     </div>
-    <ul id="roster" class="list-unstyled"></ul>
-</aside>
-</div>
-<iframe id="candy" src="about:blank" nwdisable></iframe>
+    <iframe id="candy" src="about:blank" nwdisable></iframe>
 </div>
 <div class="lobby-page forum" hidden>
     <iframe src="https://forum.my-card.in/" nwdisable nwfaketop></iframe>
@@ -1894,6 +504,7 @@
 <script src="js/bootbox.min.js"></script>
 <script src="js/typeahead.min.js"></script>
 
+<script src="js/hogan-2.0.0.js"></script>
 <script src="js/md5.js"></script>
 
 <script type="text/javascript" src="js/noty/jquery.noty.js"></script>
