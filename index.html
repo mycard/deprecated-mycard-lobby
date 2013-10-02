@@ -16,11 +16,12 @@
     <link href="css/lobby.css" rel="stylesheet">
 
     <template id="room_template">
-        <section id="room_{{id}}" class="room {{status}}">
+        <section id="room_{{id}}" class="room {{status}}" data-origin-name={{origin_name}} data-server-id={{server_id}}>
             <!-- WTF的复杂 -->
             <header class="room_top"><span
                     class="room_icon glyphicon {{#start?}}glyphicon-tower{{/start?}}{{^start}}glyphicon-home{{/start}}"></span>
                 <span class="room_name">{{name}}</span></header>
+            {{#avatar?}}
             {{^tag?}}
             <div class="room_body single">
                 <div class="players">
@@ -45,6 +46,33 @@
                 </div>
             </div>
             {{/tag?}}
+            {{/avatar?}}
+            {{^avatar?}}
+            {{^tag?}}
+            <div class="room_body single">
+                <div class="players">
+                    <span>{{player_0}}</span>
+                </div>
+                <div class="vs">VS</div>
+                <div class="players">
+                    <span>{{player_1}}</span>
+                </div>
+            </div>
+            {{/tag?}}
+            {{#tag?}}
+            <div class="room_body double">
+                <div class="players">
+                    <span>{{player_0}}</span>
+                    <span>{{player_1}}</span>
+                </div>
+                <div class="vs">VS</div>
+                <div class="players">
+                    <span>{{player_2}}</span>
+                    <span>{{player_3}}</span>
+                </div>
+            </div>
+            {{/tag?}}
+            {{/avatar?}}
             <footer class="room_member">
                 <!-- WTF!! -->
                 <p class="mode">模式: <span>{{^match?}}{{^tag?}}单局{{/tag?}}{{/match?}}{{#match?}}比赛{{/match?}}{{#tag?}}TAG{{/tag?}}</span>
@@ -292,7 +320,7 @@
                         </div>
                         <a href="#">
                             <img src="http://my-card.in/assets/images/index/support.png">
-                            <img src="https://www.paypalobjects.com/zh_XC/i/btn/btn_donate_LG.gif">
+                            <img src="img/donate_paypal.png">
                         </a>
                     </div>
                 </div>

@@ -403,6 +403,22 @@ $.getJSON 'https://api.github.com/repos/mycard/mycard/issues', (data)->
 
 
 room_template = Hogan.compile $('#room_template').html()
+render_room = (room)->
+  room = $.extend({rule: 0, mode: 0, enable_priority: false, no_check_deck: false, no_shuffle_deck: false,start_lp: 8000, start_hand: 5, draw_count: 1}, room)
+  room['match?'] = room.mode == 1
+  room['tag?'] = room.mode == 2
+  room['start?'] = room.status == 'start'
+  room['origin_name'] = mycard.room_name(room.name, null, false, room.rule, room.mode, room.start_lp, room.start_hand, room.draw_count)
+
+  for player in room.users
+    room["player_#{player.player}"] = player.id
+
+  for player in room.users
+    if $(".xmpp[data-name=\"#{player.id}\"]").length
+      room['avatar?'] = true
+      break
+
+  room_template.render(room)
 
 rooms_connect = ->
   connected = false
@@ -418,35 +434,22 @@ rooms_connect = ->
     console.log("websocket: Disconnected");
   websocket.onmessage = (evt)->
     rooms = JSON.parse(evt.data)
+    rooms = (room for room in rooms when !room.private)
     if connected
       for room in rooms
+        if room.status == 'start'
+          room._deleted = true
         if room._deleted
-          $("#room_#{room.id}").hide 'slow', ->
-          $("#room_#{room.id}").remove()
+          $("#room_#{room.id}").hide 'fast', ->
+            $("#room_#{room.id}").remove()
         else
-          room = $.extend({rule: 0, mode: 0, enable_priority: false, no_check_deck: false, no_shuffle_deck: false,start_lp: 8000, start_hand: 5, draw_count: 1}, room)
-          room['match?'] = room.mode == 1
-          room['tag?'] = room.mode == 2
-          room['start?'] = room.status == 'start'
-
-          for player in room.users
-            room["player_#{player.player}"] = player.id
-
           element = $("#room_#{room.id}")
           if element.length
-            element.replaceWith room_template.render(room)
+            element.replaceWith render_room(room)
           else
-            $(room_template.render(room)).hide().insertAfter('#new_room_quick').show('slow')
+            $(render_room(room)).hide().insertAfter('#new_room_quick').show('fast')
     else
-      $('#new_room_quick').nextAll().replaceWith (for room in rooms
-        room = $.extend({rule: 0, mode: 0, enable_priority: false, no_check_deck: false, no_shuffle_deck: false,start_lp: 8000, start_hand: 5, draw_count: 1}, room)
-        room['match?'] = room.mode == 1
-        room['tag?'] = room.mode == 2
-        room['start?'] = room.status == 'start'
-        for player in room.users
-          room["player_#{player.player}"] = player.id
-        room_template.render(room)
-      )
+      $('#new_room_quick').nextAll().replaceWith (render_room(room) for room in rooms when room.status != 'start')
 
     connected = true
   websocket.onerror = (evt)->
@@ -454,7 +457,10 @@ rooms_connect = ->
 
 $('#new_room_quick').nextAll().remove()
 $('#new_room_quick').after $('<p/>',text: '正在读取服务器列表...')
+servers = {}
 $.getJSON "http://my-card.in/servers.json", (data)->
+  for server in data
+    servers[server.id] = server
   rooms_connect()
 
 ###
@@ -465,3 +471,6 @@ $('#rooms').on  'error', 'img', (event)->
   this.src = 'img/avatar_error_small.png'
 
 ###
+$('#rooms').on 'click', '.room.wait', (event)->
+  server = servers[parseInt($(this).data('server-id'))]
+  mycard_client.send mycard.room_url_mycard(server.ip, server.port, $(this).data('origin-name'), $.cookie('username'), $.cookie('password'), false, false)
