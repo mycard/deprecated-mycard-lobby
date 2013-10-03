@@ -2,21 +2,24 @@ mycard_version = null
 ygopro_version = null
 mycard_client = null
 
-if require?
+if $('html').hasClass('gui')
   gui = require('nw.gui')
-  $('html').addClass('gui')
 
-  maximized = false
   win = gui.Window.get();
   $('#window_control_minimize').click ->
     win.minimize()
-  $('#window_control_maximize').click -> if maximized then win.unmaximize() else win.maximize()
+  $('#window_control_maximize').click ->
+    win.maximize()
+  $('#window_control_unmaximize').click ->
+    win.unmaximize()
   $('#window_control_close').click ->
     win.close()
   win.on 'maximize', ->
-    maximized = true
+    $('#window_control_maximize').hide()
+    $('#window_control_unmaximize').show()
   win.on 'unmaximize', ->
-    maximized = false
+    $('#window_control_maximize').show()
+    $('#window_control_unmaximize').hide()
   ###
   win.on 'focus', ->
     bootbox.alert('focus')
@@ -25,7 +28,10 @@ if require?
     bootbox.alert('blur')
     $('html').addClass 'blur'
   ###
-  $('html').addClass 'blur'
+
+  $('body').on 'click', 'a[target=_blank]', ->
+    gui.Shell.openExternal( this.href );
+    return false;
 
 pre_load_photo = (jid, name, domain)->
   switch domain
@@ -474,3 +480,6 @@ $('#rooms').on  'error', 'img', (event)->
 $('#rooms').on 'click', '.room.wait', (event)->
   server = servers[parseInt($(this).data('server-id'))]
   mycard_client.send mycard.room_url_mycard(server.ip, server.port, $(this).data('origin-name'), $.cookie('username'), $.cookie('password'), false, false)
+
+$('#config_modal').one 'shown.bs.modal', ->
+  $('.slider').slider()

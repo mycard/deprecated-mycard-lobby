@@ -235,7 +235,7 @@ body.modal-open, .modal-open .navbar-fixed-top, .modal-open .navbar-fixed-bottom
     color: #147CC3;*/
 }
 
-#roster_title .btn, .form-control {
+#roster_title .btn, #roster_title .form-control {
     border-radius: 0;
 }
 
@@ -254,7 +254,7 @@ body.modal-open, .modal-open .navbar-fixed-top, .modal-open .navbar-fixed-bottom
     display: block;
 }
 
-html.blur {
+html.gui.blur {
     border: 1px solid windowframe;
 }
 
@@ -326,22 +326,14 @@ iframe html {
     display: none;
 }
 
-.gui #window_control {
+html.gui #window_control {
     display: block;
     position: absolute;
     top: 0;
     right: 0
 }
 
-.gui #window_control button {
-    border-radius: 0;
-    /*    border: none;
-        color: #fff;
-        background-color: transparent;
-    */
-}
-
-.gui .navbar .container {
+html.gui .navbar .container {
     padding-right: 85px;
 }
 
@@ -690,4 +682,13 @@ iframe html {
     transition: all 5s ease 0.3s;
 } */
 
-/** { font-family:"文泉驿微米黑"}*/
+/*body {
+    font-family:"文泉驿微米黑";
+     -webkit-font-smoothing: antialiased;
+} */
+.window-control img:hover {
+    background: lightgray;
+}
+.window-control img:active {
+    background: blue;
+}
