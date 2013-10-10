@@ -1,0 +1,16 @@
+{
+  "name": "mycard",
+  "description": "a card game platform",
+  "version": "2.0.0",
+  "app": {
+    "background": {
+      "scripts": ["js/background.js"]
+    }
+  },
+  "icons": { "16": "img/logo_16.png", "128": "img/logo.png" },
+  "author":"zh99998",
+  "externally_connectable": {
+    "matches": ["*://*.my-card.in/*"]
+  },
+  "permissions": ["storage", "webview", "<all_urls>"]
+}
