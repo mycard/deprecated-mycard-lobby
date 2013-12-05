@@ -20,6 +20,9 @@ if $('html').hasClass('gui')
   win.on 'unmaximize', ->
     $('#window_control_maximize').show()
     $('#window_control_unmaximize').hide()
+  win.showDevTools()
+
+
   ###
   win.on 'focus', ->
     bootbox.alert('focus')
@@ -43,6 +46,9 @@ pre_load_photo = (jid, name, domain)->
       hash = CryptoJS.MD5(jid);
       "http://en.gravatar.com/avatar/#{hash}?s=48&d=404"
 
+nxb = require "node-xmpp-bosh"
+xmpp_server = nxb.start_bosh
+  host: "localhost"
 
 login = (name, password, remember_me)->
   $.cookie 'username', name, expires: Number.MAX_VALUE, path: '/'
@@ -54,8 +60,10 @@ login = (name, password, remember_me)->
     if data
       if remember_me
         $.cookie 'password', password, expires: Number.MAX_VALUE, path: '/'
+        mycard_client.send("auth=#{name}:#{password}") if mycard_client
       else
         $.cookie 'password', password, path: '/'
+        mycard_client.send("auth=#{name}") if mycard_client
 
       if name.indexOf('@') == -1 #mycard帐号
         jid = name + '@my-card.in'
@@ -67,7 +75,7 @@ login = (name, password, remember_me)->
 
       $('#userinfo_name').text name
       $('#userinfo_avatar').attr 'src', pre_load_photo(jid, name, domain)
-      $('#candy').attr 'src', "candy/index.html?jid=#{encodeURIComponent jid}&password=#{encodeURIComponent password}"
+      $('#candy').attr 'src', "candy/index.html?bosh=http://localhost:5280/http-bind/&jid=#{encodeURIComponent jid}&password=#{encodeURIComponent password}"
 
       $('.not-logged-in').hide()
       $('.logged-in').show()
@@ -77,8 +85,8 @@ login = (name, password, remember_me)->
     else
       bootbox.alert "用户名或密码错误"
   .error (jqXHR, textStatus, errorThrown)->
-    bootbox.hideAll()
-    bootbox.alert textStatus
+      bootbox.hideAll()
+      bootbox.alert textStatus
   false
 
 if $.cookie('username') and $.cookie('password')
@@ -92,52 +100,36 @@ $('#login_form').submit ->
 $('#new_room_custom_button').click ->
   $("#new_room_custom").slideToggle(400)
 
-$("#new_room").submit ->
-  room_name = mycard.room_name(@name.value, @password.value, false,
-    (if @ocg.checked then (if @tcg.checked then 2 else 0) else if @tcg.checked then 1 else 4),
-    parseInt($(this).find('input[name=mode]:checked').val()), parseInt(@start_lp.value), parseInt(@start_hand.value),
-    parseInt(@draw_count.value), @enable_priority.checked, @no_check_deck.checked, @no_shuffle_deck.checked)
-  mycard_client.send mycard.room_url_mycard("122.0.65.70", 7911, room_name, "zh99998", "zh112998", false, false)
-  false
-
 $("#new_room_button").click ->
   if gui?
     win = gui.Window.get();
     win.minimize();
   $("#new_room").submit()
 
-if gui?
-  $("#new_room_share_button").click ->
-    form = $("#new_room")[0]
-    room_name = mycard.room_name(form.name.value, form.password.value, false,
-      (if form.ocg.checked then (if form.tcg.checked then 2 else 0) else if form.tcg.checked then 1 else 4),
-      parseInt($(form).find('input[name=mode]:checked').val()), parseInt(form.start_lp.value),
-      parseInt(form.start_hand.value), parseInt(form.draw_count.value), form.enable_priority.checked,
-      form.no_check_deck.checked, form.no_shuffle_deck.checked)
-    room_url = mycard.room_url("122.0.65.70", 7911, room_name, null, null, false, true)
-    clipboard = gui.Clipboard.get()
-    clipboard.set room_url, "text"
-    bootbox.alert("房间地址已复制到剪贴板")
-    $("#new_room").submit()
-else
-  $('#new_room_modal').one 'shown.bs.modal', ->
-    $('#new_room_share_button').zclip
-      path: 'js/ZeroClipboard.swf',
-      copy: ->
-        form = $("#new_room")[0]
-        room_name = mycard.room_name(form.name.value, form.password.value, false,
-          (if form.ocg.checked then (if form.tcg.checked then 2 else 0) else if form.tcg.checked then 1 else 4),
-          parseInt($(form).find('input[name=mode]:checked').val()), parseInt(form.start_lp.value),
-          parseInt(form.start_hand.value), parseInt(form.draw_count.value), form.enable_priority.checked,
-          form.no_check_deck.checked, form.no_shuffle_deck.checked)
-        room_url = mycard.room_url("122.0.65.70", 7911, room_name, null, null, false, true)
-      afterCopy: ->
-        $('#new_room_modal').modal('hide')
-        bootbox.alert '房间地址已复制到剪贴板'
-        $("#new_room").submit()
+default_room_names = [0...1000]
+
+$.getJSON 'https://my-card.in/cards_zh.json',
+  c: true
+  q: JSON.stringify
+    name:
+      $not:
+        $regex: "\\s"
+, (count)->
+  $.getJSON 'https://my-card.in/cards_zh.json',
+    f: JSON.stringify
+      _id:0
+      name:1
+    q: JSON.stringify
+      name:
+        $not:
+          $regex: "\\s"
+    l:100
+    sk: _.random count - 100
+  , (data)->
+    default_room_names = _.pluck(data, 'name');
 
 $('#new_room_modal').on 'show.bs.modal', ->
-  $("#new_room_name").val(Math.floor(Math.random() * 1000))
+  $("#new_room_name").val _.sample default_room_names
 
 $.getJSON 'http://my-card.in/announcements.json', (data)->
   $('#announcements').empty()
@@ -185,6 +177,13 @@ mycard_client_connect = (wait = 3)->
         set_status()
       else
         set_status("正在下载卡图 缩略: #{msg.images_download_images} 完整: #{msg.images_download_thumbnails} 错误: #{msg.images_download_errors}")
+    if msg.auth and !$.cookie('password')
+      $.cookie('username', msg.auth.username)
+      $.cookie('password', msg.auth.password)
+      if $.cookie('username') and $.cookie('password')
+        login($.cookie('username'), $.cookie('password'))
+      else if $.cookie('username')
+        $('#login_form input[name=name]').val $.cookie('username')
 
 set_status 'Loading...'
 mycard_client_connect()
@@ -265,12 +264,15 @@ $('#logout').click ->
 
 $('#match').click ->
   bootbox.dialog message: '正在等待对手...'
-  $.get "http://122.0.65.69:9997/match.json", (data)->
-    bootbox.hideAll()
-    mycard_client.send data
-  .error (jqXHR, textStatus, errorThrown)->
-    bootbox.hideAll()
-    bootbox.alert textStatus
+  $.ajax "https://my-card.in/match",
+    username: $.cookie('username')
+    password: $.cookie('password')
+  .done (data)->
+      bootbox.hideAll()
+      mycard_client.send data
+  .fail (jqXHR, textStatus, errorThrown)->
+      bootbox.hideAll()
+      bootbox.alert errorThrown
 
 $('#roster').on 'click', '.xmpp', ->
   candy = $('#candy')[0]
@@ -377,10 +379,7 @@ $("#roster_search").submit ->
   candy.contentWindow.postMessage type: 'subscribe', jid: jid, candy.src
   false
 
-default_room_names = [0...1000]
 
-$.getJSON "http://my-card.in/cards_zh.json?f={'name':1,'_id':0}", (data)->
-  default_room_names = data[Math.floor(Math.random() * data.length)].name
 
 $('#lobby_wrap .tab-pane').on 'shown.bs.tab', (event)->
   $('#back').show()
@@ -388,16 +387,7 @@ $('#lobby_wrap .tab-pane').on 'shown.bs.tab', (event)->
 $('#back').on 'shown.bs.tab', (event)->
   $('#back').hide()
 
-$('#new_room_quick_single').click ->
-  room_name = mycard.room_name $('#newroom_quick_name').text()
-  mycard_client.send mycard.room_url_mycard("122.0.65.70", 7911, room_name, "zh99998", "zh112998", false, false)
-$('#new_room_quick_match').click ->
-  room_name = mycard.room_name $('#newroom_quick_name').text(), null, false, 0, 1
-  mycard_client.send mycard.room_url_mycard("122.0.65.70", 7911, room_name, "zh99998", "zh112998", false, false)
-$('#new_room_quick_tag').click ->
-  room_name = mycard.room_name $('#newroom_quick_name').text(), null, false, 0, 2
-  mycard_client.send mycard.room_url_mycard("122.0.65.70", 7911, room_name, "zh99998", "zh112998", false, false)
-
+###
 $.getJSON 'https://api.github.com/repos/mycard/mycard/issues', (data)->
   for issue in data
     element = $('<li/>', class: 'list-group-item').append($('<a/>', href:issue.html_url, text: issue.title, target: '_blank'))
@@ -406,7 +396,7 @@ $.getJSON 'https://api.github.com/repos/mycard/mycard/issues', (data)->
       labels.append $('<span/>',class: 'label', text: label.name, style: "background-color: ##{label.color}")
     element.append labels
     element.appendTo '#issues'
-
+###
 
 room_template = Hogan.compile $('#room_template').html()
 render_room = (room)->
@@ -428,14 +418,14 @@ render_room = (room)->
 
 rooms_connect = ->
   connected = false
-  $('#new_room_quick').nextAll().replaceWith $('<p/>',text: '正在连接...')
-  wsServer = 'ws://mycard-server.my-card.in:9998'
+  $('#new_room_placeholder').nextAll().replaceWith $('<p/>',text: '正在连接...')
+  wsServer = 'wss://my-card.in/rooms.json'
   websocket = new WebSocket(wsServer);
   websocket.onopen = ->
-    $('#new_room_quick').nextAll().replaceWith $('<p/>',text: '正在读取房间列表...')
+    $('#new_room_placeholder').nextAll().replaceWith $('<p/>',text: '正在读取房间列表...')
     console.log("websocket: Connected to WebSocket server.")
   websocket.onclose = (evt)=>
-    $('#new_room_quick').nextAll().replaceWith $('<p/>',text: '大厅连接中断, ').append($('<a />', id: 'reconnect', text: '重新连接'))
+    $('#new_room_placeholder').nextAll().remove().replaceWith $('<p/>',text: '大厅连接中断, ').append($('<a />', id: 'reconnect', text: '重新连接'))
     $('#reconnect').click rooms_connect
     console.log("websocket: Disconnected");
   websocket.onmessage = (evt)->
@@ -453,21 +443,61 @@ rooms_connect = ->
           if element.length
             element.replaceWith render_room(room)
           else
-            $(render_room(room)).hide().insertAfter('#new_room_quick').show('fast')
+            $(render_room(room)).hide().insertAfter('#new_room_placeholder').show('fast')
     else
-      $('#new_room_quick').nextAll().replaceWith (render_room(room) for room in rooms when room.status != 'start')
+      $('#new_room_placeholder').nextAll().remove().replaceWith (render_room(room) for room in rooms when room.status != 'start')
 
     connected = true
   websocket.onerror = (evt)->
     console.log('websocket: Error occured: ' + evt.data);
 
-$('#new_room_quick').nextAll().remove()
-$('#new_room_quick').after $('<p/>',text: '正在读取服务器列表...')
+$('#new_room_placeholder').nextAll().remove()
+$('#new_room_placeholder').after $('<p/>',text: '正在读取服务器列表...')
 servers = {}
-$.getJSON "http://my-card.in/servers.json", (data)->
+$.getJSON "https://my-card.in/servers.json", (data)->
   for server in data
     servers[server.id] = server
   rooms_connect()
+  $("#new_room").submit ->
+    room_name = mycard.room_name(@name.value, null, false,
+      (if @ocg.checked then (if @tcg.checked then 2 else 0) else if @tcg.checked then 1 else 4),
+      parseInt($(this).find('input[name=mode]:checked').val()), parseInt(@start_lp.value), parseInt(@start_hand.value),
+      parseInt(@draw_count.value), @enable_priority.checked, @no_check_deck.checked, @no_shuffle_deck.checked)
+    server = _.sample _.values servers
+    mycard_client.send mycard.room_url_mycard(server.ip, server.port, room_name, $.cookie('username'), $.cookie('password'), false, false)
+    false
+
+  if gui?
+    $("#new_room_share_button").click ->
+      form = $("#new_room")[0]
+      room_name = mycard.room_name(form.name.value, _.random(0, 999), false,
+        (if form.ocg.checked then (if form.tcg.checked then 2 else 0) else if form.tcg.checked then 1 else 4),
+        parseInt($(form).find('input[name=mode]:checked').val()), parseInt(form.start_lp.value),
+        parseInt(form.start_hand.value), parseInt(form.draw_count.value), form.enable_priority.checked,
+        form.no_check_deck.checked, form.no_shuffle_deck.checked)
+      server = _.sample _.values servers
+      mycard_client.send mycard.room_url_mycard(server.ip, server.port, room_name, $.cookie('username'), $.cookie('password'), false, false)
+      room_url = mycard.room_url(server.ip, server.port, room_name, null, null, false, false)
+      clipboard = gui.Clipboard.get()
+      clipboard.set room_url, "text"
+      bootbox.alert("房间地址已复制到剪贴板")
+  else
+    $('#new_room_modal').one 'shown.bs.modal', ->
+      $('#new_room_share_button').zclip
+        path: 'js/ZeroClipboard.swf',
+        copy: ->
+          form = $("#new_room")[0]
+          room_name = mycard.room_name(form.name.value, _.random(0, 999), false,
+            (if form.ocg.checked then (if form.tcg.checked then 2 else 0) else if form.tcg.checked then 1 else 4),
+            parseInt($(form).find('input[name=mode]:checked').val()), parseInt(form.start_lp.value),
+            parseInt(form.start_hand.value), parseInt(form.draw_count.value), form.enable_priority.checked,
+            form.no_check_deck.checked, form.no_shuffle_deck.checked)
+          server = _.sample _.values servers
+          mycard_client.send mycard.room_url_mycard(server.ip, server.port, room_name, $.cookie('username'), $.cookie('password'), false, false)
+          room_url = mycard.room_url(server.ip, server.port, room_name, null, null, false, false)
+        afterCopy: ->
+          $('#new_room_modal').modal('hide')
+          bootbox.alert '房间地址已复制到剪贴板'
 
 ###
 does not work
@@ -480,6 +510,22 @@ $('#rooms').on  'error', 'img', (event)->
 $('#rooms').on 'click', '.room.wait', (event)->
   server = servers[parseInt($(this).data('server-id'))]
   mycard_client.send mycard.room_url_mycard(server.ip, server.port, $(this).data('origin-name'), $.cookie('username'), $.cookie('password'), false, false)
+  if gui?
+    win = gui.Window.get();
+    win.minimize();
 
 $('#config_modal').one 'shown.bs.modal', ->
   $('.slider').slider()
+
+$('#deck_edit').click ->
+  mycard_client.send 'deck'
+
+$.getJSON 'http://my-card.in/users/top.json',
+  limit: 5
+,(data)->
+  $('#users_top').append (for index, user of data
+      $('<tr/>').append([
+        $('<td/>', text: parseInt(index)+1),
+        $('<td/>', text: user.name),
+        $('<td/>', text: user.points),
+      ]))

@@ -407,7 +407,6 @@ html.gui .navbar .container {
 
 /*房间*/
 .room {
-    border: 1px solid #eeeeee;
     border-radius: 4px;
     height: 150px;
     width: 182px;
@@ -619,16 +618,9 @@ html.gui .navbar .container {
     border-right: none;
 }*/
 
-#new_room_quick .form-control {
-    display: inline;
-    width: auto;
-    height: auto;
-    padding: 0;
-    font-size: inherit;
-}
-
-#new_room_quick_custom_button {
-    margin: 5px;
+#new_room_placeholder {
+    border-style:dashed;
+    color: #999;
 }
 
 #back img {
