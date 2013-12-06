@@ -684,3 +684,7 @@ html.gui .navbar .container {
 .window-control img:active {
     background: blue;
 }
+
+#users_top_wrapper {
+    margin-bottom: 11px;
+}

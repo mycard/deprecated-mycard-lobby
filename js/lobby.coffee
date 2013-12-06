@@ -60,10 +60,12 @@ login = (name, password, remember_me)->
     if data
       if remember_me
         $.cookie 'password', password, expires: Number.MAX_VALUE, path: '/'
-        mycard_client.send("auth=#{name}:#{password}") if mycard_client
+        try
+          mycard_client.send("auth=#{name}:#{password}") if mycard_client
       else
         $.cookie 'password', password, path: '/'
-        mycard_client.send("auth=#{name}") if mycard_client
+        try
+          mycard_client.send("auth=#{name}") if mycard_client
 
       if name.indexOf('@') == -1 #mycard帐号
         jid = name + '@my-card.in'
@@ -521,7 +523,7 @@ $('#deck_edit').click ->
   mycard_client.send 'deck'
 
 $.getJSON 'http://my-card.in/users/top.json',
-  limit: 5
+  limit: 7
 ,(data)->
   $('#users_top').append (for index, user of data
       $('<tr/>').append([

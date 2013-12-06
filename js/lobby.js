@@ -85,16 +85,20 @@
             expires: Number.MAX_VALUE,
             path: '/'
           });
-          if (mycard_client) {
-            mycard_client.send("auth=" + name + ":" + password);
-          }
+          try {
+            if (mycard_client) {
+              mycard_client.send("auth=" + name + ":" + password);
+            }
+          } catch (_error) {}
         } else {
           $.cookie('password', password, {
             path: '/'
           });
-          if (mycard_client) {
-            mycard_client.send("auth=" + name);
-          }
+          try {
+            if (mycard_client) {
+              mycard_client.send("auth=" + name);
+            }
+          } catch (_error) {}
         }
         if (name.indexOf('@') === -1) {
           jid = name + '@my-card.in';
@@ -794,7 +798,7 @@
   });
 
   $.getJSON('http://my-card.in/users/top.json', {
-    limit: 5
+    limit: 7
   }, function(data) {
     var index, user;
     return $('#users_top').append((function() {
