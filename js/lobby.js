@@ -132,7 +132,7 @@
   }
 
   $('#login_form').submit(function() {
-    return login(this.name.value, this.password.value);
+    return login(this.name.value, this.password.value, this.remember_me.checked);
   });
 
   $('#new_room_custom_button').click(function() {
@@ -374,6 +374,11 @@
     });
     $('.logged-in').hide();
     $('.not-logged-in').show();
+    try {
+      if (mycard_client) {
+        mycard_client.send("auth=");
+      }
+    } catch (_error) {}
     $('.lobby-page:visible').slideUp();
     $('.lobby-page.login').slideDown();
     return false;
@@ -568,7 +573,7 @@
     }
   });
 
-  $("#roster_search").submit(function() {
+  $("#roster_search").change(function() {
     var candy, jid;
     if (this.name.value.indexOf('@') === -1) {
       jid = this.name.value + '@my-card.in';
@@ -641,13 +646,13 @@
     var connected, websocket, wsServer,
       _this = this;
     connected = false;
-    $('#new_room_placeholder').nextAll().replaceWith($('<p/>', {
+    $('#new_room_placeholder').nextAll().remove().replaceWith($('<p/>', {
       text: '正在连接...'
     }));
     wsServer = 'wss://my-card.in/rooms.json';
     websocket = new WebSocket(wsServer);
     websocket.onopen = function() {
-      $('#new_room_placeholder').nextAll().replaceWith($('<p/>', {
+      $('#new_room_placeholder').nextAll().remove().replaceWith($('<p/>', {
         text: '正在读取房间列表...'
       }));
       return console.log("websocket: Connected to WebSocket server.");

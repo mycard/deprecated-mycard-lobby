@@ -262,7 +262,7 @@ body {
     -webkit-app-region: drag;
 }
 
-a, button, input, iframe, #roster, img, #rooms_tab, #contributing {
+a, button, input, iframe, #roster, #roster_search_result, img, #rooms_tab, #contributing {
     -webkit-app-region: no-drag;
 }
 

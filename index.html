@@ -222,7 +222,7 @@
                             <input name="name" type="text" class="form-control" placeholder="用户名" autofocus>
                             <input name="password" type="password" class="form-control" placeholder="密码">
                             <label class="checkbox">
-                                <input type="checkbox" value="remember-me"> 记住密码
+                                <input type="checkbox" name="remember_me"> 自动登录
                             </label>
                             <button class="btn btn-lg btn-primary btn-block" type="submit">登录</button>
                         </form>
@@ -352,19 +352,20 @@
         </div>
         <aside id="roster_aside">
             <div id="roster_title">
-                <form id="roster_search">
+                <form id="roster_search_wrapper">
                     <div class="input-group">
                         <span class="input-group-btn">
                             <button class="btn btn-default" type="button">
                                 <span class="glyphicon glyphicon-search"></span>
                             </button>
                         </span>
-                        <input type="text" name="name" class="form-control">
+                        <input id="roster_search" type="text" name="name" class="form-control">
                     </div>
                 </form>
                 <!-- /input-group -->
             </div>
             <ul id="roster" class="list-unstyled"></ul>
+            <ul id="roster_search_result" class="list-unstyled" hidden></ul>
         </aside>
     </div>
     <iframe id="candy" src="about:blank" nwdisable></iframe>

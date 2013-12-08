@@ -97,7 +97,7 @@ else if $.cookie('username')
   $('#login_form input[name=name]').val $.cookie('username')
 
 $('#login_form').submit ->
-  login(@name.value, @password.value)
+  login(@name.value, @password.value, @remember_me.checked)
 
 $('#new_room_custom_button').click ->
   $("#new_room_custom").slideToggle(400)
@@ -259,6 +259,8 @@ $('#logout').click ->
   $.removeCookie 'password', path: '/'
   $('.logged-in').hide()
   $('.not-logged-in').show()
+  try
+    mycard_client.send("auth=") if mycard_client
 
   $('.lobby-page:visible').slideUp()
   $('.lobby-page.login').slideDown()
@@ -371,7 +373,7 @@ window.addEventListener 'message', (event)->
           #roster.add new Candy.Core.ChatUser(barefrom, pres)
           $(".xmpp[data-jid=\"#{barefrom}\"]").attr('data-presence-type', type or 'available')
 
-$("#roster_search").submit ->
+$("#roster_search").change ->
   if @name.value.indexOf('@') == -1 #name
     jid = @name.value + '@my-card.in'
   else
@@ -420,11 +422,11 @@ render_room = (room)->
 
 rooms_connect = ->
   connected = false
-  $('#new_room_placeholder').nextAll().replaceWith $('<p/>',text: '正在连接...')
+  $('#new_room_placeholder').nextAll().remove().replaceWith $('<p/>',text: '正在连接...')
   wsServer = 'wss://my-card.in/rooms.json'
   websocket = new WebSocket(wsServer);
   websocket.onopen = ->
-    $('#new_room_placeholder').nextAll().replaceWith $('<p/>',text: '正在读取房间列表...')
+    $('#new_room_placeholder').nextAll().remove().replaceWith $('<p/>',text: '正在读取房间列表...')
     console.log("websocket: Connected to WebSocket server.")
   websocket.onclose = (evt)=>
     $('#new_room_placeholder').nextAll().remove().replaceWith $('<p/>',text: '大厅连接中断, ').append($('<a />', id: 'reconnect', text: '重新连接'))
