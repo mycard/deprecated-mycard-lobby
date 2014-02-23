@@ -46,9 +46,9 @@ pre_load_photo = (jid, name, domain)->
       hash = CryptoJS.MD5(jid);
       "http://en.gravatar.com/avatar/#{hash}?s=48&d=404"
 
-nxb = require "node-xmpp-bosh"
-xmpp_server = nxb.start_bosh
-  host: "localhost"
+#nxb = require "node-xmpp-bosh"
+#xmpp_server = nxb.start_bosh
+#  host: "localhost"
 
 login = (name, password, remember_me)->
   $.cookie 'username', name, expires: Number.MAX_VALUE, path: '/'
@@ -77,7 +77,7 @@ login = (name, password, remember_me)->
 
       $('#userinfo_name').text name
       $('#userinfo_avatar').attr 'src', pre_load_photo(jid, name, domain)
-      $('#candy').attr 'src', "candy/index.html?bosh=http://localhost:5280/http-bind/&jid=#{encodeURIComponent jid}&password=#{encodeURIComponent password}"
+      $('#candy').attr 'src', "candy/index.html?bosh=http://127.0.0.1:5280/http-bind/&jid=#{encodeURIComponent jid}&password=#{encodeURIComponent password}"
 
       $('.not-logged-in').hide()
       $('.logged-in').show()
@@ -147,7 +147,6 @@ set_status = (text)->
 
 mycard_client_connect = (wait = 3)->
   connected = false
-  $('<iframe/>', src: 'mycard:///', hidden: true).appendTo('body')
 
   mycard_client = new WebSocket 'ws://127.0.0.1:9998/'
   mycard_client.onopen = (evt)->
@@ -158,6 +157,7 @@ mycard_client_connect = (wait = 3)->
     console.log 'client disconnected'
     if !connected #从没连上去过
       if wait > 1
+        $('<iframe/>', src: 'mycard:///', hidden: true).appendTo('body')
         mycard_client_connect(wait - 1)
       else
         bootbox.alert("启动本地客户端失败")

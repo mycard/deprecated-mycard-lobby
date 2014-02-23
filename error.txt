@@ -1,0 +1,15 @@
+程序出现了错误，请把你的操作及以下信息发送至zh99998@gmail.com来帮助我们完善程序
+an error occurs, please send your operation and message below to zh99998@gmail.com
+
+#<LoadError: No such file to load -- C:/Users/zh99998/Documents/GitHub/mycard-lobby/websocket/handshake>
+  websocket/eventmachine/server.rb:51:in `post_init'
+em/connection.rb:58:in `block in new'
+em/connection.rb:49:in `instance_eval'
+em/connection.rb:49:in `new'
+eventmachine.rb:1467:in `event_callback'
+eventmachine.rb:187:in `run_machine'
+eventmachine.rb:187:in `run'
+main.rb:208:in `service'
+main.rb:582:in `parse'
+main.rb:692:in `<main>'
+main.rb:1:in `eval'
