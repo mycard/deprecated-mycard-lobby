@@ -18,7 +18,6 @@ if (!token) {
 }
 if (token) {
     user = querystring.parse(new Buffer(token, 'base64').toString());
-    console.log(user);
     $('#game-create-title').val(user.name + ' 的房间');
 
     $('#candy').attr('src', 'candy/index.html?' + querystring.stringify({
