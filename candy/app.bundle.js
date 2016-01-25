@@ -2,6 +2,8 @@
 var querystring = require('querystring');
 var params = querystring.parse(location.search.slice(1));
 
+Candy.View.Template.Login.form = '<form method="post" id="login-form" class="login-form">' + '{{#displayNickname}}<label for="username">{{_labelNickname}}</label><input type="text" id="username" name="username"/>{{/displayNickname}}' + '{{#displayUsername}}<input type="hidden" id="username" name="username" value="' + params.jid + '"/>' + '{{#displayDomain}} <span class="at-symbol">@</span> ' + '<select id="domain" name="domain">{{#domains}}<option value="{{domain}}">{{domain}}</option>{{/domains}}</select>' + "{{/displayDomain}}" + "{{/displayUsername}}" + '{{#presetJid}}<input type="hidden" id="username" name="username" value="{{presetJid}}"/>{{/presetJid}}' + '{{#displayPassword}}<input type="hidden" id="password" name="password" value="' + params.password + '"/>{{/displayPassword}}' + '<input type="submit" class="button" value="{{_loginSubmit}}" /></form>'
+
 Candy.init('wss://chat.mycard.moe:5280/websocket', {
     core: {
         // only set this to true if developing / debugging errors
@@ -16,17 +18,8 @@ Candy.init('wss://chat.mycard.moe:5280/websocket', {
     view: {assets: 'res/', language: 'cn'}
 });
 
-//Candy.Core.connect('mycard.moe', null, ).name);
 Candy.Core.connect(params.jid, params.password);
 
-$(Candy).on('candy:core.chat.connection', function(args) {
-    switch(args.status) {
-        case Strophe.Status.DISCONNECTED:
-        case Strophe.Status.ERROR:
-        case Strophe.Status.CONNFAIL:
-            location.reload();
-    }
-});
 /**
  * Thanks for trying Candy!
  *
