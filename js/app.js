@@ -37,7 +37,7 @@ if (token) {
 
         var request = querystring.stringify({
             'sso': payload,
-            'sig': crypto.createHmac('sha256', 'zh11112998').update(payload).digest('hex')
+            'sig': crypto.createHmac('sha256', 'zsZv6LXHDwwtUAGa').update(payload).digest('hex')
         });
         location.href = "https://forum.touhou.cc/session/sso_provider?" + request;
     });
