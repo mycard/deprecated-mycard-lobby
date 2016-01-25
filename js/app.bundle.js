@@ -34,7 +34,7 @@ if (token) {
 
         var payload = new Buffer(querystring.stringify({
             //nonce: nonce,
-            return_sso_url: 'http://local.mycard.moe:3000'
+            return_sso_url: location.href
         })).toString('base64');
 
         var request = querystring.stringify({
