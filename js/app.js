@@ -45,12 +45,17 @@ if (token) {
 
 // announcements
 var announcements = [
-    {"id": 11, "title": "这是一个测试公告", content: '似乎是好的', image: "http://www.ygobbs.com/Public/pic/show1.jpg"},
+    {
+        "id": 11,
+        "title": "这是一个测试公告",
+        content: '聚集的祈愿将成为新生的闪耀之星。化作光芒闪耀的道路吧！',
+        image: "https://secure.static.tumblr.com/5084e6d3b95d24415ed5dd416842ffee/jucea4l/qE8nlmp8n/tumblr_static_tumblr_static_filename_640.jpg"
+    },
     {
         "id": 12,
         "title": "这是另一个测试公告",
-        content: '星光咕噜毛也是好的',
-        image: "http://bbs.ygobbs.com/data/attachment/forum/201507/19/193730rgervzg4vr74zgvv.gif"
+        content: '看看那被伟大之风引导的翅膀吧！',
+        image: "https://yugiohblog.konami.com/articles/wp-content/uploads/2014/06/DanResult3.jpg"
     }];
 
 $('.carousel-indicators').empty();
@@ -164,7 +169,7 @@ $('#deck-delete').click(function (event) {
  });*/
 
 // local
-var websocket = new WebSocket('ws://127.0.0.1:9999');
+var websocket = new ReconnectingWebSocket('ws://127.0.0.1:9999');
 websocket.onmessage = function (event) {
     var message = JSON.parse(event.data);
     switch (message.event) {
@@ -187,6 +192,7 @@ websocket.onmessage = function (event) {
 websocket.onclose = function () {
     $('#deck').html('<option>Loading...</option>');
     $('.require-local').prop('disabled', true);
+    websocket = new WebSocket('ws://127.0.0.1:9999');
 };
 var local = {
     on: function (event, callback) {
