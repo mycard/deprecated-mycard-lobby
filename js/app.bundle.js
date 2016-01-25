@@ -47,11 +47,11 @@ if (token) {
 
 // announcements
 var announcements = [
-    {"id": 11, "title": "Mr. Nice", content: '测试1', image: "http://www.ygobbs.com/Public/pic/show1.jpg"},
+    {"id": 11, "title": "这是一个测试公告", content: '似乎是好的', image: "http://www.ygobbs.com/Public/pic/show1.jpg"},
     {
         "id": 12,
-        "title": "Narco",
-        content: '测试2',
+        "title": "这是另一个测试公告",
+        content: '星光咕噜毛也是好的',
         image: "http://bbs.ygobbs.com/data/attachment/forum/201507/19/193730rgervzg4vr74zgvv.gif"
     }];
 
@@ -135,7 +135,7 @@ $('#game-match').on('click', function () {
 
 //deck
 
-$('#deck').change(function(event){
+$('#deck').change(function (event) {
     local.send('start', {
         lastdeck: $(this).val()
     })
