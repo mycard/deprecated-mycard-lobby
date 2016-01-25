@@ -40,25 +40,36 @@
         </div>
         <div class="col-md-6">
             <h3>开始游戏</h3>
-            <form>
+            <form id="game">
                 <div class="form-group row">
-                    <label for="game-deck" class="col-sm-2 form-control-label">卡组</label>
+                    <label for="deck" class="col-sm-2 form-control-label">卡组</label>
                     <div class="col-sm-10">
-                        <select id="game-deck" class="form-control">
-                            <option selected>测试卡组1</option>
-                            <option>测试卡组2</option>
+                        <select id="deck" class="form-control require-local" disabled>
+                            <option>Loading...</option>
                         </select>
-                        <button type="button" class="btn btn-secondary">编辑</button>
+                        <div class="btn-group">
+                            <button id="deck-edit" type="button" class="btn btn-secondary require-local" disabled>编辑</button>
+                            <button type="button" class="btn btn-secondary require-local dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" disabled>
+                                <span class="caret"></span>
+                                <span class="sr-only">Toggle Dropdown</span>
+                            </button>
+                            <div class="dropdown-menu">
+                                <a id="deck-delete" class="dropdown-item" href="#">删除</a>
+                                <a class="dropdown-item disabled" href="#" target="_blank">打印</a>
+                                <a class="dropdown-item disabled" href="#" target="_blank">购买实体卡</a>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
 
                 <div class="form-group row">
                     <div class="col-sm-offset-1 col-sm-10">
-                        <button id="game-match" type="button" class="btn btn-primary">自动匹配</button>
-                        <button type="button" class="btn btn-secondary" data-toggle="modal"
-                                data-target="#game-create-modal">创建房间
+                        <button id="game-match" type="button" class="btn btn-primary require-local" disabled>自动匹配</button>
+                        <button type="button" class="btn btn-secondary require-local" data-toggle="modal"
+                                data-target="#game-create-modal" disabled>创建房间
                         </button>
-                        <button type="button" class="btn btn-secondary">查看房间</button>
+                        <button type="button" class="btn btn-secondary require-local" disabled>查看房间</button>
                     </div>
                 </div>
             </form>
@@ -183,16 +194,16 @@
     </div>
 </div>
 
-<div id="game-match-error-modal" class="modal fade" tabindex="-1" role="dialog">
+<div id="alert-modal" class="modal fade" tabindex="-1" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                         aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">匹配失败</h4>
+                <h4 id="alert-title" class="modal-title"></h4>
             </div>
             <div class="modal-body">
-                <p id="game-match-error-status"></p>
+                <p id="alert-message"></p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" data-dismiss="modal">确定</button>

@@ -3,6 +3,7 @@
  */
 var querystring = require('querystring');
 var crypto = require('crypto');
+var path = require('path');
 
 //$.get('http://127.0.0.1:3000/run')
 
@@ -92,13 +93,12 @@ $('#game-create').submit(function (event) {
     var address = '122.0.65.73';
     var port = '233';
 
-    local.send('join', {
-        address: address,
-        port: port,
-        password: password,
-        username: user.name,
-        deck: undefined
-    });
+    local.send('start', {
+        lastip: address,
+        lastport: port,
+        roompass: password,
+        nickname: user.name
+    }, ['-j']);
     $('#game-create-modal').modal('hide');
 });
 
@@ -116,24 +116,83 @@ $('#game-match').on('click', function () {
             }
         })
         .done(function (data, textStatus, jqXHR) {
-            data.username = user.name;
-            local.send('join', data);
+            local.send('start', {
+                lastip: data.address,
+                lastport: data.port,
+                roompass: data.password,
+                nickname: user.name
+            }, ['-j']);
         })
         .fail(function (data, textStatus, jqXHR) {
-            $('#game-match-error-status').text(textStatus);
-            $('#game-match-error-modal').modal('show');
+            alert('匹配失败', textStatus);
         })
         .always(function () {
             $('#game-match').prop('disabled', false).text('自动匹配');
         })
 });
 
-// communication
+//deck
+$('#deck-edit').click(function (event) {
+    event.preventDefault();
+    var deck = $('#deck').val();
+    if (deck == null) return;
+    local.send('start', {
+        lastdeck: deck
+    }, ['-d']);
+});
+$('#deck-delete').click(function (event) {
+    event.preventDefault();
+    var deck = $('#deck').val();
+    if (deck == null) return;
+    local.send('delete', path.join('deck', deck + '.ydk'));
+    $('#deck > option:selected').remove();
+    alert('删除卡组', '卡组 ' + deck + ' 已删除');
+
+});
+/*$('#deck-rename').click(function(){
+ event.preventDefault();
+ local.send('deck-copy', $('#deck').val());
+ });
+ $('#deck-copy').click(function(){
+ event.preventDefault();
+ local.send('deck-copy', $('#deck').val());
+ });*/
+
+// local
 var websocket = new WebSocket('ws://127.0.0.1:9999');
+websocket.onmessage = function (event) {
+    var message = JSON.parse(event.data);
+    switch (message.event) {
+        case 'init':
+            var decks_element = $('#deck');
+            decks_element.empty();
+            for (var i in message.data.decks) {
+                var deck = message.data.decks[i];
+                $('<option/>', {
+                    value: deck.name,
+                    text: deck.name,
+                    selected: deck.name == message.data.system.lastdeck
+                }).appendTo(decks_element);
+            }
+            $('.require-local').prop('disabled', false);
+            $('#game-match').prop('disabled', !!match_request);
+            break
+    }
+};
+websocket.onclose = function () {
+    $('#deck').html('<option>Loading...</option>');
+    $('.require-local').prop('disabled', true);
+};
 var local = {
     on: function (event, callback) {
     },
-    send: function (event, data) {
-        websocket.send(JSON.stringify({event: event, data: data}))
+    send: function (event) {
+        websocket.send(JSON.stringify({event: event, data: Array.prototype.slice.call(arguments, 1)}))
     }
+};
+
+var alert = function (title, message) {
+    $('#alert-title').text(title);
+    $('#alert-message').text(message);
+    $('#alert-modal').modal('show');
 };
