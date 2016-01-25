@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+
+    <title>Sticky Footer Template for Bootstrap</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="css/style.css" rel="stylesheet">
+</head>
+
+<body>
+<div id="main" class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <h3>动态</h3>
+
+
+            <div id="announcements" class="carousel slide" data-ride="carousel">
+                <ol class="carousel-indicators"></ol>
+                <div class="carousel-inner" role="listbox"></div>
+                <a class="left carousel-control" href="#announcements" role="button" data-slide="prev">
+                    <span class="icon-prev" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="right carousel-control" href="#announcements" role="button" data-slide="next">
+                    <span class="icon-next" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <h3>开始游戏</h3>
+            <form>
+                <div class="form-group row">
+                    <label for="game-deck" class="col-sm-2 form-control-label">卡组</label>
+                    <div class="col-sm-10">
+                        <select id="game-deck" class="form-control">
+                            <option selected>测试卡组1</option>
+                            <option>测试卡组2</option>
+                        </select>
+                        <button type="button" class="btn btn-secondary">编辑</button>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-sm-offset-1 col-sm-10">
+                        <button id="game-match" type="button" class="btn btn-primary">自动匹配</button>
+                        <button type="button" class="btn btn-secondary" data-toggle="modal"
+                                data-target="#game-create-modal">创建房间
+                        </button>
+                        <button type="button" class="btn btn-secondary">查看房间</button>
+                    </div>
+                </div>
+            </form>
+            <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+            <!-- mycard大厅 -->
+            <ins class="adsbygoogle"
+                 style="display:inline-block;width:100%;height:160px;"
+                 data-ad-client="ca-pub-1173264056684633"
+                 data-ad-slot="3321506463"></ins>
+            <script>
+                (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
+    </div>
+</div>
+</div>
+
+<iframe id="candy" scrolling="no" frameborder="0"></iframe>
+
+<!-- Button trigger modal -->
+
+
+<!-- Modal -->
+<div class="modal fade" id="game-create-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">创建房间</h4>
+            </div>
+            <form id="game-create">
+                <div class="modal-body">
+                    <div class="form-group row">
+                        <label for="game-create-title" class="col-sm-2 form-control-label">游戏标题</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="game-create-title" name="title">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="game-create-rule" class="col-sm-2 form-control-label">卡片允许</label>
+                        <div class="col-sm-10">
+                            <select class="form-control" id="game-create-rule" name="rule">
+                                <option value="2" selected>OCG</option>
+                                <option value="1">TCG</option>
+                                <option value="3">OCG & TCG</option>
+                                <option value="0">专有卡禁止</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="game-create-mode" class="col-sm-2 form-control-label">决斗模式</label>
+                        <div class="col-sm-10">
+                            <select class="form-control" id="game-create-mode" name="mode">
+                                <option value="1">单据模式</option>
+                                <option value="2" selected>比赛模式</option>
+                                <option value="3">TAG</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 form-control-label">额外选项</label>
+                        <div class="col-sm-4">
+                            <div class="row">
+                                <label for="game-create-start-lp" class="col-sm-6 form-control-label">初始 LP</label>
+                                <div class="col-sm-6">
+                                    <input name="start_lp" type="number" value="8000" min="1" max="65536"
+                                           class="form-control form-control-sm" id="game-create-start-lp">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label for="game-create-start-hand" class="col-sm-6 form-control-label">初始手牌数</label>
+                                <div class="col-sm-6">
+                                    <input name="start_hand" type="number" value="5" min="1" max="16"
+                                           class="form-control form-control-sm" id="game-create-start-hand">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label for="game-create-draw-count" class="col-sm-6 form-control-label">每回合抽卡</label>
+                                <div class="col-sm-6">
+                                    <input name="draw_count" type="number" value="1" min="1" max="16"
+                                           class="form-control form-control-sm" id="game-create-draw-count">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="checkbox">
+                                <label>
+                                    <input name="enable_priority" type="checkbox">允许启动效果优先权
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input name="no_check_deck" type="checkbox">不检查卡组
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input name="no_shuffle_deck" type="checkbox">开局不洗卡组
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2">公开</label>
+                        <div class="col-sm-10">
+                            <div class="checkbox">
+                                <label>
+                                    <input name="public" type="checkbox" checked>在房间列表中公开显示
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                    <button type="submit" class="btn btn-primary">创建</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div id="game-match-error-modal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">匹配失败</h4>
+            </div>
+            <div class="modal-body">
+                <p id="game-match-error-status"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">确定</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<script src="js/jquery-2.2.0.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/app.bundle.js"></script>
+</body>
+</html>
