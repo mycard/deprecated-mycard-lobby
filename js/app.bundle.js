@@ -113,7 +113,7 @@ $('#game-create').submit(function (event) {
 var match_request = null;
 $('#game-match').on('click', function () {
     $(this).prop('disabled', true).text('等待对手');
-    $.post({
+    match_request = $.post({
             url: 'https://api.mycard.moe/ygopro/match',
             timeout: 60000,
             dataType: "json",
@@ -134,6 +134,7 @@ $('#game-match').on('click', function () {
             alert('匹配失败', textStatus);
         })
         .always(function () {
+            match_request = null;
             $('#game-match').prop('disabled', false).text('自动匹配');
         })
 });
@@ -187,13 +188,16 @@ websocket.onmessage = function (event) {
                 }).appendTo(decks_element);
             }
             $('.require-local').prop('disabled', false);
-            $('#game-match').prop('disabled', !!match_request);
             break
     }
 };
 websocket.onclose = function () {
     $('#deck').html('<option>Loading...</option>');
     $('.require-local').prop('disabled', true);
+    if (match_request) {
+        match_request.abort();
+        match_request = null;
+    }
     websocket = new WebSocket('ws://127.0.0.1:9999');
 };
 var local = {
