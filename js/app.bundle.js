@@ -134,6 +134,12 @@ $('#game-match').on('click', function () {
 });
 
 //deck
+
+$('#deck').change(function(event){
+    local.send('start', {
+        lastdeck: $(this).val()
+    })
+});
 $('#deck-edit').click(function (event) {
     event.preventDefault();
     var deck = $('#deck').val();
@@ -149,7 +155,6 @@ $('#deck-delete').click(function (event) {
     local.send('delete', path.join('deck', deck + '.ydk'));
     $('#deck > option:selected').remove();
     alert('删除卡组', '卡组 ' + deck + ' 已删除');
-
 });
 /*$('#deck-rename').click(function(){
  event.preventDefault();
