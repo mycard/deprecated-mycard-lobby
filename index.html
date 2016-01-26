@@ -2,627 +2,219 @@
 <html lang="zh-CN">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="shortcut icon" href="https://my-card.in/favicon.ico">
+    <!--<link rel="icon" href="../../favicon.ico">-->
 
-    <title>MyCard 用户登录</title>
-
-    <script src="js/gui.js"></script>
+    <title>YGOPro</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="css/bootstrap.css" rel="stylesheet">
-    <link href="css/typeahead.js-bootstrap.css" rel="stylesheet">
-    <link href="css/slider.css" rel="stylesheet">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
 
-    <link href="css/lobby.css" rel="stylesheet">
-
-    <template id="room_template">
-        <section id="room_{{id}}" class="room {{status}}" data-origin-name={{origin_name}} data-server-id={{server_id}}>
-            <!-- WTF的复杂 -->
-            <header class="room_top"><span
-                    class="room_icon glyphicon {{#start?}}glyphicon-tower{{/start?}}{{^start}}glyphicon-home{{/start}}"></span>
-                <span class="room_name">{{name}}</span></header>
-            {{#avatar?}}
-            {{^tag?}}
-            <div class="room_body single">
-                <div class="players">
-                    <img src="{{#player_0}}http://my-card.in/users/{{player_0}}.png{{/player_0}}{{^player_0}}img/room_empty.png{{/player_0}}"
-                         onerror="this.src='img/avatar_error_small.png'">
-                </div>
-                <div class="vs">VS</div>
-                <div class="players">
-                    <img src="{{#player_1}}http://my-card.in/users/{{player_1}}.png{{/player_1}}{{^player_1}}img/room_empty.png{{/player_1}}"
-                         onerror="this.src='img/avatar_error_small.png'">
-                </div>
-            </div>
-            {{/tag?}}
-            {{#tag?}}
-            <div class="room_body double">
-                <div class="players">
-                    <img src="{{#player_0}}http://my-card.in/users/{{player_0}}.png{{/player_0}}{{^player_0}}img/room_empty.png{{/player_0}}"
-                         onerror="this.src='img/avatar_error_small.png'">
-                    <img src="{{#player_1}}http://my-card.in/users/{{player_1}}.png{{/player_1}}{{^player_1}}img/room_empty.png{{/player_1}}"
-                         onerror="this.src='img/avatar_error_small.png'">
-                </div>
-                <div class="vs">VS</div>
-                <div class="players">
-                    <img src="{{#player_2}}http://my-card.in/users/{{player_2}}.png{{/player_2}}{{^player_2}}img/room_empty.png{{/player_2}}"
-                         onerror="this.src='img/avatar_error_small.png'">
-                    <img src="{{#player_3}}http://my-card.in/users/{{player_3}}.png{{/player_3}}{{^player_3}}img/room_empty.png{{/player_3}}"
-                         onerror="this.src='img/avatar_error_small.png'">
-                </div>
-            </div>
-            {{/tag?}}
-            {{/avatar?}}
-            {{^avatar?}}
-            {{^tag?}}
-            <div class="room_body single">
-                <div class="players">
-                    <span>{{player_0}}</span>
-                </div>
-                <div class="vs">VS</div>
-                <div class="players">
-                    <span>{{player_1}}</span>
-                </div>
-            </div>
-            {{/tag?}}
-            {{#tag?}}
-            <div class="room_body double">
-                <div class="players">
-                    <span>{{player_0}}</span>
-                    <span>{{player_1}}</span>
-                </div>
-                <div class="vs">VS</div>
-                <div class="players">
-                    <span>{{player_2}}</span>
-                    <span>{{player_3}}</span>
-                </div>
-            </div>
-            {{/tag?}}
-            {{/avatar?}}
-            <footer class="room_member">
-                <!-- WTF!! -->
-                <p class="mode">模式: <span>{{^match?}}{{^tag?}}单局{{/tag?}}{{/match?}}{{#match?}}比赛{{/match?}}{{#tag?}}TAG{{/tag?}}</span>
-                </p> <!---->
-                <!--<img _tmplitem="123661"  src="/assets/images/duel.png" alt="竞技场" class="arena">-->
-            </footer>
-        </section>
-    </template>
-
+    <!-- Custom styles for this template -->
+    <link href="css/style.css" rel="stylesheet">
 </head>
 
 <body>
-<!--<OBJECT id="min" type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11">
-    <PARAM name="Command" value="Minimize">
-</OBJECT>
-<button onclick="min.Click()"><font face="webdings">0</font></button>
-<OBJECT id="max" type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11">
-    <PARAM name="Command" value="Maximize">
-</OBJECT>
-<button onclick="max.Click()"><font face="webdings">1</font></button>
-<OBJECT id="clo" type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11">
-    <PARAM name="Command" value="Close">
-</OBJECT>
-<button onclick="clo.Click()"><font face="webdings">r</font></button>-->
-<div class="navbar navbar-inverse navbar-fixed-top">
-    <a id="back" href="#home_tab" data-toggle="tab" hidden><img src="img/back.png"></a>
+<div id="main" class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <h3>动态</h3>
 
-    <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="#">MyCard</a>
-        </div>
-        <div class="navbar-collapse collapse">
-            <ul id="nav" class="nav navbar-nav logged-in">
-                <li id="lobby_nav" class="active"><a href="#">大厅</a></li>
-                <li id="forum_nav"><a href="#">论坛</a></li>
-                <li id="duelists_nav" class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">《DUELIST》<b class="caret"></b></a>
-                    <ul class="dropdown-menu" id="duelists">
-                        <li><a href="#">Loading...</a></li>
-                    </ul>
-                </li>
-            </ul>
-            <form id="cards_nav" class="navbar-form navbar-left logged-in" role="search"
-                  action="http://www.ourocg.cn/S.aspx#mycard" target="cards">
-                <div class="input-group">
-                    <input id="cards_search" name="key" type="text" class="form-control" placeholder="卡片查询">
 
-                    <div class="input-group-btn">
-                        <button type="submit" class="btn btn-default" tabindex="-1">搜索</button>
-                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
-                                tabindex="-1">
-                            <span class="caret"></span>
-                        </button>
-                        <ul class="dropdown-menu pull-right" role="menu">
-                            <li><a href="http://www.ourocg.cn/advance" target="cards">高级搜索</a></li>
-                            <li><a href="http://www.ourocg.cn/Manual.aspx" target="cards">搜索语法</a></li>
-                            <li class="divider"></li>
-                            <li><a href="http://www.ourocg.cn/Cards/Package" target="cards">卡包</a></li>
-                            <li><a href="http://www.ourocg.cn/Cards/Lists-1-1" target="cards">全部怪兽</a></li>
-                            <li><a href="http://www.ourocg.cn/Cards/Lists-2-1" target="cards">全部魔陷</a></li>
-                            <li><a href="http://www.ourocg.cn/Limit-Latest" target="cards">禁限卡表</a></li>
-                            <li class="divider"></li>
-                            <li><a href="http://blog.ocgsoft.cn/%E9%97%AE%E9%A2%98%E5%8F%8D%E9%A6%88" target="cards">问题反馈</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </form>
-
-            <ul id="userinfo" class="nav navbar-nav navbar-right logged-in">
-                <!-- TODO: 重构 -->
-                <li>
-                    <a class="dropdown-toggle" data-toggle="dropdown" style="padding: 1px 5px 1px 5px">
-                        <img id="userinfo_avatar"
-                             src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
-
-                        <div id="userinfo_level">Lv12</div>
-                    </a>
-                    <ul class="dropdown-menu" style="right:auto">
-                        <li><a href="#">个人中心</a></li>
-                        <li><a id="logout" href="#">退出登录</a></li>
-                    </ul>
-                </li>
-                <li><a id="userinfo_name" class="dropdown-toggle" data-toggle="dropdown"></a>
-                    <!--<ul class="dropdown-menu" style="right:auto">
-                        <li><a href="#">个人中心</a></li>
-                        <li><a id="logout" href="#">退出登录</a></li>
-                    </ul>-->
-                    <div id="userinfo_buttons" class="btn-group btn-group-xs">
-                        <button id="deck_edit" type="button" class="btn btn-default">卡组编辑</button>
-                        <a data-toggle="modal" href="#config_modal" class="btn btn-default">设置</a>
-                    </div>
-                </li>
-            </ul>
-            <form id="register_form" class="navbar-form navbar-right not-logged-in" action="https://my-card.in/register"
-                  target="_blank">
-                <button type="submit" class="btn btn-success">注册</button>
-            </form>
-        </div>
-        <!--/.navbar-collapse -->
-
-    </div>
-    <!--/.navbar-collapse -->
-
-    <div id="window_control" hidden>
-        <a id="window_control_minimize" class="window-control"><img src="img/minimize.png"></a>
-        <a id="window_control_maximize" class="window-control"><img src="img/maximize.png"></a>
-        <a id="window_control_unmaximize" hidden class="window-control"><img src="img/unmaximize.png"></a>
-        <a id="window_control_close" class="window-control"><img src="img/close.png"></a>
-    </div>
-</div>
-<div class="lobby-page login">
-    <div id="wrap">
-        <!-- Main jumbotron for a primary marketing message or call to action -->
-        <div class="col-lg-6">
-            <!-- /.input-group -->
-        </div>
-        <div class="jumbotron">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-8">
-                        <div>
-                            <!--<img src="http://wiki.oekaki.so/images/1/1f/Tan_thumb.png" class="pull-left">
-                            <ul id="announcements" class="list-unstyled pull-left">
-                                公告读取中...
-                            </ul>-->
-                        </div>
-                    </div>
-
-                    <div class="col-md-4 panel panel-default">
-                        <form class="form-signin" id="login_form">
-                            <h2 class="form-signin-heading"></h2>
-                            <input name="name" type="text" class="form-control" placeholder="用户名" autofocus>
-                            <input name="password" type="password" class="form-control" placeholder="密码">
-                            <label class="checkbox">
-                                <input type="checkbox" name="remember_me"> 自动登录
-                            </label>
-                            <button class="btn btn-lg btn-primary btn-block" type="submit">登录</button>
-                        </form>
-                    </div>
-                </div>
+            <div id="announcements" class="carousel slide" data-ride="carousel">
+                <ol class="carousel-indicators"></ol>
+                <div class="carousel-inner" role="listbox"></div>
+                <a class="left carousel-control" href="#announcements" role="button" data-slide="prev">
+                    <span class="icon-prev" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="right carousel-control" href="#announcements" role="button" data-slide="next">
+                    <span class="icon-next" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
             </div>
         </div>
-    </div>
-
-    <footer id="footer">
-        <hr>
-        <div class="container">
-            <ul class="list-inline text-muted credit pull-left">
-                <li>© 2013 MyCard</li>
-                <li><a href="https://my-card.in/tos">服务条款</a></li>
-                <li><a href="https://my-card.in/faq">常见问题</a></li>
-                <li class="mycard_status"></li>
-            </ul>
-
-        <span id="lang-chooser-wrap" class="lang-chooser-wrap pull-right">
-            <img src="https://ssl.gstatic.com/images/icons/ui/common/universal_language_settings-21.png">
-               <select id="lang-chooser" class="lang-chooser">
-                   <option value="zh-TW">‪繁體中文‬</option>
-                   <option value="zh-CN" selected="selected">‪简体中文‬</option>
-                   <option value="ja">‪日本語‬</option>
-                   <option value="en">‪English (United States)‬</option>
-               </select>
-        </span>
-        </div>
-    </footer>
-</div>
-<div class="lobby-page lobby" id="lobby" hidden>
-    <div id="lobby_wrap">
-        <div class="tab-content container">
-            <div class="tab-pane active" id="home_tab">
-
-                <div class="row">
-                    <a id="match" href="#" class="btn btn-primary btn-lg">自动匹配</a>
-                    <a href="#rooms_tab" data-toggle="tab" class="btn btn-primary btn-lg">自定义游戏</a>
-                    <a data-toggle="modal" href="#rooms_modal" class="btn btn-default btn-lg">备用模式</a>
-                    <a data-toggle="modal" href="#rooms_modal" class="btn btn-default btn-lg">备用模式</a>
-                    <a data-toggle="modal" href="#rooms_modal" class="btn btn-primary btn-lg pull-right">新手教学</a>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-8">
-                        <div id="carousel-example-generic" class="carousel slide">
-                            <!-- Indicators -->
-                            <ol class="carousel-indicators">
-                                <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-                                <li data-target="#carousel-example-generic" data-slide-to="1"></li>
-                                <li data-target="#carousel-example-generic" data-slide-to="2"></li>
-                            </ol>
-
-                            <!-- Wrapper for slides -->
-                            <div class="carousel-inner">
-                                <div class="item active">
-                                    <a href="http://nwbbs.com/thread-762047-1-1.html" target="_blank"><img
-                                            class="img-thumbnail"
-                                            src="img/Unnamed.png"></a>
-
-                                    <div class="carousel-caption">
-                                        <h3>首届NWBBS@鸷光杯网络赛</h3>
-                                    </div>
-                                </div>
-                                <div class="item">
-                                    <a href="http://nwbbs.com/thread-762047-1-1.html" target="_blank"><img
-                                            class="img-thumbnail"
-                                            src="img/11337592_215642235124_2.jpg"></a>
-
-                                    <div class="carousel-caption">
-                                        <h3>喵喵喵喵喵喵喵</h3>
-                                    </div>
-                                </div>
-                                <div class="item">
-                                    <a href="http://nwbbs.com/thread-762047-1-1.html" target="_blank"><img
-                                            class="img-thumbnail"
-                                            src="img/2010938.jpg"></a>
-
-                                    <div class="carousel-caption">
-                                        <h3>汪汪汪汪汪汪汪</h3>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Controls -->
-                            <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
-                                <span class="icon-prev"></span>
-                            </a>
-                            <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
-                                <span class="icon-next"></span>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col-md-1"></div>
-                    <div class="col-md-4" style="padding-left: 0">
-                        <table id="users_top_wrapper" class="table table-hover">
-                            <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>用户名</th>
-                                <th>积分</th>
-                            </tr>
-                            </thead>
-                            <tbody id="users_top"></tbody>
-                        </table>
-                        <!--<div id="contributing">
-                            <div class="panel panel-default">
-                                <div class="panel-heading">帮助 MyCard 做的更好</div>
-                                <ul class="list-group"
-                                    style="font-size:12px;text-overflow: ellipsis;white-space: nowrap"
-                                    id="issues"></ul>
-                            </div>
-                        </div>-->
-                        <!--<a href="#">
-                            <img src="http://my-card.in/assets/images/index/support.png">
-                            <img src="img/donate_paypal.png">
-                        </a>-->
-                    </div>
-                </div>
-            </div>
-            <div class="tab-pane" id="rooms_tab">
-                <section id="rooms">
-                    <button id="new_room_placeholder" type="button" class="btn btn-default btn-lg room wait" data-toggle="modal" href="#new_room_modal"> <span class="glyphicon glyphicon-plus"></span> 建立房间</button>
-                </section>
-            </div>
-        </div>
-        <aside id="roster_aside">
-            <div id="roster_title">
-                <form id="roster_search_wrapper">
-                    <div class="input-group">
-                        <span class="input-group-btn">
-                            <button class="btn btn-default" type="button">
-                                <span class="glyphicon glyphicon-search"></span>
+        <div class="col-md-6">
+            <h3>开始游戏</h3>
+            <form id="game">
+                <div class="form-group row">
+                    <label for="deck" class="col-sm-2 form-control-label">卡组</label>
+                    <div class="col-sm-10">
+                        <select id="deck" class="form-control require-local" disabled>
+                            <option>Loading...</option>
+                        </select>
+                        <div class="btn-group">
+                            <button id="deck-edit" type="button" class="btn btn-secondary require-local" disabled>编辑</button>
+                            <button type="button" class="btn btn-secondary require-local dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" disabled>
+                                <span class="caret"></span>
+                                <span class="sr-only">Toggle Dropdown</span>
                             </button>
-                        </span>
-                        <input id="roster_search" type="text" name="name" class="form-control">
+                            <div class="dropdown-menu">
+                                <a id="deck-delete" class="dropdown-item" href="#">删除</a>
+                                <a class="dropdown-item disabled" href="#" target="_blank">打印</a>
+                                <a class="dropdown-item disabled" href="#" target="_blank">购买实体卡</a>
+                            </div>
+                        </div>
+
                     </div>
-                </form>
-                <!-- /input-group -->
-            </div>
-            <ul id="roster" class="list-unstyled"></ul>
-            <ul id="roster_search_result" class="list-unstyled" hidden></ul>
-        </aside>
-    </div>
-    <iframe id="candy" src="about:blank" nwdisable></iframe>
-</div>
-<div class="lobby-page forum" hidden>
-    <iframe src="https://forum.my-card.in/" nwdisable nwfaketop></iframe>
-</div>
-
-<div class="lobby-page web" hidden>
-    <iframe id="browser" name="browser" src="about:blank" nwdisable nwfaketop></iframe>
-</div>
-
-<div class="lobby-page cards" hidden>
-    <iframe id="cards" name="cards" src="about:blank" horizontalscrolling="no" nwdisable nwfaketop></iframe>
-</div>
-
-
-<!-- /container -->
-
-
-<!-- Modal -->
-<div class="modal fade" id="new_room_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-     aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">建立房间</h4>
-            </div>
-            <div class="modal-body">
-                <div>
-                    <form class="form-horizontal" role="form" id="new_room">
-                        <div class="form-group">
-                            <label for="new_room_name" class="col-md-2 control-label">房间名</label>
-
-                            <div class="col-md-10">
-                                <input type="email" class="form-control" id="new_room_name" name="name">
-                            </div>
-                        </div>
-                        <!-- Multiple Radios (inline) -->
-                        <div class="form-group">
-                            <label class="col-md-2 control-label" for="new_room_mode">决斗模式</label>
-
-                            <div class="col-md-10" id="new_room_mode">
-                                <label class="radio-inline" for="new_room_mode-0">
-                                    <input type="radio" name="mode" id="new_room_mode-0" value="0">
-                                    单局模式
-                                </label>
-                                <label class="radio-inline" for="new_room_mode-1">
-                                    <input type="radio" name="mode" id="new_room_mode-1" value="1" checked>
-                                    比赛模式
-                                </label>
-                                <label class="radio-inline" for="new_room_mode-2">
-                                    <input type="radio" name="mode" id="new_room_mode-2" value="2">
-                                    TAG双打
-                                </label>
-                            </div>
-                        </div>
-
-                        <div id="new_room_custom" hidden>
-                            <hr>
-                            <!-- Multiple Checkboxes (inline) -->
-                            <div class="form-group">
-                                <label class="col-md-2 control-label" for="new_room_rule">卡片允许</label>
-
-                                <div class="col-md-10" id="new_room_rule">
-                                    <label class="checkbox-inline" for="new_room_rule-0">
-                                        <input type="checkbox" name="ocg" id="new_room_rule-0" value="ocg" checked>
-                                        OCG
-                                    </label>
-                                    <label class="checkbox-inline" for="new_room_rule-1">
-                                        <input type="checkbox" name="tcg" id="new_room_rule-1" value="tcg">
-                                        TCG
-                                    </label>
-                                </div>
-                            </div>
-                            <!-- Multiple Checkboxes (inline) -->
-                            <div class="form-group">
-                                <label class="col-md-2 control-label" for="new_room_extras">额外选项</label>
-
-                                <div class="col-md-10" id="new_room_extras">
-                                    <label class="checkbox-inline" for="new_room_enable_priority">
-                                        <input type="checkbox" name="enable_priority" id="new_room_enable_priority"
-                                               value="enable_priority">
-                                        允许启动效果优先权
-                                    </label>
-                                    <label class="checkbox-inline" for="new_room_no_check_deck">
-                                        <input type="checkbox" name="no_check_deck" id="new_room_no_check_deck"
-                                               value="no_check_deck">
-                                        不检查卡组
-                                    </label>
-                                    <label class="checkbox-inline" for="new_room_no_shuffle_deck">
-                                        <input type="checkbox" name="no_shuffle_deck" id="new_room_no_shuffle_deck"
-                                               value="no_shuffle_deck">
-                                        开局不洗卡组
-                                    </label>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="col-md-2 control-label" for="new_room_start_lp">初始LP</label>
-
-                                <div class="col-md-4">
-                                    <input id="new_room_start_lp" name="start_lp" type="number" placeholder=""
-                                           class="form-control input-md" value="8000">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-md-2 control-label" for="new_room_start_hand">初始手牌数</label>
-
-                                <div class="col-md-4">
-                                    <input id="new_room_start_hand" name="start_hand" type="number" placeholder=""
-                                           class="form-control input-md" value="5">
-                                </div>
-                                <label class="col-md-2 control-label" for="new_room_draw_count">每回合抽卡</label>
-
-                                <div class="col-md-4">
-                                    <input id="new_room_draw_count" name="draw_count" type="number" placeholder=""
-                                           class="form-control input-md" value="1">
-                                </div>
-                            </div>
-                        </div>
-                    </form>
                 </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" id="new_room_custom_button" class="btn btn-default pull-left">高级</button>
-                <button id="new_room_share_button" type="button" class="btn btn-primary" data-dismiss="modal">约战
-                </button>
-                <button id="new_room_button" type="button" class="btn btn-primary" data-dismiss="modal">打野</button>
-            </div>
+
+                <div class="form-group row">
+                    <div class="col-sm-offset-1 col-sm-10">
+                        <button id="game-match" type="button" class="btn btn-primary require-local" disabled>自动匹配</button>
+                        <button type="button" class="btn btn-secondary require-local" data-toggle="modal"
+                                data-target="#game-create-modal" disabled>创建房间
+                        </button>
+                        <button type="button" class="btn btn-secondary require-local" disabled>查看房间</button>
+                    </div>
+                </div>
+            </form>
+            <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+            <!-- mycard大厅 -->
+            <ins class="adsbygoogle"
+                 style="display:inline-block;width:100%;height:160px;"
+                 data-ad-client="ca-pub-1173264056684633"
+                 data-ad-slot="3321506463"></ins>
+            <script>
+                (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
         </div>
-        <!-- /.modal-content -->
     </div>
-    <!-- /.modal-dialog -->
 </div>
-<!-- /.modal -->
+
+<iframe id="candy" scrolling="no" frameborder="0"></iframe>
+
+<!-- Button trigger modal -->
+
 
 <!-- Modal -->
-<div class="modal fade" id="config_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+<div class="modal fade" id="game-create-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">设置</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">创建房间</h4>
             </div>
-            <div class="modal-body">
-                <form class="form-horizontal" role="form">
-                    <div class="form-group form-inline">
-                        <div class="checkbox">
-                            <label>
-                                <input type="checkbox" value="">
-                                音效
-                            </label>
+            <form id="game-create">
+                <div class="modal-body">
+                    <div class="form-group row">
+                        <label for="game-create-title" class="col-sm-2 form-control-label">游戏标题</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="game-create-title" name="title">
                         </div>
-                        <input type="text" class="slider" value="" data-slider-min="0" data-slider-max="100"
-                               data-slider-step="1" data-slider-value="100">
                     </div>
-                    <div class="form-group form-inline">
-                        <div class="checkbox">
-                            <label>
-                                <input type="checkbox" value="">
-                                音乐
-                            </label>
-                        </div>
-                        <input type="text" class="slider" value="" data-slider-min="0" data-slider-max="100"
-                               data-slider-step="1" data-slider-value="100">
-                    </div>
-                    <div class="form-group">
-                        <label for="config_language" class="col-md-2 control-label">语言</label>
-
-                        <div class="col-md-10">
-                            <select id="config_language" class="form-control">
-                                <option value="zh-TW">‪繁體中文‬</option>
-                                <option value="zh-CN" selected="selected">‪简体中文‬</option>
-                                <option value="ja">‪日本語‬</option>
-                                <option value="en">‪English (United States)‬</option>
+                    <div class="form-group row">
+                        <label for="game-create-rule" class="col-sm-2 form-control-label">卡片允许</label>
+                        <div class="col-sm-10">
+                            <select class="form-control" id="game-create-rule" name="rule">
+                                <option value="2" selected>OCG</option>
+                                <option value="1">TCG</option>
+                                <option value="3">OCG & TCG</option>
+                                <option value="0">专有卡禁止</option>
                             </select>
                         </div>
                     </div>
-
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                <button type="button" class="btn btn-primary">确定</button>
-            </div>
+                    <div class="form-group row">
+                        <label for="game-create-mode" class="col-sm-2 form-control-label">决斗模式</label>
+                        <div class="col-sm-10">
+                            <select class="form-control" id="game-create-mode" name="mode">
+                                <option value="1">单据模式</option>
+                                <option value="2" selected>比赛模式</option>
+                                <option value="3">TAG</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 form-control-label">额外选项</label>
+                        <div class="col-sm-4">
+                            <div class="row">
+                                <label for="game-create-start-lp" class="col-sm-6 form-control-label">初始 LP</label>
+                                <div class="col-sm-6">
+                                    <input name="start_lp" type="number" value="8000" min="1" max="65536"
+                                           class="form-control form-control-sm" id="game-create-start-lp">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label for="game-create-start-hand" class="col-sm-6 form-control-label">初始手牌数</label>
+                                <div class="col-sm-6">
+                                    <input name="start_hand" type="number" value="5" min="1" max="16"
+                                           class="form-control form-control-sm" id="game-create-start-hand">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label for="game-create-draw-count" class="col-sm-6 form-control-label">每回合抽卡</label>
+                                <div class="col-sm-6">
+                                    <input name="draw_count" type="number" value="1" min="1" max="16"
+                                           class="form-control form-control-sm" id="game-create-draw-count">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="checkbox">
+                                <label>
+                                    <input name="enable_priority" type="checkbox">允许启动效果优先权
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input name="no_check_deck" type="checkbox">不检查卡组
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input name="no_shuffle_deck" type="checkbox">开局不洗卡组
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2">公开</label>
+                        <div class="col-sm-10">
+                            <div class="checkbox">
+                                <label>
+                                    <input name="public" type="checkbox" checked>在房间列表中公开显示
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                    <button type="submit" class="btn btn-primary">创建</button>
+                </div>
+            </form>
         </div>
-        <!-- /.modal-content -->
     </div>
-    <!-- /.modal-dialog -->
 </div>
-<!-- /.modal -->
 
-<div class="modal fade" id="decks_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div id="alert-modal" class="modal fade" tabindex="-1" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">卡组编辑</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 id="alert-title" class="modal-title"></h4>
             </div>
             <div class="modal-body">
-                <form class="form-horizontal" role="form">
-
-
-                </form>
+                <p id="alert-message"></p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                <button type="button" class="btn btn-primary">确定</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal">确定</button>
             </div>
-        </div>
-        <!-- /.modal-content -->
-    </div>
-    <!-- /.modal-dialog -->
-</div>
-<!-- /.modal -->
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 
-
-
-<!-- Bootstrap core JavaScript
-================================================== -->
-<!-- Placed at the end of the document so the pages load faster -->
-<!--<audio autoplay loop>
-    <source src="audio/bgm/title.ogg">
-</audio>-->
-<script src="js/jquery-2.0.3.min.js"></script>
+<script src="js/jquery-2.2.0.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
-
-<script src="js/jquery.cookie.js"></script>
-<script src="js/jquery.zclip.min.js"></script>
-<script src="js/bootbox.min.js"></script>
-<script src="js/typeahead.min.js"></script>
-<script src="js/bootstrap-slider.js"></script>
-
-<script src="js/hogan-2.0.0.js"></script>
-<script src="js/md5.js"></script>
-
-<script type="text/javascript" src="js/noty/jquery.noty.js"></script>
-<script type="text/javascript" src="js/noty/layouts/topRight.js"></script>
-<script type="text/javascript" src="js/noty/themes/default.js"></script>
-
-<script src="js/underscore-min.js"></script>
-
-<script src="js/mycard.js"></script>
-<script src="js/lobby.js"></script>
-
-<script>
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-    ga('create', 'UA-29582484-3', 'my-card.in');
-    ga('send', 'pageview');
-
-</script>
-
+<script src="js/reconnecting-websocket.js"></script>
+<script src="js/app.bundle.js"></script>
 </body>
 </html>

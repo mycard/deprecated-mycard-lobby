@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #################
 ## mycard
 #################
@@ -227,3 +228,6 @@ pip-log.txt
 
 #Mr Developer
 .mr.developer.cfg
+=======
+/.idea/
+>>>>>>> d374b316947037477e9e3a7bdc92b61e7b2b2cf2
