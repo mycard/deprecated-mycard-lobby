@@ -41,3 +41,11 @@ select.form-control{
 #game-create-modal .form-control-label {
     padding-right: 0;
 }
+
+#install-browse-label {
+    margin-bottom: inherit;
+}
+#install-browse{
+    display: none;
+
+}

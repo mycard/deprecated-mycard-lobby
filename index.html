@@ -47,8 +47,10 @@
                             <option>载入中...</option>
                         </select>
                         <div class="btn-group">
-                            <button id="deck-edit" type="button" class="btn btn-secondary require-local" disabled>编辑</button>
-                            <button type="button" class="btn btn-secondary require-local dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" disabled>
+                            <button id="deck-edit" type="button" class="btn btn-secondary require-local" disabled>编辑
+                            </button>
+                            <button type="button" class="btn btn-secondary require-local dropdown-toggle"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" disabled>
                                 <span class="caret"></span>
                                 <!--<span class="sr-only">Toggle Dropdown</span>-->
                             </button>
@@ -64,7 +66,8 @@
 
                 <div class="form-group row">
                     <div class="col-sm-offset-1 col-sm-10">
-                        <button id="game-match" type="button" class="btn btn-primary require-local" disabled>自动匹配</button>
+                        <button id="game-match" type="button" class="btn btn-primary require-local" disabled>自动匹配
+                        </button>
                         <button type="button" class="btn btn-secondary require-local" data-toggle="modal"
                                 data-target="#game-create-modal" disabled>创建房间
                         </button>
@@ -124,7 +127,7 @@
                         <label for="game-create-mode" class="col-sm-2 form-control-label">决斗模式</label>
                         <div class="col-sm-10">
                             <select class="form-control" id="game-create-mode" name="mode">
-                                <option value="1">单据模式</option>
+                                <option value="1">单局模式</option>
                                 <option value="2" selected>比赛模式</option>
                                 <option value="3">TAG</option>
                             </select>
@@ -193,6 +196,40 @@
     </div>
 </div>
 
+<div class="modal fade" id="install-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>-->
+                <h4 class="modal-title">安装 <span id="install-title"></span></h4>
+            </div>
+            <form id="install">
+                <div class="modal-body">
+                    <div class="form-group row">
+                        <label for="game-create-title" class="col-sm-2 form-control-label">安装到</label>
+                        <div class="col-sm-10 input-group">
+                            <input type="text" class="form-control" id="install-path" name="path">
+                            <div id="install-browse-wrapper" class="input-group-addon">
+                                <label id="install-browse-label">
+                                    浏览
+                                    <input type="file" id="install-browse" webkitdirectory directory>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <!--<button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>-->
+                    <button type="submit" class="btn btn-primary">安装</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 <div id="alert-modal" class="modal fade" tabindex="-1" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -213,6 +250,7 @@
 
 <script src="js/jquery-2.2.0.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
+<script src="js/jquery.serializeObject.js"></script>
 <script src="js/reconnecting-websocket.js"></script>
 <script src="js/app.bundle.js"></script>
 </body>

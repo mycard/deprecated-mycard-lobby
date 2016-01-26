@@ -70,10 +70,7 @@ $('.carousel-item:first-child').addClass('active');
 // create game
 $('#game-create').submit(function (event) {
     event.preventDefault();
-    var options = {};
-    $(this).serializeArray().forEach(function (item) {
-        options[item.name] = item.value
-    });
+    var options = $(this).serializeObject();
     var options_buffer = new Buffer(6);
     /* rule: 3bits, mode: 2bits, extra: 3bits*/
     /* lp: 16bits, hand: 4bits, count: 4bits*/
@@ -98,12 +95,12 @@ $('#game-create').submit(function (event) {
     var address = '122.0.65.73';
     var port = '233';
 
-    local.send('start', {
+    eventemitter.send('action', 'ygopro', 'join', {
         lastip: address,
         lastport: port,
         roompass: password,
         nickname: user.name
-    }, ['-j']);
+    });
     $('#game-create-modal').modal('hide');
 });
 
@@ -121,12 +118,12 @@ $('#game-match').on('click', function () {
             }
         })
         .done(function (data, textStatus, jqXHR) {
-            local.send('start', {
+            eventemitter.send('action', 'ygopro', 'join', {
                 lastip: data.address,
                 lastport: data.port,
                 roompass: data.password,
                 nickname: user.name
-            }, ['-j']);
+            });
         })
         .fail(function (data, textStatus, jqXHR) {
             alert('匹配失败', textStatus);
@@ -140,57 +137,108 @@ $('#game-match').on('click', function () {
 //deck
 
 $('#deck').change(function (event) {
-    local.send('start', {
+    eventemitter.send('write', 'ygopro', 'system.conf', {
         lastdeck: $(this).val()
-    })
+    }, true)
 });
 $('#deck-edit').click(function (event) {
     event.preventDefault();
     var deck = $('#deck').val();
     if (deck == null) return;
-    local.send('start', {
+    eventemitter.send('action', 'ygopro', 'deck', {
         lastdeck: deck
-    }, ['-d']);
+    });
 });
 $('#deck-delete').click(function (event) {
     event.preventDefault();
     var deck = $('#deck').val();
     if (deck == null) return;
-    local.send('delete', path.join('deck', deck + '.ydk'));
+    eventemitter.send('delete', path.join('deck', deck + '.ydk'));
     $('#deck > option:selected').remove();
     alert('删除卡组', '卡组 ' + deck + ' 已删除');
 });
 /*$('#deck-rename').click(function(){
  event.preventDefault();
- local.send('deck-copy', $('#deck').val());
+ eventemitter.send('deck-copy', $('#deck').val());
  });
  $('#deck-copy').click(function(){
  event.preventDefault();
- local.send('deck-copy', $('#deck').val());
+ eventemitter.send('deck-copy', $('#deck').val());
  });*/
-
-// local
+var install_app = null;
+// eventemitter
 var websocket = new ReconnectingWebSocket('ws://127.0.0.1:9999');
-websocket.onmessage = function (event) {
-    var message = JSON.parse(event.data);
-    switch (message.event) {
-        case 'init':
+var db;
+
+function update(app, local, reason) {
+    if (reason == 'install-failed') {
+        new Notification(app.locales['zh-CN'].name, {body: '安装失败'});
+    }
+    if (app.id == 'ygopro') {
+        console.log(2, app, local);
+        if (local.status == 'installing') {
+            console.log(3, app, local);
+            $('#deck').html('<option>安装中...</option>');
+        } else if (local.status == 'ready') {
             var decks_element = $('#deck');
             decks_element.empty();
-            for (var i in message.data.decks) {
-                var deck = message.data.decks[i];
-                $('<option/>', {
-                    value: deck.name,
-                    text: deck.name,
-                    selected: deck.name == message.data.system.lastdeck
-                }).appendTo(decks_element);
+            for (var file in local.files) {
+                var matched = file.match(/deck(?:\/|\\)(.*).ydk/)
+                if (matched) {
+                    var deck = matched[1];
+                    $('<option/>', {
+                        value: deck,
+                        text: deck,
+                        selected: deck == local.files['system.conf'].lastdeck
+                    }).appendTo(decks_element);
+                }
             }
             $('.require-local').prop('disabled', false);
-            break
+        }
+    }
+}
+websocket.onmessage = function (event) {
+    var message = JSON.parse(event.data);
+    console.log(message);
+    switch (message.event) {
+        case 'bundle':
+            var app = message.data[0][0];
+            if (db.platform == 'darwin') {
+                eventemitter.send('install', app, {})
+            } else {
+                $('#install-title').text(app.locales['zh-CN'].name);
+                $('#install-modal').modal('show');
+                $('#install').submit(function (event) {
+                    event.preventDefault();
+                    var options = $(this).serializeObject();
+                    eventemitter.send('install', app, options);
+                    $('#install-modal').modal('hide');
+                });
+                $('#install-path').val(path.join(db.default_apps_path, app.id));
+                $('#install-browse').change(function (event) {
+                    var file = event.target.files[0];
+                    if (file) {
+                        $('#install-path').val(file.path);
+                    }
+                });
+            }
+            break;
+        case 'init':
+            db = message.data[0];
+            for (var app_id in db.local) {
+                update(db.apps[app_id], db.local[app_id]);
+            }
+            break;
+        case 'update':
+            var app = message.data[0];
+            var local = message.data[1];
+            var reason = message.data[2];
+            update(app, local, reason);
+
     }
 };
 websocket.onclose = function () {
-    $('#deck').html('<option>Loading...</option>');
+    $('#deck').html('<option>载入中...</option>');
     $('.require-local').prop('disabled', true);
     if (match_request) {
         match_request.abort();
@@ -198,7 +246,7 @@ websocket.onclose = function () {
     }
     websocket = new WebSocket('ws://127.0.0.1:9999');
 };
-var local = {
+var eventemitter = {
     on: function (event, callback) {
     },
     send: function (event) {
@@ -211,3 +259,7 @@ var alert = function (title, message) {
     $('#alert-message').text(message);
     $('#alert-modal').modal('show');
 };
+
+if (!navigator.userAgent.match(/mycard/)) {
+    $('#install-browse-wrapper').remove()
+}
