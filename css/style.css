@@ -55,3 +55,12 @@ select.form-control {
     display: none;
 
 }
+
+#status {
+    color: gray;
+    font-size: 1.2rem;
+    font-weight: initial;
+    float: right;
+    margin-right: 5rem;
+    line-height: 1.6;
+}

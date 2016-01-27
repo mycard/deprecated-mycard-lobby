@@ -47,6 +47,11 @@ if (token) {
     });
 }
 
+if(!user){
+    $(document.body).html('正在跳转到登录页面...')
+    return;
+}
+
 // announcements
 var announcements = [
     {
@@ -178,9 +183,12 @@ function update(app, local, reason) {
     if (reason == 'install-failed') {
         new Notification(app.locales['zh-CN'].name, {body: '安装失败'});
     }
+    if (reason == 'install-successful') {
+        new Notification(app.locales['zh-CN'].name, {body: '安装完成'});
+    }
     if (app.id == 'ygopro') {
         if (local.status == 'installing') {
-            $('#deck').html('<option>安装中...</option>');
+            $('#status').html('正在安装 <i class="icon-spin animate-spin"></i>');
         } else if (local.status == 'ready') {
             var decks_element = $('#deck');
             decks_element.empty();
@@ -195,6 +203,7 @@ function update(app, local, reason) {
                     }).appendTo(decks_element);
                 }
             }
+            $('#status').empty();
             $('.require-local').prop('disabled', false);
         }
     }
@@ -239,7 +248,7 @@ websocket.onmessage = function (event) {
     }
 };
 websocket.onclose = function () {
-    $('#deck').html('<option>载入中...</option>');
+    $('#status').html('载入中 <i class="icon-spin animate-spin"></i>');
     $('.require-local').prop('disabled', true);
     if (match_request) {
         match_request.abort();
