@@ -60,13 +60,13 @@ var announcements = [
         "id": 11,
         "title": "这是一个测试公告",
         content: '聚集的祈愿将成为新生的闪耀之星。化作光芒闪耀的道路吧！',
-        image: "https://pic3.zhimg.com/3751c5a9f0e1c3b018984496a57be086_b.jpg"
+        image: "https://forum-cdn.touhou.cc/uploads/default/optimized/2X/a/a80ead0ab65c557ba68abec75a20761076ee9d37_1_555x500.jpg"
     },
     {
         "id": 12,
         "title": "这是另一个测试公告",
         content: '看看那被伟大之风引导的翅膀吧！',
-        image: "https://pic2.zhimg.com/2cb1baf6bb1b9195943a599d8b8fdc4d_b.jpg"
+        image: "https://forum-cdn.touhou.cc/uploads/default/optimized/2X/8/8f12ebbf0606907c710ce16e753d9c1347e41873_1_690x466.jpg"
     }];
 
 $('.carousel-indicators').empty();
