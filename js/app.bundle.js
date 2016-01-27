@@ -197,13 +197,13 @@ function update(app, local, reason) {
             var decks_element = $('#deck');
             decks_element.empty();
             for (var file in local.files) {
-                var matched = file.match(/deck(?:\/|\\)(.*).ydk/)
+                var matched = file.match(/deck(?:\/|\\)(.*).ydk/);
                 if (matched) {
                     var deck = matched[1];
                     $('<option/>', {
                         value: deck,
                         text: deck,
-                        selected: deck == local.files['system.conf'].lastdeck
+                        selected: deck == local.files['system.conf'].content.lastdeck
                     }).appendTo(decks_element);
                 }
             }
