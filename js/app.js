@@ -58,13 +58,13 @@ var announcements = [
         "id": 11,
         "title": "这是一个测试公告",
         content: '聚集的祈愿将成为新生的闪耀之星。化作光芒闪耀的道路吧！',
-        image: "https://secure.static.tumblr.com/5084e6d3b95d24415ed5dd416842ffee/jucea4l/qE8nlmp8n/tumblr_static_tumblr_static_filename_640.jpg"
+        image: "https://pic3.zhimg.com/3751c5a9f0e1c3b018984496a57be086_b.jpg"
     },
     {
         "id": 12,
         "title": "这是另一个测试公告",
         content: '看看那被伟大之风引导的翅膀吧！',
-        image: "https://yugiohblog.konami.com/articles/wp-content/uploads/2014/06/DanResult3.jpg"
+        image: "https://pic2.zhimg.com/2cb1baf6bb1b9195943a599d8b8fdc4d_b.jpg"
     }];
 
 $('.carousel-indicators').empty();
