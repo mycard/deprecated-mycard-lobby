@@ -66,5 +66,6 @@ select.form-control {
 }
 
 input.game-create-extra {
-    padding-right: .275rem;;
+    padding-right: .275rem;
+    padding-left: .6rem;
 }
