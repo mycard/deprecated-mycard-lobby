@@ -30,6 +30,7 @@ if (token) {
     $('#candy').attr('src', 'candy/index.html?' + querystring.stringify({
             jid: user.username + '@mycard.moe',
             password: user.external_id,
+            nickname: user.name,
             autojoin: 'ygopro_china_north@conference.mycard.moe'
         }));
 } else {
@@ -125,7 +126,7 @@ $('#game-match').on('click', function () {
             dataType: "json",
             cache: false,
             headers: {
-                Authorization: 'Basic ' + btoa(user.username + ':' + user.password)
+                Authorization: 'Basic ' + new Buffer(user.username + ':' + user.password).toString('base64')
             }
         })
         .done(function (data, textStatus, jqXHR) {

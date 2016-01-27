@@ -17,7 +17,7 @@ Candy.init('wss://chat.mycard.moe:5280/websocket', {
     view: {assets: 'res/', language: 'cn'}
 });
 
-Candy.Core.connect(params.jid, params.password);
+Candy.Core.connect(params.jid, params.password, params.nickname);
 
 /**
  * Thanks for trying Candy!
@@ -32,3 +32,11 @@ Candy.Core.connect(params.jid, params.password);
  * Github issues for bugs:
  *   - https://github.com/candy-chat/candy/issues
  */
+
+// candy fix
+Base64.encode = function (input) {
+    return new Buffer(input).toString('base64');
+};
+Base64.decode = function (input) {
+    return new Buffer(input, 'base64').toString();
+};
