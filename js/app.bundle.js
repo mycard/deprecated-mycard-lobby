@@ -184,6 +184,7 @@ var db;
 function update(app, local, reason) {
     if (reason == 'install-failed') {
         new Notification(app.locales['zh-CN'].name, {body: '安装失败'});
+        $('#status').empty();
     }
     if (reason == 'install-successful') {
         new Notification(app.locales['zh-CN'].name, {body: '安装完成'});
