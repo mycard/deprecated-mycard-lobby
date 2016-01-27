@@ -5,8 +5,6 @@ var querystring = require('querystring');
 var crypto = require('crypto');
 var path = require('path');
 
-//$.get('http://127.0.0.1:3000/run')
-
 var user;
 
 // login
@@ -175,9 +173,7 @@ function update(app, local, reason) {
         new Notification(app.locales['zh-CN'].name, {body: '安装失败'});
     }
     if (app.id == 'ygopro') {
-        console.log(2, app, local);
         if (local.status == 'installing') {
-            console.log(3, app, local);
             $('#deck').html('<option>安装中...</option>');
         } else if (local.status == 'ready') {
             var decks_element = $('#deck');
@@ -199,7 +195,6 @@ function update(app, local, reason) {
 }
 websocket.onmessage = function (event) {
     var message = JSON.parse(event.data);
-    console.log(message);
     switch (message.event) {
         case 'bundle':
             var app = message.data[0][0];
@@ -214,7 +209,7 @@ websocket.onmessage = function (event) {
                     eventemitter.send('install', app, options);
                     $('#install-modal').modal('hide');
                 });
-                $('#install-path').val(path.join(db.default_apps_path, app.id));
+                $('#install-path').val(path.win32.join(db.default_apps_path, app.id));
                 $('#install-browse').change(function (event) {
                     var file = event.target.files[0];
                     if (file) {
