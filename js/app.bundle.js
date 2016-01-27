@@ -7,6 +7,13 @@ var querystring = require('querystring');
 var crypto = require('crypto');
 var path = require('path');
 
+// patch browserify
+path.win32 = $.clone(path);
+path.win32._join = path.win32.join;
+path.win32.join = function () {
+    return path.win32._join.replace('/', '\\');
+};
+
 var user;
 
 // login
