@@ -64,3 +64,7 @@ select.form-control {
     margin-right: 5rem;
     line-height: 1.6;
 }
+
+input.game-create-extra {
+    padding-right: .275rem;;
+}
