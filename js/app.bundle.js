@@ -34,6 +34,11 @@ if (token) {
             autojoin: 'ygopro_china_north@conference.mycard.moe'
         }));
 } else {
+    return redirect_to_login()
+}
+
+function redirect_to_login(logout) {
+    $(document.body).html('Loading...');
     crypto.randomBytes(64, function (error, buffer) {
         var nonce = buffer.toString('hex');
 
@@ -46,13 +51,18 @@ if (token) {
             'sso': payload,
             'sig': crypto.createHmac('sha256', 'zsZv6LXHDwwtUAGa').update(payload).digest('hex')
         });
-        location.href = "https://forum.touhou.cc/session/sso_provider?" + request;
-    });
-}
+        var login_url = "https://forum.touhou.cc/session/sso_provider?" + request;
+        if (logout) {
+            localStorage.removeItem('token', token);
+            request = querystring.stringify({
+                'redirect': login_url
+            });
+            location.href = "https://forum.touhou.cc?" + request;
+        } else {
+            location.href = login_url;
+        }
 
-if(!user){
-    $(document.body).html('正在跳转到登录页面...')
-    return;
+    });
 }
 
 // announcements
@@ -215,6 +225,9 @@ function update(app, local, reason) {
 websocket.onmessage = function (event) {
     var message = JSON.parse(event.data);
     switch (message.event) {
+        case 'logout':
+            redirect_to_login(true);
+            break;
         case 'bundle':
             var app = message.data[0][0];
             if (db.platform == 'darwin') {
@@ -250,6 +263,9 @@ websocket.onmessage = function (event) {
             update(app, local, reason);
 
     }
+};
+websocket.onopen = function () {
+    eventemitter.send('login', user);
 };
 websocket.onclose = function () {
     $('#status').html('载入中 <i class="icon-spin animate-spin"></i>');
