@@ -15,22 +15,14 @@ var user;
 
 // login
 var token = querystring.parse(location.search.slice(1)).sso;
-if (token) {
+/*if (token) {
     localStorage.setItem('token', token);
 }
 if (!token) {
     token = localStorage.getItem('token');
-}
+}*/
 if (token) {
-    user = querystring.parse(new Buffer(token, 'base64').toString());
-    $('#game-create-title').val(user.name + ' 的房间');
-
-    $('#candy').attr('src', 'candy/index.html?' + querystring.stringify({
-            jid: user.username + '@mycard.moe',
-            password: user.external_id,
-            nickname: user.name,
-            autojoin: 'ygopro_china_north@conference.mycard.moe'
-        }));
+    login(querystring.parse(new Buffer(token, 'base64').toString()));
 } else {
     return redirect_to_login()
 }
@@ -61,6 +53,22 @@ function redirect_to_login(logout) {
         }
 
     });
+}
+function login(u) {
+    user = u;
+    $('#game-create-title').val(user.name + ' 的房间');
+
+    var candy = $('#candy');
+    var candy_url = 'candy/index.html?' + querystring.stringify({
+        jid: user.username + '@mycard.moe',
+        password: user.external_id,
+        nickname: user.name,
+        autojoin: 'ygopro_china_north@conference.mycard.moe'
+    });
+
+    if(candy.attr('src') != candy_url){
+        candy.attr('src', candy_url);
+    }
 }
 
 // announcements
@@ -223,8 +231,8 @@ function update(app, local, reason) {
 websocket.onmessage = function (event) {
     var message = JSON.parse(event.data);
     switch (message.event) {
-        case 'logout':
-            redirect_to_login(true);
+        case 'login':
+            login(message.data[0]);
             break;
         case 'bundle':
             var app = message.data[0][0];
