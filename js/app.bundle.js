@@ -321,7 +321,7 @@ var default_options = {
     no_shuffle_deck: false
 };
 var modes = {0: '单局模式', 1: '比赛模式', 2: 'TAG'};
-var rules_short = {0: 'O/T', 1: 'TCG', 2: 'OCG', 3: '专有卡禁止'};
+var rules_short = {0: 'OCG', 1: 'TCG', 2: 'O/T', 3: '专有卡禁止'};
 
 function room_template(room, server) {
     room.options = $.extend({}, default_options, room.options);
