@@ -195,7 +195,7 @@
                             <div class="row">
                                 <label for="game-create-start-hand" class="col-sm-6 form-control-label">初始手牌数</label>
                                 <div class="col-sm-6">
-                                    <input name="start_hand" type="number" value="5" min="1" max="16"
+                                    <input name="start_hand" type="number" value="5" min="0" max="16"
                                            class="form-control form-control-sm game-create-extra"
                                            id="game-create-start-hand">
                                 </div>
@@ -203,7 +203,7 @@
                             <div class="row">
                                 <label for="game-create-draw-count" class="col-sm-6 form-control-label">每回合抽卡</label>
                                 <div class="col-sm-6">
-                                    <input name="draw_count" type="number" value="1" min="1" max="16"
+                                    <input name="draw_count" type="number" value="1" min="0" max="16"
                                            class="form-control form-control-sm game-create-extra"
                                            id="game-create-draw-count">
                                 </div>
@@ -232,7 +232,7 @@
                         <div class="col-sm-10">
                             <div class="checkbox">
                                 <label>
-                                    <input name="private" type="checkbox">不在房间列表中显示 (不要点,约战功能还没实现
+                                    <input name="private" type="checkbox">不在房间列表中显示 (约战功能还没做好，不要勾
                                 </label>
                             </div>
                         </div>

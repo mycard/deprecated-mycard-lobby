@@ -107,9 +107,9 @@ $('#game-create').submit(function (event) {
     /* public: 1bits */
 
     options_buffer.writeUInt8((options.private == 'on' ? 2 : 1) << 4, 1);
-    options_buffer.writeUInt8(parseInt(options.rule) << 5 | parseInt(options.mode) << 2 | (options.enable_priority == 'on' ? 1 << 2 : 0) | (options.enable_priority == 'on' ? 1 << 1 : 0) | (options.no_check_deck == 'on' ? 1 : 0), 2);
+    options_buffer.writeUInt8(parseInt(options.rule) << 5 | parseInt(options.mode) << 3 | (options.enable_priority == 'on' ? 1 << 2 : 0) | (options.no_check_deck == 'on' ? 1 << 1 : 0) | (options.no_shuffle_deck == 'on' ? 1 : 0), 2);
     options_buffer.writeUInt16LE(parseInt(options.start_lp), 3);
-    options_buffer.writeUInt8(parseInt(options.start_hand) << 4 | parseInt(options.draw_count) << 4, 5);
+    options_buffer.writeUInt8(parseInt(options.start_hand) << 4 | parseInt(options.draw_count), 5);
     var checksum = 0;
     for (var i = 1; i < options_buffer.length; i++) {
         checksum -= options_buffer.readUInt8(i)
@@ -338,10 +338,10 @@ function room_template(room, server) {
         extra.push(room.options.start_lp + 'LP');
     }
     if (room.options.start_hand != default_options.start_hand) {
-        extra.push(room.options.start_hand + '手牌');
+        extra.push(room.options.start_hand + '初始');
     }
     if (room.options.draw_count != default_options.draw_count) {
-        extra.push(room.options.start_hand + '抽卡');
+        extra.push(room.options.draw_count + '抽卡');
     }
     if (room.options.enable_priority != default_options.enable_priority) {
         extra.push('优先权');
