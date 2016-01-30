@@ -42,7 +42,7 @@ Base64.decode = function (input) {
     return new Buffer(input, 'base64').toString();
 };
 
-Candy.View.Pane = function(self, $){
+/*Candy.View.Pane = function(self, $){
     self.Chat.Modal.showLoginForm = function (message, presetJid) {
         var domains = Candy.Core.getOptions().domains;
         var hideDomainList = Candy.Core.getOptions().hideDomainList;
@@ -99,4 +99,4 @@ Candy.View.Pane = function(self, $){
         });
     };
     return self;
-}(Candy.View.Pane, jQuery);
+}(Candy.View.Pane, jQuery);*/

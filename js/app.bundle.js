@@ -18,11 +18,11 @@ var user;
 // login
 var token = querystring.parse(location.search.slice(1)).sso;
 /*if (token) {
-    localStorage.setItem('token', token);
-}
-if (!token) {
-    token = localStorage.getItem('token');
-}*/
+ localStorage.setItem('token', token);
+ }
+ if (!token) {
+ token = localStorage.getItem('token');
+ }*/
 if (token) {
     login(querystring.parse(new Buffer(token, 'base64').toString()));
 } else {
@@ -58,17 +58,17 @@ function redirect_to_login(logout) {
 }
 function login(u) {
     user = u;
-    $('#game-create-title').val(user.name + ' 的房间');
+    $('#game-create-title').val(user.username + ' 的房间');
 
     var candy = $('#candy');
     var candy_url = 'candy/index.html?' + querystring.stringify({
-        jid: user.username + '@mycard.moe',
-        password: user.external_id,
-        nickname: user.name,
-        autojoin: 'ygopro_china_north@conference.mycard.moe'
-    });
+            jid: user.username + '@mycard.moe',
+            password: user.external_id,
+            nickname: user.username,
+            autojoin: 'ygopro_china_north@conference.mycard.moe'
+        });
 
-    if(candy.attr('src') != candy_url){
+    if (candy.attr('src') != candy_url) {
         candy.attr('src', candy_url);
     }
 }
@@ -106,30 +106,38 @@ $('#game-create').submit(function (event) {
     /* lp: 16bits, hand: 4bits, count: 4bits*/
     /* public: 1bits */
 
-    options_buffer.writeUInt8(parseInt(options.rule) << 5 | parseInt(options.mode) << 2 | (options.enable_priority == 'on' ? 1 << 2 : 0) | (options.enable_priority == 'on' ? 1 << 1 : 0) | (options.no_check_deck == 'on' ? 1 : 0), 0);
-    options_buffer.writeUInt16LE(parseInt(options.start_lp), 1);
-    options_buffer.writeUInt8(parseInt(options.start_hand) << 4 | parseInt(options.draw_count) << 4, 3);
-    options_buffer.writeUInt8(parseInt(options.public == 'on' ? 1 << 7 : 0), 4);
+    options_buffer.writeUInt8((options.private == 'on' ? 2 : 1) << 4, 1);
+    options_buffer.writeUInt8(parseInt(options.rule) << 5 | parseInt(options.mode) << 2 | (options.enable_priority == 'on' ? 1 << 2 : 0) | (options.enable_priority == 'on' ? 1 << 1 : 0) | (options.no_check_deck == 'on' ? 1 : 0), 2);
+    options_buffer.writeUInt16LE(parseInt(options.start_lp), 3);
+    options_buffer.writeUInt8(parseInt(options.start_hand) << 4 | parseInt(options.draw_count) << 4, 5);
+    var checksum = 0;
+    for (var i = 1; i < options_buffer.length; i++) {
+        checksum -= options_buffer.readUInt8(i)
+    }
+    options_buffer.writeUInt8(checksum & 0xFF, 0);
 
-    var room_id = options_buffer.toString('base64') + new Buffer(user.name + "\0" + options.title).toString('base64');
+    console.log('plain', options_buffer);
 
-    //var cipher = crypto.createCipher('bf-cfb','123');
-    //console.log(cipher.update(options_buffer).final('base64'));
-    // fuck browserify
-    var secret = user.external_id & (1 << 16 - 1);
-    for (var i = 0; i < options_buffer.length; i += 2) {
+    var secret = user.external_id % 65535 + 1;
+    for (i = 0; i < options_buffer.length; i += 2) {
         options_buffer.writeUInt16LE(options_buffer.readUInt16LE(i) ^ secret, i)
     }
+
+    console.log('crypted', options_buffer);
+
     var password = options_buffer.toString('base64') + options.title;
+    var room_id = crypto.createHash('md5').update(password + user.username).digest('base64').slice(0, 10).replace('+', '-').replace('/', '_')
+    console.log(room_id)
+
 
     var address = '122.0.65.73';
-    var port = '233';
+    var port = '7911';
 
     eventemitter.send('action', 'ygopro', 'join', {
         lastip: address,
         lastport: port,
         roompass: password,
-        nickname: user.name
+        nickname: user.username
     });
     $('#game-create-modal').modal('hide');
 });
@@ -139,12 +147,12 @@ var match_request = null;
 $('#game-match').on('click', function () {
     $(this).prop('disabled', true).text('等待对手');
     match_request = $.post({
-            url: 'https://api.mycard.moe/ygopro/match',
+            url: 'https://mycard.moe/ygopro/match',
             timeout: 60000,
             dataType: "json",
             cache: false,
             headers: {
-                Authorization: 'Basic ' + new Buffer(user.username + ':' + user.password).toString('base64')
+                Authorization: 'Basic ' + new Buffer(user.username + ':' + user.external_id).toString('base64')
             }
         })
         .done(function (data, textStatus, jqXHR) {
@@ -152,7 +160,7 @@ $('#game-match').on('click', function () {
                 lastip: data.address,
                 lastport: data.port,
                 roompass: data.password,
-                nickname: user.name
+                nickname: user.username
             });
         })
         .fail(function (data, textStatus, jqXHR) {
@@ -301,6 +309,133 @@ var alert = function (title, message) {
 if (!navigator.userAgent.match(/mycard/)) {
     $('#install-browse-wrapper').remove()
 }
+
+var default_options = {
+    mode: 1,
+    rule: 2,
+    start_lp: 8000,
+    start_hand: 5,
+    draw_count: 1,
+    enable_priority: false,
+    no_check_deck: false,
+    no_shuffle_deck: false
+};
+var modes = {0: '单局模式', 1: '比赛模式', 2: 'TAG'};
+var rules_short = {0: '专有卡禁止', 1: 'TCG', 2: 'OCG', 3: 'O/T'};
+
+function room_template(room, server) {
+    room.options = $.extend({}, default_options, room.options);
+    var result = '<tr id="room-' + server.id + '-' + room.id + '" class="room" data-server-id="' + server.id + '"><td class="title">' + room.title + '</td><td class="users">';
+    for (var j = 0; j < room.users.length; j++) {
+        result += '<img class="avatar" src="https://forum-cdn.touhou.cc/user_avatar/forum.touhou.cc/zh99998/36/167_1.png">'
+    }
+    result += '</td><td class="mode">' + modes[room.options.mode] + '</td><td class="extra">';
+    var extra = [];
+    if (room.options.rule != default_options.rule) {
+        extra.push(rules_short[room.options.rule]);
+    }
+    if (room.options.start_lp != default_options.start_lp) {
+        extra.push(room.options.start_lp + 'LP');
+    }
+    if (room.options.start_hand != default_options.start_hand) {
+        extra.push(room.options.start_hand + '手牌');
+    }
+    if (room.options.draw_count != default_options.draw_count) {
+        extra.push(room.options.start_hand + '抽卡');
+    }
+    if (room.options.enable_priority != default_options.enable_priority) {
+        extra.push('优先权');
+    }
+    if (room.options.no_check_deck != default_options.no_check_deck) {
+        extra.push('不检查');
+    }
+    if (room.options.no_shuffle_deck != default_options.no_shuffle_deck) {
+        extra.push('不洗卡');
+    }
+    result += extra.join(' ');
+    return result
+}
+$('#game-list-modal tbody').on('click', '.room', function (event) {
+    var server = servers[$(this).attr('data-server-id')];
+
+    var room_id = $(this).attr('id').slice(server.id.length + 6);
+    var options_buffer = new Buffer(6);
+    options_buffer.writeUInt8(3 << 4, 1);
+    var checksum = 0;
+    for (var i = 1; i < options_buffer.length; i++) {
+        checksum -= options_buffer.readUInt8(i)
+    }
+    options_buffer.writeUInt8(checksum & 0xFF, 0);
+
+    var secret = user.external_id % 65535 + 1;
+    for (i = 0; i < options_buffer.length; i += 2) {
+        options_buffer.writeUInt16LE(options_buffer.readUInt16LE(i) ^ secret, i)
+    }
+
+
+    var password = options_buffer.toString('base64') + room_id;
+
+    eventemitter.send('action', 'ygopro', 'join', {
+        lastip: server.address,
+        lastport: server.port,
+        roompass: password,
+        nickname: user.username
+    });
+
+});
+
+
+var servers = {
+    "master": {
+        id: 'master', url: 'wss://master.mycard.moe:7923', address: '122.0.65.73', port: '7911', private: null
+    }
+};
+var roomlist_connections = [];
+$('#game-list-modal').on('show.bs.modal', function (event) {
+    var tbody = $('#game-list-modal tbody');
+    for (var server_id in servers) {
+        (function (server) {
+            if (server.private) return;
+            var connection = new ReconnectingWebSocket(server.url);
+            connection.onclose = function (event) {
+                tbody.children('[data-server-id="' + server.id + '"]').remove()
+            };
+            connection.onmessage = function (event) {
+                console.log(event)
+                var message = JSON.parse(event.data);
+                switch (message.event) {
+                    case 'init':
+                        tbody.children('[data-server-id="' + server.id + '"]').remove();
+                        for (var i = 0; i < message.data.length; i++) {
+                            tbody.append(room_template(message.data[i], server));
+                        }
+                        break;
+                    case 'create':
+                        tbody.append(room_template(message.data, server));
+                        break;
+                    case 'update':
+                        $('#room-' + server.id + '-' + message.data.id).replaceWith(room_template(message.data, server));
+                        break;
+                    case 'delete':
+                        $('#room-' + server.id + '-' + message.data).remove();
+                    //auto width not works.
+                    /*var thead = $('#game-list-modal .modal-header th');
+                     tbody.find('tr:first-child td').each(function (index, element) {
+                     $(thead[index]).width($(element).width())
+                     });
+                     */
+                }
+            };
+            roomlist_connections[server_id] = connection;
+        })(servers[server_id]);
+    }
+});
+
+$('#game-list-modal').on('hide.bs.modal', function (event) {
+    for (var i in roomlist_connections) {
+        roomlist_connections[i].close();
+    }
+});
 }).call(this,require("buffer").Buffer)
 },{"buffer":3,"crypto":7,"path":203,"querystring":207}],2:[function(require,module,exports){
 
