@@ -123,10 +123,8 @@ $('#game-create').submit(function (event) {
 
     console.log('crypted', options_buffer);
 
-    var password = options_buffer.toString('base64') + options.title;
+    var password = options_buffer.toString('base64') + options.title.replace(/\s/, String.fromCharCode(0xFEFF));
     var room_id = crypto.createHash('md5').update(password + user.username).digest('base64').slice(0, 10).replace('+', '-').replace('/', '_')
-    console.log(room_id)
-
 
     var address = '122.0.65.73';
     var port = '7911';
