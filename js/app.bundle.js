@@ -309,7 +309,7 @@ if (!navigator.userAgent.match(/mycard/)) {
 }
 
 var default_options = {
-    mode: 1,
+    mode: 0,
     rule: 2,
     start_lp: 8000,
     start_hand: 5,
