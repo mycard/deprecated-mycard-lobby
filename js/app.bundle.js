@@ -43,13 +43,13 @@ function redirect_to_login(logout) {
             'sso': payload,
             'sig': crypto.createHmac('sha256', 'zsZv6LXHDwwtUAGa').update(payload).digest('hex')
         });
-        var login_url = "https://forum.touhou.cc/session/sso_provider?" + request;
+        var login_url = "https://ygobbs.com/session/sso_provider?" + request;
         if (logout) {
             localStorage.removeItem('token', token);
             request = querystring.stringify({
                 'redirect': login_url
             });
-            location.href = "https://forum.touhou.cc?" + request;
+            location.href = "https://ygobbs.com?" + request;
         } else {
             location.href = login_url;
         }
@@ -325,7 +325,7 @@ function room_template(room, server) {
     room.options = $.extend({}, default_options, room.options);
     var result = '<tr id="room-' + server.id + '-' + room.id + '" class="room" data-server-id="' + server.id + '"><td class="title">' + room.title + '</td><td class="users">';
     for (var j = 0; j < room.users.length; j++) {
-        result += '<img class="avatar" src="https://forum-cdn.touhou.cc/user_avatar/forum.touhou.cc/zh99998/36/167_1.png">'
+        result += '<img class="avatar" src="https://ygobbs.com/user_avatar/ygobbs.com/zh99998/64/2668_1.png">'
     }
     result += '</td><td class="mode">' + modes[room.options.mode] + '</td><td class="extra">';
     var extra = [];
