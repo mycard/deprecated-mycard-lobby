@@ -5,6 +5,8 @@ var params = querystring.parse(location.search.slice(1));
 
 Candy.View.Template.Login.form = '<form method="post" id="login-form" class="login-form">' + '<input type="hidden" id="nickname" name="nickname" value="' + params.nickname + '"/>' + '{{#displayUsername}}<input type="hidden" id="username" name="username" value="' + params.jid + '"/>' + '{{#displayDomain}} <span class="at-symbol">@</span> ' + '<select id="domain" name="domain">{{#domains}}<option value="{{domain}}">{{domain}}</option>{{/domains}}</select>' + "{{/displayDomain}}" + "{{/displayUsername}}" + '{{#presetJid}}<input type="hidden" id="username" name="username" value="{{presetJid}}"/>{{/presetJid}}' + '{{#displayPassword}}<input type="hidden" id="password" name="password" value="' + params.password + '"/>{{/displayPassword}}' + '<input type="submit" class="button" value="{{_loginSubmit}}" /></form>'
 
+Candy.Util.setCookie('candy-nostatusmessages', '1', 365);
+
 Candy.init('wss://chat.mycard.moe:5280/websocket', {
     core: {
         // only set this to true if developing / debugging errors
