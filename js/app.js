@@ -4,6 +4,7 @@
 var querystring = require('querystring');
 var crypto = require('crypto');
 var path = require('path');
+var url = require('url');
 
 // patch browserify
 path.win32 = $.extend({}, path);
@@ -71,29 +72,25 @@ function login(u) {
     }
 }
 
-// announcements
-var announcements = [
-    {
-        "id": 11,
-        "title": "这是一个测试公告",
-        content: '聚集的祈愿将成为新生的闪耀之星。化作光芒闪耀的道路吧！',
-        image: "https://forum-cdn.touhou.cc/uploads/default/optimized/2X/a/a80ead0ab65c557ba68abec75a20761076ee9d37_1_555x500.jpg"
-    },
-    {
-        "id": 12,
-        "title": "这是另一个测试公告",
-        content: '看看那被伟大之风引导的翅膀吧！',
-        image: "https://forum-cdn.touhou.cc/uploads/default/optimized/2X/8/8f12ebbf0606907c710ce16e753d9c1347e41873_1_690x466.jpg"
-    }];
+$.getJSON('https://ygobbs.com/c/%E5%AE%98%E6%96%B9%E5%85%AC%E5%91%8A.json', function (data) {
+    $('.carousel-indicators').empty();
+    $('.carousel-inner').empty();
+    var topics = data.topic_list.topics;
+    for (var i in topics) {
+        var topic = topics[i];
 
-$('.carousel-indicators').empty();
-$('.carousel-inner').empty();
-for (var i in announcements) {
-    $('<li data-target="#announcements" data-slide-to="' + i + '"></li>').appendTo('.carousel-indicators');
-    $('<div class="carousel-item" style="background-image: url(' + announcements[i].image + ')"><div class="carousel-caption"><h3>' + announcements[i].title + '</h3><p>' + announcements[i].content + '</p></div></div>').appendTo('.carousel-inner')
-}
-$('.carousel-indicators > li:first-child').addClass('active');
-$('.carousel-item:first-child').addClass('active');
+        if (topic.pinned && topic.visible && !topic.closed && !topic.archived && topic.image_url) {
+            var image = url.resolve("https://ygobbs.com", topic.image_url);
+            var content = topic.excerpt.replace('[image]', '').replace('[图片]', '');
+            $('<li data-target="#announcements" data-slide-to="' + topic.id + '"></li>').appendTo('.carousel-indicators');
+            $('<a href="https://ygobbs.com/t/' + topic.slug + '/' + topic.id + '" target="_blank"><div class="carousel-item" style="background-image: url(' + image + ')"><div class="carousel-caption"><h3>' + topic.fancy_title + '</h3><p>' + content + '</p></div></div></a>').appendTo('.carousel-inner')
+
+
+        }
+    }
+    $('.carousel-indicators > li:first-child').addClass('active');
+    $('.carousel-item:first-child').addClass('active');
+});
 
 // create game
 $('#game-create').submit(function (event) {
@@ -187,7 +184,7 @@ $('#deck-delete').click(function (event) {
     event.preventDefault();
     var deck = $('#deck').val();
     if (deck == null) return;
-    eventemitter.send('delete', path.join('deck', deck + '.ydk'));
+    eventemitter.send('delete', 'ygopro', path.join('deck', deck + '.ydk'));
     $('#deck > option:selected').remove();
     alert('删除卡组', '卡组 ' + deck + ' 已删除');
 });
