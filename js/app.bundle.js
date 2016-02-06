@@ -187,9 +187,16 @@ $('#deck-delete').click(function (event) {
     var deck = $('#deck').val();
     if (deck == null) return;
     eventemitter.send('delete', 'ygopro', path.join('deck', deck + '.ydk'));
-    $('#deck > option:selected').remove();
+    //$('#deck > option:selected').remove();
     alert('删除卡组', '卡组 ' + deck + ' 已删除');
 });
+
+$('#explore').click(function (event) {
+    event.preventDefault();
+    eventemitter.send('explore', 'ygopro');
+});
+
+
 /*$('#deck-rename').click(function(){
  event.preventDefault();
  eventemitter.send('deck-copy', $('#deck').val());
