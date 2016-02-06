@@ -1,0 +1,22 @@
+CACHE MANIFEST
+# 2016-02-06 13:07:10
+# Explicitly cached 'master entries'.
+CACHE:
+/
+js/jquery-2.2.0.min.js
+js/jquery.serializeObject.js
+js/bootstrap.min.js
+js/reconnecting-websocket.js
+js/app.bundle.js
+css/bootstrap.min.css
+css/fontello.css
+css/animation.css
+css/style.css
+font/fontello.eot
+font/fontello.woff
+font/fontello.ttf
+font/fontello.svg
+
+NETWORK:
+candy/
+*
