@@ -327,7 +327,7 @@ function room_template(room, server) {
     room.options = $.extend({}, default_options, room.options);
     var result = '<tr id="room-' + server.id + '-' + room.id + '" class="room" data-server-id="' + server.id + '"><td class="title">' + room.title + '</td><td class="users">';
     for (var j = 0; j < room.users.length; j++) {
-        result += '<img class="avatar" src="https://ygobbs.com/user_avatar/ygobbs.com/zh99998/64/2668_1.png">'
+        result += '<img class="avatar" src="https://ygobbs.com/user_avatar/ygobbs.com/' + room.users[j].username + '/25/1.png">'
     }
     result += '</td><td class="mode">' + modes[room.options.mode] + '</td><td class="extra">';
     var extra = [];
