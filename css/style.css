@@ -7,6 +7,9 @@ body {
     height: 100%;
     -webkit-user-select: none;
 }
+.user-select {
+    -webkit-user-select: text;
+}
 
 #main {
     height: 100%;
@@ -143,4 +146,16 @@ input.game-create-extra {
 }
 .float-left{
     float:left;
+}
+#donate {
+    margin-top: 30px;
+    margin-bottom: 20px;
+}
+
+#donate img {
+    margin-top: 5px;
+}
+
+#donate-qrcode {
+    width: 100%
 }
