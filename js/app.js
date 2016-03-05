@@ -72,20 +72,14 @@ function login(u) {
     }
 }
 
-$.getJSON('https://ygobbs.com/c/%E5%AE%98%E6%96%B9%E5%85%AC%E5%91%8A.json', function (data) {
+$.getJSON('http://mycard.moe/apps.json', function (data) {
     $('.carousel-indicators').empty();
     $('.carousel-inner').empty();
-    var topics = data.topic_list.topics;
-    for (var i in topics) {
-        var topic = topics[i];
-
-        if (topic.pinned && topic.visible && !topic.closed && !topic.archived && topic.image_url) {
-            var image = url.resolve("https://ygobbs.com", topic.image_url);
-            var content = topic.excerpt.replace('[image]', '').replace('[图片]', '');
-            $('<li data-target="#announcements" data-slide-to="' + topic.id + '"></li>').appendTo('.carousel-indicators');
-            $('<a href="https://ygobbs.com/t/' + topic.slug + '/' + topic.id + '" target="_blank"><div class="carousel-item" style="background-image: url(' + image + ')"><div class="carousel-caption"><h3>' + topic.fancy_title + '</h3><p>' + content + '</p></div></div></a>').appendTo('.carousel-inner')
-
-
+    for (var i in data.ygopro.news) {
+        var item = data.ygopro.news[i];
+        if (item.type == 'image') {
+            $('<li data-target="#announcements" data-slide-to="' + item.id + '"></li>').appendTo('.carousel-indicators');
+            $('<a href="' + item.url + '" target="_blank"><div class="carousel-item" style="background-image: url(' + item.image + ')"><div class="carousel-caption"><h3>' + item.title + '</h3><p>' + item.text + '</p></div></div></a>').appendTo('.carousel-inner')
         }
     }
     $('.carousel-indicators > li:first-child').addClass('active');
@@ -439,7 +433,7 @@ $('#game-list-modal').on('hide.bs.modal', function (event) {
 
 $('#donate').popover();
 var clipboard = new Clipboard('#donate-copy');
-clipboard.on('success', function(e) {
+clipboard.on('success', function (e) {
     console.info('Action:', e.action);
     console.info('Text:', e.text);
     console.info('Trigger:', e.trigger);
@@ -447,7 +441,7 @@ clipboard.on('success', function(e) {
     e.clearSelection();
 });
 
-clipboard.on('error', function(e) {
+clipboard.on('error', function (e) {
     console.error('Action:', e.action);
     console.error('Trigger:', e.trigger);
 });
