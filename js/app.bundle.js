@@ -383,7 +383,7 @@ $('#game-list-modal tbody').on('click', '.room', function (event) {
 
 var servers = {
     "master": {
-        id: 'master', url: 'wss://master.mycard.moe:7923', address: '122.0.65.73', port: '7911', private: null
+        id: 'master', url: 'wss://tiramisu.mycard.moe:7923', address: '112.124.105.11', port: '7911', private: null
     }
 };
 var roomlist_connections = [];
