@@ -119,12 +119,11 @@ $('#game-create').submit(function (event) {
     var password = options_buffer.toString('base64') + options.title.replace(/\s/, String.fromCharCode(0xFEFF));
     var room_id = crypto.createHash('md5').update(password + user.username).digest('base64').slice(0, 10).replace('+', '-').replace('/', '_')
 
-    var address = '122.0.65.73';
-    var port = '7911';
+    var server = servers['tiramisu'];
 
     eventemitter.send('action', 'ygopro', 'join', {
-        lastip: address,
-        lastport: port,
+        lastip: server.address,
+        lastport: server.port,
         roompass: password,
         nickname: user.username
     });
@@ -380,10 +379,25 @@ $('#game-list-modal tbody').on('click', '.room', function (event) {
 
 });
 
+$('#windbots').on('click', 'a[data-windbot-name]', function (event) {
+    var server = servers['tiramisu'];
+
+    var password = 'AI_' + $(this).data('windbot-name');
+    console.log(password);
+
+    eventemitter.send('action', 'ygopro', 'join', {
+        lastip: server.address,
+        lastport: server.port,
+        roompass: password,
+        nickname: user.username
+    });
+
+});
+
 
 var servers = {
-    "master": {
-        id: 'master', url: 'wss://tiramisu.mycard.moe:7923', address: '112.124.105.11', port: '7911', private: null
+    "tiramisu": {
+        id: 'tiramisu', url: 'wss://tiramisu.mycard.moe:7923', address: '112.124.105.11', port: '7911', private: null, windbot: null
     }
 };
 var roomlist_connections = [];
